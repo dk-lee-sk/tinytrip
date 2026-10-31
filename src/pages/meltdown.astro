@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import meltdown from '../data/meltdown.json';
+---
+
+<Base title="The meltdown guide">
+  <div class="inner narrow">
+    <p class="page-eyebrow">When things go sideways</p>
+    <h1 class="page-title">The meltdown guide</h1>
+    <p class="page-sub">
+      Every parent's nightmare: a full meltdown in an airport, restaurant, or train. Here's your calm, practical
+      playbook. Bookmark this page.
+    </p>
+
+    <div class="calm-box">
+      <h2>{meltdown.reassurance.title}</h2>
+      <p>{meltdown.reassurance.text}</p>
+    </div>
+
+    <ol class="meltdown-steps">
+      {meltdown.steps.map((s, i) => (
+        <li class="step-card">
+          <span class="step-num" aria-hidden="true">{i + 1}</span>
+          <div>
+            <h2>{s.title}</h2>
+            <p>{s.text}</p>
+            {s.needsReview && <span class="review-flag">Being reviewed</span>}
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="calm-box">
+      <h2>{meltdown.kit.title}</h2>
+      <ul class="kit">{meltdown.kit.items.map((k) => <li>{k}</li>)}</ul>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .meltdown-steps { list-style: none; display: grid; gap: 16px; margin: 28px 0 24px; }
+  .step-card {
+    background: var(--white); border-radius: 18px; padding: 22px 24px;
+    box-shadow: var(--shadow); display: flex; gap: 18px; align-items: flex-start;
+  }
+  .step-num {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--blush); color: var(--coral-dk);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 1rem; flex-shrink: 0; border: 2px solid var(--peach);
+  }
+  .step-card h2 { font-weight: 700; font-size: 0.95rem; margin-bottom: 5px; }
+  .step-card p { font-size: 0.85rem; line-height: 1.65; color: var(--muted); }
+  .kit { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+  .kit li { background: var(--white); border-radius: 100px; padding: 4px 12px; font-size: 0.82rem; }
+  @media (max-width: 520px) { .step-card { padding: 18px 16px; gap: 12px; } }
+</style>

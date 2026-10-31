@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'A calm, step-by-step guide for first-time parents planning their first trip with a baby.',
+} = Astro.props;
+
+const pageTitle = title ? `${title} · TinyTrip` : 'TinyTrip — Your First Trip with Baby';
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/ready', label: '🍼 Is Baby Ready?' },
+  { href: '/pack', label: '📋 Pack List' },
+  { href: '/destinations', label: '🗺️ Destinations' },
+  { href: '/guides', label: '📖 Guides' },
+  { href: '/sleep', label: '😴 Sleep & Schedules' },
+  { href: '/meltdown', label: '😰 Meltdown Help' },
+];
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <nav class="site-nav" aria-label="Main">
+      <a class="logo" href="/"><span aria-hidden="true">🌍</span> TinyTrip</a>
+      <ul>
+        {links.map((l) => (
+          <li>
+            <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        <strong>TinyTrip shares general information, not medical advice.</strong>
+        Every baby is different — check with your GP, health visitor or paediatrician before travelling,
+        especially with a very young or unwell baby. Items marked “being reviewed” are still being checked
+        against official guidance.
+      </p>
+    </footer>
+  </body>
+</html>

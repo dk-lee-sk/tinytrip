@@ -1,0 +1,46 @@
+{
+  "timezones": [
+    { "id": "Europe/London", "label": "London" },
+    { "id": "Europe/Lisbon", "label": "Lisbon" },
+    { "id": "Europe/Amsterdam", "label": "Amsterdam" },
+    { "id": "America/New_York", "label": "New York" },
+    { "id": "America/Chicago", "label": "Chicago" },
+    { "id": "America/Los_Angeles", "label": "Los Angeles" },
+    { "id": "Asia/Dubai", "label": "Dubai" },
+    { "id": "Asia/Kolkata", "label": "Delhi / Mumbai" },
+    { "id": "Asia/Bangkok", "label": "Bangkok" },
+    { "id": "Asia/Singapore", "label": "Singapore / Hong Kong" },
+    { "id": "Asia/Tokyo", "label": "Tokyo" },
+    { "id": "Australia/Melbourne", "label": "Melbourne / Sydney" },
+    { "id": "Pacific/Auckland", "label": "Auckland" }
+  ],
+  "tips": {
+    "small": [
+      "Keep baby's usual routine on local clock time — a shift this small usually settles on its own",
+      "Use blackout blinds and white noise to make the new room feel like home"
+    ],
+    "east": [
+      "A few days before you leave, try moving bedtime a little earlier each day",
+      "On arrival, get outside in morning light to help set the new day",
+      "Protect the first nap of each day — skip sightseeing if needed"
+    ],
+    "west": [
+      "A few days before you leave, try moving bedtime a little later each day",
+      "On arrival, get outside in afternoon light to help push bedtime later",
+      "Protect the first nap of each day — skip sightseeing if needed"
+    ]
+  },
+  "schedule": {
+    "title": "Sample daily travel schedule (6–12 months)",
+    "items": [
+      { "time": "6:30am", "title": "Wake + feed", "text": "Open curtains straight away — morning light helps set baby's body clock." },
+      { "time": "8:30am", "title": "Nap 1 (in stroller or carrier)", "text": "Time this with your first activity. Baby sleeps, you explore." },
+      { "time": "10:00am", "title": "Activity window", "text": "Best alert window of the day. Museums, parks, restaurants." },
+      { "time": "12:30pm", "title": "Lunch + feed", "text": "Baby eats first, then you eat. Try to find a quieter table." },
+      { "time": "1:00pm", "title": "Nap 2 (back at hotel)", "text": "This is the \"protected nap.\" Do not skip. Use this for your rest too." },
+      { "time": "3:30pm", "title": "Afternoon activity", "text": "Short outing — shops, a walk, dinner prep area scouting." },
+      { "time": "5:30pm", "title": "Early dinner", "text": "Aim for 5:30–6pm. Restaurants are quiet. Baby is still cheerful." },
+      { "time": "7:00pm", "title": "Bedtime routine", "text": "Bath → feed → white noise → dark room. Same routine as home, always." }
+    ]
+  }
+}

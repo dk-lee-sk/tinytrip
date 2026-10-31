@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+import packing from '../data/packing.json';
+
+const total = packing.reduce((n, s) => n + s.items.length, 0);
+const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Helpful', you: 'You 💚' };
+---
+
+<Base title="Your packing list">
+  <div class="inner">
+    <p class="page-eyebrow">Packing for a baby</p>
+    <h1 class="page-title">Your complete packing list</h1>
+    <p class="page-sub">
+      Don't know where to start? Neither did any parent before you. Check off as you go — we've prioritised by what
+      matters most. Your ticks are saved on this device.
+    </p>
+
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <div>
+          <div class="progress-pct" id="pct">0%</div>
+          <div class="progress-desc" id="pct-desc" aria-live="polite">0 of {total} items packed</div>
+        </div>
+        <div class="progress-cheer">Keep going — you're doing great 💚</div>
+      </div>
+      <div class="prog-bar" role="progressbar" aria-labelledby="pct-desc" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="prog-bar">
+        <div class="prog-fill" id="prog-fill"></div>
+      </div>
+    </div>
+
+    {packing.map((section) => (
+      <section class="checklist-section" aria-labelledby={`sec-${section.id}`}>
+        <div class="cs-header">
+          <span class="cs-icon" aria-hidden="true">{section.icon}</span>
+          <h2 id={`sec-${section.id}`}>{section.title}</h2>
+          <span class={`pill pill-${section.badge} cs-badge`}>{section.badgeLabel}</span>
+        </div>
+        <div class="cs-items">
+          {section.items.map((item) => (
+            <label class="ci">
+              <input type="checkbox" data-item={item.id} />
+              <span class="ci-text">
+                <strong>{item.name}</strong>
+                <span>{item.note}</span>
+                {item.needsReview && <span class="review-flag">Being reviewed</span>}
+              </span>
+              <span class={`pill pill-${item.priority}`}>{pillLabel[item.priority]}</span>
+            </label>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <div class="next-step">
+      <button type="button" class="btn-ghost" id="reset">Clear all ticks</button>
+    </div>
+  </div>
+</Base>
+
+<script>
+  const KEY = 'tinytrip:pack:v1';
+  const boxes = Array.from(document.querySelectorAll<HTMLInputElement>('.ci input[type="checkbox"]'));
+
+  function load(): string[] {
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch { return []; }
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(boxes.filter((b) => b.checked).map((b) => b.dataset.item))); } catch {}
+  }
+  function render() {
+    const done = boxes.filter((b) => b.checked).length;
+    const pct = Math.round((done / boxes.length) * 100);
+    boxes.forEach((b) => b.closest('.ci')!.classList.toggle('checked', b.checked));
+    document.getElementById('pct')!.textContent = `${pct}%`;
+    document.getElementById('pct-desc')!.textContent = `${done} of ${boxes.length} items packed`;
+    document.getElementById('prog-fill')!.style.width = `${pct}%`;
+    document.getElementById('prog-bar')!.setAttribute('aria-valuenow', String(pct));
+  }
+
+  const saved = new Set(load());
+  boxes.forEach((b) => {
+    b.checked = saved.has(b.dataset.item!);
+    b.addEventListener('change', () => { save(); render(); });
+  });
+  document.getElementById('reset')!.addEventListener('click', () => {
+    boxes.forEach((b) => (b.checked = false));
+    save(); render();
+  });
+  render();
+</script>
+
+<style>
+  .progress-wrap { margin-bottom: 28px; }
+  .progress-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+  .progress-pct { font-family: 'Lora', serif; font-size: 1.6rem; font-weight: 700; color: var(--coral-dk); }
+  .progress-desc, .progress-cheer { font-size: 0.82rem; color: var(--muted); }
+  .progress-cheer { text-align: right; }
+  .prog-bar { background: #E8E2DC; border-radius: 100px; height: 8px; }
+  .prog-fill { background: linear-gradient(90deg, var(--coral), var(--gold)); height: 8px; border-radius: 100px; transition: width 0.4s ease; width: 0%; }
+
+  .checklist-section { margin-bottom: 24px; }
+  .cs-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .cs-icon { font-size: 1.4rem; }
+  .cs-header h2 { font-weight: 700; font-size: 1rem; }
+  .cs-badge { margin-left: auto; }
+  .cs-items { background: var(--white); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+  .ci {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 20px; border-bottom: 1px solid #F0EBE5;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .ci:last-child { border-bottom: none; }
+  .ci:hover { background: var(--warm); }
+  .ci input { width: 18px; height: 18px; accent-color: var(--coral-dk); margin-top: 2px; flex-shrink: 0; cursor: pointer; }
+  .ci-text { flex: 1; }
+  .ci-text strong { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; }
+  .ci-text > span:not(.review-flag) { display: block; font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+  .ci.checked .ci-text strong { text-decoration: line-through; opacity: 0.45; }
+  .ci.checked .ci-text > span { opacity: 0.4; }
+
+  @media (max-width: 520px) {
+    .ci { padding: 14px 14px; gap: 10px; }
+    .progress-cheer { display: none; }
+  }
+</style>

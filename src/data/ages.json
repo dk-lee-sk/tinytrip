@@ -1,0 +1,92 @@
+[
+  {
+    "id": "newborn",
+    "label": "0–6 weeks (newborn)",
+    "icon": "🐣",
+    "blurb": "Very new. Short, local trips only — we'll show you what's safe.",
+    "title": "0–6 weeks: Local trips only — and that's completely fine.",
+    "body": "Newborns under 6 weeks have immature immune systems and are not recommended for long-haul flights. Pediatricians typically advise waiting until at least 6–8 weeks for air travel.",
+    "listHeading": "What you can do now",
+    "points": [
+      "Short car trips (1–2 hours) are perfectly safe from day one",
+      "A weekend at a nearby hotel is a great \"practice\" trip",
+      "Focus on mastering your baby kit before adding travel variables"
+    ],
+    "needsReview": true
+  },
+  {
+    "id": "early",
+    "label": "6 weeks – 3 months",
+    "icon": "🌱",
+    "blurb": "Immune system strengthening. A great window for short flights.",
+    "title": "6 weeks – 3 months: Short flights are a green light.",
+    "body": "Most airlines allow infants from 2 weeks old, but paediatricians recommend waiting until 6–8 weeks. By 6 weeks, you're good for short-to-medium haul flights.",
+    "listHeading": "Good news",
+    "points": [
+      "Babies at this age sleep a lot — long journeys are often easier than later",
+      "They're not yet mobile, making containment simple",
+      "Breastfeeding on demand handles most flight discomfort"
+    ],
+    "needsReview": true
+  },
+  {
+    "id": "rolling",
+    "label": "3 – 6 months",
+    "icon": "☀️",
+    "blurb": "Often called the travel \"sweet spot.\" Alert but not yet mobile.",
+    "title": "3–6 months: The travel sweet spot. Seriously.",
+    "body": "Many parents call this the easiest window to travel. Babies are alert and engaging but not yet crawling or walking. They sleep in carriers and strollers. They're charmed by new faces.",
+    "listHeading": "What this age allows",
+    "points": [
+      "Long-haul flights — babies often sleep well with engine white noise",
+      "Restaurant dinners (they'll be entertained by the environment)",
+      "Bassinet eligibility on most airlines (book ahead)"
+    ],
+    "needsReview": true
+  },
+  {
+    "id": "sitter",
+    "label": "6 – 12 months",
+    "icon": "🌟",
+    "blurb": "More interactive — and more opinions. Lap infant fares apply.",
+    "title": "6–12 months: Wonderful — with a bit more planning.",
+    "body": "Babies at this age are interactive, curious, and developing strong opinions about what they want. This is wonderful — and means you'll want more activities and more snacks.",
+    "listHeading": "Key considerations",
+    "points": [
+      "Lap infant fares apply until 24 months on most airlines",
+      "Solid foods mean you can buy food locally — lighter packing",
+      "Crawling babies need safe spaces — check hotel room carefully"
+    ],
+    "needsReview": false
+  },
+  {
+    "id": "walker",
+    "label": "12 – 18 months",
+    "icon": "🚶",
+    "blurb": "Walking + curious = plan for exploration time at every stop.",
+    "title": "12–18 months: They want to walk. Let them.",
+    "body": "New walkers are explorers. Build walking time into every stop — airports, parks, hotel corridors. A toddler who's moved their body is a toddler who sleeps.",
+    "listHeading": "Tips for this age",
+    "points": [
+      "Choose destinations with parks, beaches, or open walking space",
+      "Schedule activities in the morning alert window",
+      "Carry a carrier as backup when legs give out suddenly"
+    ],
+    "needsReview": false
+  },
+  {
+    "id": "toddler",
+    "label": "18 months – 2 years",
+    "icon": "🎒",
+    "blurb": "Strong opinions and big personality. Still very manageable with prep.",
+    "title": "18 months – 2 years: Big personality, big fun.",
+    "body": "Toddlers at this age have preferences, language emerging, and strong feelings about things. That's also what makes travel with them memorable.",
+    "listHeading": "Make it work",
+    "points": [
+      "Give them \"choices\" within your plan (\"Do you want to go to the park or the beach first?\")",
+      "Keep snacks visible and accessible at all times",
+      "Download 2–3 favourite shows for transit — no guilt"
+    ],
+    "needsReview": false
+  }
+]

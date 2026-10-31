@@ -1,0 +1,69 @@
+[
+  {
+    "id": "safety",
+    "title": "Safety Essentials",
+    "icon": "🛡️",
+    "badge": "must",
+    "badgeLabel": "Must-haves",
+    "items": [
+      { "id": "car-seat", "name": "Infant car seat (if driving or renting)", "note": "Rear-facing, correctly installed. The #1 safety item for any trip.", "priority": "must" },
+      { "id": "insurance", "name": "Travel health insurance with infant cover", "note": "Many standard policies exclude babies under 8 weeks. Double-check yours.", "priority": "must", "needsReview": true },
+      { "id": "passport", "name": "Baby's passport (if travelling internationally)", "note": "Takes 4–6 weeks to process — apply early. Newborns need their own.", "priority": "must", "needsReview": true },
+      { "id": "vaccination-record", "name": "Vaccination record copy", "note": "Some destinations and paediatricians require these on arrival.", "priority": "must", "needsReview": true }
+    ]
+  },
+  {
+    "id": "feeding",
+    "title": "Feeding",
+    "icon": "🍼",
+    "badge": "key",
+    "badgeLabel": "Essential",
+    "items": [
+      { "id": "formula", "name": "Formula + extra supply (if formula-feeding)", "note": "Bring 30% more than you think you need. Brands vary abroad.", "priority": "key", "needsReview": true },
+      { "id": "nursing-cover", "name": "Nursing cover / portable privacy wrap", "note": "Optional — but helpful in busy airports and restaurants.", "priority": "nice" },
+      { "id": "bottles", "name": "Bottles + portable steriliser", "note": "A microwave steam bag works in most hotel rooms.", "priority": "key" },
+      { "id": "bibs", "name": "Bibs × 6 minimum", "note": "You will always need more bibs than you think.", "priority": "key" }
+    ]
+  },
+  {
+    "id": "sleep",
+    "title": "Sleep",
+    "icon": "😴",
+    "badge": "key",
+    "badgeLabel": "Essential",
+    "items": [
+      { "id": "travel-cot", "name": "Portable travel cot or book a hotel crib", "note": "Confirm with hotel 48h in advance. Specify infant, not toddler crib.", "priority": "must" },
+      { "id": "white-noise", "name": "White noise app or portable speaker", "note": "Recreates home sleep sounds — powerful for unsettled environments.", "priority": "key" },
+      { "id": "blackout-blind", "name": "Portable blackout blind", "note": "Clip-on, fits most windows. Game-changer for naps in bright rooms.", "priority": "key" },
+      { "id": "sleep-sack", "name": "Baby's familiar sleep sack or swaddle", "note": "Scent and feel of home. Huge comfort anchor for babies.", "priority": "key", "needsReview": true }
+    ]
+  },
+  {
+    "id": "health",
+    "title": "Health & Comfort",
+    "icon": "💊",
+    "badge": "key",
+    "badgeLabel": "Essential",
+    "items": [
+      { "id": "paracetamol", "name": "Infant paracetamol (age-appropriate)", "note": "Check dosage weight-range on pack. Bring 2 bottles.", "priority": "must", "needsReview": true },
+      { "id": "thermometer", "name": "Digital ear thermometer", "note": "Ear thermometers are fastest with wriggly babies.", "priority": "must", "needsReview": true },
+      { "id": "ors", "name": "Oral rehydration sachets (ORS)", "note": "For vomiting or diarrhoea — can't always find abroad.", "priority": "key", "needsReview": true },
+      { "id": "nappy-cream", "name": "Nappy rash cream", "note": "Travel can trigger flare-ups from heat and different water.", "priority": "key" },
+      { "id": "wipes", "name": "Anti-bac wipes × 100+", "note": "Used for surfaces, tray tables, changing mats. Stock up.", "priority": "key" }
+    ]
+  },
+  {
+    "id": "gear",
+    "title": "Gear & Logistics",
+    "icon": "🎒",
+    "badge": "nice",
+    "badgeLabel": "Helpful",
+    "items": [
+      { "id": "stroller", "name": "Lightweight stroller (gate-check compatible)", "note": "Ask at check-in — most airlines gate-check for free.", "priority": "key", "needsReview": true },
+      { "id": "carrier", "name": "Baby carrier / sling", "note": "Hands-free and better than a stroller in crowds or cobblestones.", "priority": "key" },
+      { "id": "changing-mat", "name": "Portable changing mat", "note": "Some airports and restaurants lack changing facilities. Be prepared.", "priority": "key" },
+      { "id": "nappy-bag", "name": "Nappy bag with packing cubes", "note": "Compartmentalise feed, change, sleep items. Saves you at 2am.", "priority": "nice" },
+      { "id": "earphones", "name": "Noise-cancelling earphones (yours!)", "note": "You deserve this. Especially on the return flight.", "priority": "you" }
+    ]
+  }
+]

@@ -1,0 +1,153 @@
+---
+import Base from '../layouts/Base.astro';
+import sleep from '../data/sleep.json';
+---
+
+<Base title="Sleep & schedules">
+  <div class="inner">
+    <p class="page-eyebrow">Sleep guidance</p>
+    <h1 class="page-title">Sleep & schedules while travelling</h1>
+    <p class="page-sub">
+      Protecting your baby's sleep makes a huge difference to how the trip feels. Here's how to do it without
+      giving up everything else.
+    </p>
+
+    <div class="sleep-layout">
+      <div class="panel">
+        <h2>⏰ Time zone helper</h2>
+        <form id="tz-form">
+          <div class="form-field">
+            <label for="tz-home">Home</label>
+            <select id="tz-home">
+              {sleep.timezones.map((t) => <option value={t.id} selected={t.id === 'Europe/London'}>{t.label}</option>)}
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="tz-dest">Destination</label>
+            <select id="tz-dest">
+              {sleep.timezones.map((t) => <option value={t.id} selected={t.id === 'Asia/Tokyo'}>{t.label}</option>)}
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="tz-date">Travel date</label>
+            <input type="date" id="tz-date" />
+          </div>
+          <div class="form-field">
+            <label for="tz-bed">Baby's usual bedtime (home)</label>
+            <input type="time" id="tz-bed" value="19:00" />
+          </div>
+          <button class="btn-coral btn-block" type="submit">Get sleep plan →</button>
+        </form>
+
+        <div class="sleep-result" id="sleep-result" aria-live="polite" hidden>
+          <h3 id="sr-title"></h3>
+          <p id="sr-summary"></p>
+          <ul id="sr-tips"></ul>
+          <span class="review-flag">Tips being reviewed against official guidance</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>📅 {sleep.schedule.title}</h2>
+        <ol class="timeline">
+          {sleep.schedule.items.map((s) => (
+            <li class="tl-item">
+              <span class="tl-time">{s.time}</span>
+              <span class="tl-desc"><strong>{s.title}</strong>{s.text}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<script define:vars={{ tips: sleep.tips, zones: sleep.timezones }}>
+  // Minutes east of UTC for a zone on a given date (handles daylight saving).
+  function offsetMinutes(timeZone, date) {
+    const name = new Intl.DateTimeFormat('en-GB', { timeZone, timeZoneName: 'longOffset' })
+      .formatToParts(date)
+      .find((p) => p.type === 'timeZoneName').value; // e.g. "GMT+09:00" or "GMT"
+    const m = name.match(/GMT([+-])(\d{1,2}):?(\d{2})?/);
+    if (!m) return 0;
+    const mins = Number(m[2]) * 60 + Number(m[3] || 0);
+    return m[1] === '-' ? -mins : mins;
+  }
+
+  function fmtHours(mins) {
+    const h = Math.floor(Math.abs(mins) / 60);
+    const m = Math.abs(mins) % 60;
+    const hPart = h ? `${h} hour${h === 1 ? '' : 's'}` : '';
+    const mPart = m ? `${m} minutes` : '';
+    return [hPart, mPart].filter(Boolean).join(' ');
+  }
+
+  function fmtClock(totalMins) {
+    const t = ((totalMins % 1440) + 1440) % 1440;
+    const h24 = Math.floor(t / 60);
+    const m = t % 60;
+    const suffix = h24 < 12 ? 'am' : 'pm';
+    const h12 = h24 % 12 || 12;
+    return `${h12}:${String(m).padStart(2, '0')}${suffix}`;
+  }
+
+  const label = (id) => zones.find((z) => z.id === id).label;
+  const dateInput = document.getElementById('tz-date');
+  dateInput.value = new Date().toISOString().slice(0, 10);
+
+  document.getElementById('tz-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const home = document.getElementById('tz-home').value;
+    const dest = document.getElementById('tz-dest').value;
+    const [bh, bm] = (document.getElementById('tz-bed').value || '19:00').split(':').map(Number);
+    const date = dateInput.value ? new Date(`${dateInput.value}T12:00:00Z`) : new Date();
+
+    const diff = offsetMinutes(dest, date) - offsetMinutes(home, date); // + means destination is ahead
+    const bedHome = bh * 60 + bm;
+
+    let title, summary, list;
+    if (diff === 0) {
+      title = `${label(home)} → ${label(dest)}: same time`;
+      summary = 'No time difference on that date, so your baby can keep their usual routine.';
+      list = tips.small;
+    } else {
+      const ahead = diff > 0;
+      // A local bedtime of e.g. 7pm at the destination is this time on baby's home body clock.
+      const bodyClock = fmtClock(bedHome - diff);
+      title = `${label(home)} → ${label(dest)}: ${fmtHours(diff)} ${ahead ? 'ahead' : 'behind'}`;
+      summary =
+        `When it's ${fmtClock(bedHome)} bedtime in ${label(dest)}, your baby's body will think it's ` +
+        `${bodyClock}. ` +
+        (Math.abs(diff) <= 120
+          ? 'That’s a small shift — most babies cope well with a few days of gentle routine.'
+          : `That's a big change, so expect a few unsettled nights while they adjust.`);
+      list = Math.abs(diff) <= 120 ? tips.small : ahead ? tips.east : tips.west;
+    }
+
+    document.getElementById('sr-title').textContent = title;
+    document.getElementById('sr-summary').textContent = summary;
+    const ul = document.getElementById('sr-tips');
+    ul.replaceChildren(...list.map((t) => Object.assign(document.createElement('li'), { textContent: t })));
+    document.getElementById('sleep-result').hidden = false;
+  });
+</script>
+
+<style>
+  .sleep-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; align-items: start; }
+  .sleep-result {
+    background: var(--sky-lt); border-radius: 14px; padding: 18px; margin-top: 16px;
+    border-left: 4px solid var(--sky); animation: rise 0.3s ease both;
+  }
+  .sleep-result h3 { font-weight: 700; color: #2F5C80; margin-bottom: 8px; font-size: 0.95rem; }
+  .sleep-result p { font-size: 0.88rem; line-height: 1.65; }
+  .sleep-result ul { margin-top: 8px; padding-left: 16px; font-size: 0.85rem; line-height: 1.8; }
+  .timeline { list-style: none; margin-top: 8px; }
+  .tl-item { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid #F0EBE5; }
+  .tl-item:last-child { border-bottom: none; }
+  .tl-time { font-weight: 700; font-size: 0.85rem; color: var(--coral-dk); min-width: 70px; flex-shrink: 0; }
+  .tl-desc { font-size: 0.85rem; line-height: 1.55; }
+  .tl-desc strong { display: block; font-size: 0.88rem; margin-bottom: 2px; }
+
+  @media (max-width: 900px) { .sleep-layout { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .panel { padding: 20px; } }
+</style>

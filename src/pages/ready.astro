@@ -1,0 +1,107 @@
+---
+import Base from '../layouts/Base.astro';
+import ages from '../data/ages.json';
+---
+
+<Base title="Is my baby ready to travel?">
+  <div class="inner">
+    <p class="page-eyebrow">Step 1 of your journey</p>
+    <h1 class="page-title">Is my baby ready to travel?</h1>
+    <p class="page-sub">
+      This is the question every first-time parent asks — and the answer is almost always “yes, with the right
+      preparation.” Tap your baby's age to see what to expect.
+    </p>
+
+    <div class="readiness-intro">
+      <h2>💚 First, a deep breath.</h2>
+      <p>
+        Babies travel every day. Airlines, trains, and hotels are well-practised at hosting families with infants.
+        The biggest challenge isn't logistics — it's your confidence as a parent. That's exactly what TinyTrip is
+        here to build.
+      </p>
+    </div>
+
+    <div class="age-grid" role="group" aria-label="Choose your baby's age">
+      {ages.map((a) => (
+        <button type="button" class="age-card" data-age={a.id} aria-pressed="false" aria-controls={`result-${a.id}`}>
+          <span class="ac-icon" aria-hidden="true">{a.icon}</span>
+          <span class="ac-title">{a.label}</span>
+          <span class="ac-blurb">{a.blurb}</span>
+        </button>
+      ))}
+    </div>
+
+    <div aria-live="polite">
+      {ages.map((a) => (
+        <section class="readiness-result" id={`result-${a.id}`} hidden>
+          <h2>✅ {a.title}</h2>
+          <p>{a.body}</p>
+          <p><strong>{a.listHeading}:</strong></p>
+          <ul>{a.points.map((p) => <li>{p}</li>)}</ul>
+          {a.needsReview && <span class="review-flag">Being reviewed against official guidance</span>}
+        </section>
+      ))}
+    </div>
+
+    <div class="next-step">
+      <a class="btn-coral" href="/pack">Next: Build my packing list →</a>
+    </div>
+  </div>
+</Base>
+
+<script>
+  const cards = document.querySelectorAll<HTMLButtonElement>('.age-card');
+  const results = document.querySelectorAll<HTMLElement>('.readiness-result');
+
+  function select(id: string, scroll: boolean) {
+    cards.forEach((c) => {
+      const on = c.dataset.age === id;
+      c.classList.toggle('selected', on);
+      c.setAttribute('aria-pressed', String(on));
+    });
+    results.forEach((r) => (r.hidden = r.id !== `result-${id}`));
+    const shown = document.getElementById(`result-${id}`);
+    if (scroll && shown) shown.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  cards.forEach((c) => c.addEventListener('click', () => select(c.dataset.age!, true)));
+
+  // Arriving from the home form: ?age=<id>
+  const fromForm = new URLSearchParams(location.search).get('age');
+  if (fromForm && document.getElementById(`result-${fromForm}`)) select(fromForm, true);
+</script>
+
+<style>
+  .readiness-intro { background: var(--white); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); margin-bottom: 28px; }
+  .readiness-intro h2 { font-family: 'Lora', serif; font-size: 1.15rem; margin-bottom: 10px; }
+  .readiness-intro p { font-size: 0.9rem; line-height: 1.7; color: var(--muted); }
+
+  .age-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 32px; }
+  .age-card {
+    font: inherit; color: inherit; text-align: left;
+    background: var(--white); border-radius: 18px; padding: 24px 20px;
+    box-shadow: var(--shadow); cursor: pointer; transition: all 0.2s;
+    border: 2.5px solid transparent;
+  }
+  .age-card:hover { border-color: var(--coral); }
+  .age-card.selected { border-color: var(--coral); background: var(--blush); }
+  .ac-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+  .ac-title { display: block; font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; }
+  .ac-blurb { display: block; font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+
+  .readiness-result {
+    background: var(--sage-lt); border-radius: var(--radius);
+    padding: 28px 32px; border-left: 5px solid var(--sage);
+    animation: rise 0.3s ease both;
+  }
+  .readiness-result h2 { font-family: 'Lora', serif; font-size: 1.1rem; color: var(--sage-dk); margin-bottom: 10px; }
+  .readiness-result p { font-size: 0.9rem; line-height: 1.7; margin-bottom: 12px; }
+  .readiness-result ul { padding-left: 18px; }
+  .readiness-result li { font-size: 0.88rem; line-height: 1.75; }
+
+  @media (max-width: 900px) { .age-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) {
+    .age-grid { grid-template-columns: 1fr; }
+    .readiness-result { padding: 22px 20px; }
+  }
+</style>
