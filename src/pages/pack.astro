@@ -1,25 +1,55 @@
 ---
 import Base from '../layouts/Base.astro';
 import packing from '../data/packing.json';
+import ages from '../data/ages.json';
+import { LENGTHS, MODES, resolveItem, type PackItem } from '../lib/trip';
 
-const total = packing.reduce((n, s) => n + s.items.length, 0);
+// Server render shows the full list (no trip known yet); the script below tailors it in the browser.
 const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Helpful', you: 'You 💚' };
 ---
 
 <Base title="Your packing list">
   <div class="inner">
     <p class="page-eyebrow">Packing for a baby</p>
-    <h1 class="page-title">Your complete packing list</h1>
+    <h1 class="page-title">Your packing list</h1>
     <p class="page-sub">
-      Don't know where to start? Neither did any parent before you. Check off as you go — we've prioritised by what
-      matters most. Your ticks are saved on this device.
+      Don't know where to start? Neither did any parent before you. Tell us about your trip and we'll tailor the
+      list — then check off as you go. Everything is saved on this device.
     </p>
+
+    <form class="trip-panel" id="trip-form" aria-labelledby="trip-heading">
+      <h2 id="trip-heading">Your trip</h2>
+      <div class="trip-fields">
+        <div class="form-field">
+          <label for="trip-age">Baby's age</label>
+          <select id="trip-age" name="age">
+            <option value="">Any age</option>
+            {ages.map((a) => <option value={a.id}>{a.label}</option>)}
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="trip-mode">Travel type</label>
+          <select id="trip-mode" name="mode">
+            <option value="">Any</option>
+            {Object.entries(MODES).map(([v, l]) => <option value={v}>{l}</option>)}
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="trip-length">Trip length</label>
+          <select id="trip-length" name="length">
+            <option value="">Any</option>
+            {Object.entries(LENGTHS).map(([v, l]) => <option value={v}>{l}</option>)}
+          </select>
+        </div>
+      </div>
+      <p class="trip-status" id="trip-status" aria-live="polite">Showing the full list. Pick your trip details to tailor it.</p>
+    </form>
 
     <div class="progress-wrap">
       <div class="progress-top">
         <div>
           <div class="progress-pct" id="pct">0%</div>
-          <div class="progress-desc" id="pct-desc" aria-live="polite">0 of {total} items packed</div>
+          <div class="progress-desc" id="pct-desc">0 items packed</div>
         </div>
         <div class="progress-cheer">Keep going — you're doing great 💚</div>
       </div>
@@ -29,24 +59,27 @@ const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Hel
     </div>
 
     {packing.map((section) => (
-      <section class="checklist-section" aria-labelledby={`sec-${section.id}`}>
+      <section class="checklist-section" data-section={section.id} aria-labelledby={`sec-${section.id}`}>
         <div class="cs-header">
           <span class="cs-icon" aria-hidden="true">{section.icon}</span>
           <h2 id={`sec-${section.id}`}>{section.title}</h2>
           <span class={`pill pill-${section.badge} cs-badge`}>{section.badgeLabel}</span>
         </div>
         <div class="cs-items">
-          {section.items.map((item) => (
-            <label class="ci">
-              <input type="checkbox" data-item={item.id} />
-              <span class="ci-text">
-                <strong>{item.name}</strong>
-                <span>{item.note}</span>
-                {item.needsReview && <span class="review-flag">Being reviewed</span>}
-              </span>
-              <span class={`pill pill-${item.priority}`}>{pillLabel[item.priority]}</span>
-            </label>
-          ))}
+          {(section.items as PackItem[]).map((raw) => {
+            const item = resolveItem(raw, {})!;
+            return (
+              <label class="ci" data-row={item.id}>
+                <input type="checkbox" data-item={item.id} />
+                <span class="ci-text">
+                  <strong class="ci-name">{item.name}</strong>
+                  <span class="ci-note">{item.note}</span>
+                  <span class="review-flag" hidden={!item.needsReview}>Being reviewed</span>
+                </span>
+                <span class={`pill pill-${item.priority} ci-pill`}>{pillLabel[item.priority]}</span>
+              </label>
+            );
+          })}
         </div>
       </section>
     ))}
@@ -58,38 +91,109 @@ const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Hel
 </Base>
 
 <script>
-  const KEY = 'tinytrip:pack:v1';
+  import packing from '../data/packing.json';
+  import ages from '../data/ages.json';
+  import { saveTrip, tripFromUrl, resolveItem, LENGTHS, MODES, type PackItem, type Trip } from '../lib/trip';
+
+  const PACK_KEY = 'tinytrip:pack:v1';
+  const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Helpful', you: 'You 💚' };
+  const ageLabel = (id?: string) => ages.find((a) => a.id === id)?.label;
+
+  const form = document.getElementById('trip-form') as HTMLFormElement;
+  const fields = {
+    age: document.getElementById('trip-age') as HTMLSelectElement,
+    mode: document.getElementById('trip-mode') as HTMLSelectElement,
+    length: document.getElementById('trip-length') as HTMLSelectElement,
+  };
   const boxes = Array.from(document.querySelectorAll<HTMLInputElement>('.ci input[type="checkbox"]'));
 
-  function load(): string[] {
-    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch { return []; }
+  function loadTicks(): Set<string> {
+    try { return new Set(JSON.parse(localStorage.getItem(PACK_KEY) || '[]')); } catch { return new Set(); }
   }
-  function save() {
-    try { localStorage.setItem(KEY, JSON.stringify(boxes.filter((b) => b.checked).map((b) => b.dataset.item))); } catch {}
+  function saveTicks() {
+    // Ticks on hidden items are kept, so switching trip type back doesn't lose them.
+    try { localStorage.setItem(PACK_KEY, JSON.stringify(boxes.filter((b) => b.checked).map((b) => b.dataset.item))); } catch {}
   }
-  function render() {
-    const done = boxes.filter((b) => b.checked).length;
-    const pct = Math.round((done / boxes.length) * 100);
+
+  function describe(trip: Trip) {
+    const parts = [ageLabel(trip.age), trip.mode && MODES[trip.mode], trip.length && LENGTHS[trip.length]].filter(Boolean);
+    return parts.length
+      ? `Tailored for: ${parts.join(' · ')}`
+      : 'Showing the full list. Pick your trip details to tailor it.';
+  }
+
+  function applyTrip(trip: Trip) {
+    for (const section of packing) {
+      let visible = 0;
+      for (const raw of section.items as PackItem[]) {
+        const row = document.querySelector<HTMLElement>(`[data-row="${raw.id}"]`)!;
+        const item = resolveItem(raw, trip);
+        row.hidden = !item;
+        if (!item) continue;
+        visible++;
+        row.querySelector('.ci-name')!.textContent = item.name;
+        row.querySelector('.ci-note')!.textContent = item.note;
+        (row.querySelector('.review-flag') as HTMLElement).hidden = !item.needsReview;
+        const pill = row.querySelector('.ci-pill')!;
+        pill.className = `pill pill-${item.priority} ci-pill`;
+        pill.textContent = pillLabel[item.priority];
+      }
+      document.querySelector<HTMLElement>(`[data-section="${section.id}"]`)!.hidden = visible === 0;
+    }
+    document.getElementById('trip-status')!.textContent = describe(trip);
+    renderProgress();
+  }
+
+  function renderProgress() {
+    const shown = boxes.filter((b) => !b.closest<HTMLElement>('.ci')!.hidden);
+    const done = shown.filter((b) => b.checked).length;
+    const pct = shown.length ? Math.round((done / shown.length) * 100) : 0;
     boxes.forEach((b) => b.closest('.ci')!.classList.toggle('checked', b.checked));
     document.getElementById('pct')!.textContent = `${pct}%`;
-    document.getElementById('pct-desc')!.textContent = `${done} of ${boxes.length} items packed`;
+    document.getElementById('pct-desc')!.textContent = `${done} of ${shown.length} items packed`;
     document.getElementById('prog-fill')!.style.width = `${pct}%`;
     document.getElementById('prog-bar')!.setAttribute('aria-valuenow', String(pct));
   }
 
-  const saved = new Set(load());
+  // Trip: URL params win (e.g. linked from the readiness page), else what was saved.
+  const trip = tripFromUrl(ages.map((a) => a.id));
+  fields.age.value = trip.age ?? '';
+  fields.mode.value = trip.mode ?? '';
+  fields.length.value = trip.length ?? '';
+
+  form.addEventListener('change', () => {
+    const next: Trip = {
+      age: fields.age.value || undefined,
+      mode: fields.mode.value || undefined,
+      length: fields.length.value || undefined,
+    };
+    saveTrip(next);
+    applyTrip(next);
+  });
+  form.addEventListener('submit', (e) => e.preventDefault());
+
+  const ticks = loadTicks();
   boxes.forEach((b) => {
-    b.checked = saved.has(b.dataset.item!);
-    b.addEventListener('change', () => { save(); render(); });
+    b.checked = ticks.has(b.dataset.item!);
+    b.addEventListener('change', () => { saveTicks(); renderProgress(); });
   });
   document.getElementById('reset')!.addEventListener('click', () => {
     boxes.forEach((b) => (b.checked = false));
-    save(); render();
+    saveTicks(); renderProgress();
   });
-  render();
+
+  applyTrip(trip);
 </script>
 
 <style>
+  .trip-panel {
+    background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: 24px 28px 18px; margin-bottom: 28px; border-top: 4px solid var(--coral);
+  }
+  .trip-panel h2 { font-family: 'Lora', serif; font-size: 1.1rem; margin-bottom: 16px; }
+  .trip-fields { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 12px; }
+  .trip-status { font-size: 0.85rem; color: var(--sage-dk); font-weight: 600; }
+
   .progress-wrap { margin-bottom: 28px; }
   .progress-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px; }
   .progress-pct { font-family: 'Lora', serif; font-size: 1.6rem; font-weight: 700; color: var(--coral-dk); }
@@ -99,6 +203,7 @@ const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Hel
   .prog-fill { background: linear-gradient(90deg, var(--coral), var(--gold)); height: 8px; border-radius: 100px; transition: width 0.4s ease; width: 0%; }
 
   .checklist-section { margin-bottom: 24px; }
+  .checklist-section[hidden], .ci[hidden] { display: none; }
   .cs-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
   .cs-icon { font-size: 1.4rem; }
   .cs-header h2 { font-weight: 700; font-size: 1rem; }
@@ -113,12 +218,15 @@ const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Hel
   .ci:hover { background: var(--warm); }
   .ci input { width: 18px; height: 18px; accent-color: var(--coral-dk); margin-top: 2px; flex-shrink: 0; cursor: pointer; }
   .ci-text { flex: 1; }
-  .ci-text strong { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; }
-  .ci-text > span:not(.review-flag) { display: block; font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
-  .ci.checked .ci-text strong { text-decoration: line-through; opacity: 0.45; }
-  .ci.checked .ci-text > span { opacity: 0.4; }
+  .ci-name { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; }
+  .ci-note { display: block; font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+  .review-flag[hidden] { display: none; }
+  .ci.checked .ci-name { text-decoration: line-through; opacity: 0.45; }
+  .ci.checked .ci-note { opacity: 0.4; }
 
+  @media (max-width: 700px) { .trip-fields { grid-template-columns: 1fr; gap: 0; } }
   @media (max-width: 520px) {
+    .trip-panel { padding: 20px 16px 14px; }
     .ci { padding: 14px 14px; gap: 10px; }
     .progress-cheer { display: none; }
   }

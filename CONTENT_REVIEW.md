@@ -23,7 +23,16 @@ When a claim is verified: add the source, fix the wording if needed, and set `ne
 - [ ] "Ear thermometers are fastest" (NHS guidance on thermometer types for under-1s)
 - [ ] Oral rehydration sachets — age suitability
 - [ ] Familiar sleep sack/swaddle (safe-sleep guidance on swaddling once rolling)
-- [ ] "Most airlines gate-check strollers for free"
+- [ ] "Most airlines let you take the stroller to the gate" (flight variant)
+- [ ] Feed / drink during take-off and landing helps with ear pressure (flight item, and toddler variant)
+- [ ] Swaddle: "stop once baby shows signs of rolling" (0–3 month variant)
+- [ ] Sun: "shade is the best protection for young babies"; sun cream age guidance
+- [ ] Road trips: "stop at least every 2 hours" out of the car seat
+- [ ] Airline infant rules item (lap fares, bassinets, minimum age vary by airline)
+- [ ] Paracetamol variant for 0–3 months: "shouldn't be given medicine without advice"
+
+## Is baby ready? — flight note
+- [ ] Newborn + flight: "talk to your GP or health visitor first; many airlines have a minimum age"
 
 ## Guides (`src/data/guides.json`)
 - [ ] Ear pressure: feed during take-off and landing

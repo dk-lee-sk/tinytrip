@@ -12,6 +12,8 @@ import ages from '../data/ages.json';
       preparation.” Tap your baby's age to see what to expect.
     </p>
 
+    <p class="trip-summary" id="trip-summary" hidden></p>
+
     <div class="readiness-intro">
       <h2>💚 First, a deep breath.</h2>
       <p>
@@ -38,20 +40,36 @@ import ages from '../data/ages.json';
           <p>{a.body}</p>
           <p><strong>{a.listHeading}:</strong></p>
           <ul>{a.points.map((p) => <li>{p}</li>)}</ul>
+          {a.flightNote && <p class="flight-note" data-flight-note hidden>✈️ {a.flightNote}</p>}
           {a.needsReview && <span class="review-flag">Being reviewed against official guidance</span>}
         </section>
       ))}
     </div>
 
     <div class="next-step">
-      <a class="btn-coral" href="/pack">Next: Build my packing list →</a>
+      <a class="btn-coral" href="/pack" id="next-pack">Next: Build my packing list →</a>
     </div>
   </div>
 </Base>
 
 <script>
+  import ages from '../data/ages.json';
+  import { saveTrip, tripFromUrl, LENGTHS, MODES } from '../lib/trip';
+
   const cards = document.querySelectorAll<HTMLButtonElement>('.age-card');
   const results = document.querySelectorAll<HTMLElement>('.readiness-result');
+
+  // Arriving from the home form (?age=&length=&mode=) saves the trip; otherwise use what was saved.
+  const trip = tripFromUrl(ages.map((a) => a.id));
+
+  function showSummary() {
+    const el = document.getElementById('trip-summary')!;
+    const age = ages.find((a) => a.id === trip.age)?.label;
+    const parts = [age, trip.mode && MODES[trip.mode], trip.length && LENGTHS[trip.length]].filter(Boolean);
+    el.hidden = parts.length === 0;
+    el.textContent = `Your trip: ${parts.join(' · ')}`;
+    document.querySelectorAll<HTMLElement>('[data-flight-note]').forEach((n) => (n.hidden = trip.mode !== 'flight'));
+  }
 
   function select(id: string, scroll: boolean) {
     cards.forEach((c) => {
@@ -64,14 +82,33 @@ import ages from '../data/ages.json';
     if (scroll && shown) shown.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  cards.forEach((c) => c.addEventListener('click', () => select(c.dataset.age!, true)));
+  cards.forEach((c) =>
+    c.addEventListener('click', () => {
+      // Picking an age here updates the saved trip, so the packing list follows.
+      trip.age = c.dataset.age!;
+      saveTrip(trip);
+      select(trip.age, true);
+      showSummary();
+    }),
+  );
 
-  // Arriving from the home form: ?age=<id>
-  const fromForm = new URLSearchParams(location.search).get('age');
-  if (fromForm && document.getElementById(`result-${fromForm}`)) select(fromForm, true);
+  showSummary();
+  if (trip.age && document.getElementById(`result-${trip.age}`)) {
+    select(trip.age, new URLSearchParams(location.search).has('age'));
+  }
 </script>
 
 <style>
+  .trip-summary {
+    display: inline-block; margin: -16px 0 24px;
+    background: var(--blush); color: var(--coral-dk);
+    border-radius: 100px; padding: 6px 16px; font-size: 0.85rem; font-weight: 700;
+  }
+  .trip-summary[hidden], .flight-note[hidden] { display: none; }
+  .flight-note {
+    background: var(--white); border-radius: 12px; padding: 12px 14px; margin-top: 14px;
+    font-size: 0.86rem; line-height: 1.6; border-left: 3px solid var(--coral);
+  }
   .readiness-intro { background: var(--white); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); margin-bottom: 28px; }
   .readiness-intro h2 { font-family: 'Lora', serif; font-size: 1.15rem; margin-bottom: 10px; }
   .readiness-intro p { font-size: 0.9rem; line-height: 1.7; color: var(--muted); }

@@ -97,6 +97,20 @@ const promises = [
   </section>
 </Base>
 
+<script>
+  import { loadTrip } from '../lib/trip';
+
+  // Coming back? Pre-fill the form with the trip saved last time.
+  const trip = loadTrip();
+  const set = (id: string, v?: string) => {
+    const el = document.getElementById(id) as HTMLSelectElement | null;
+    if (el && v && [...el.options].some((o) => o.value === v)) el.value = v;
+  };
+  set('home-age', trip.age);
+  set('home-length', trip.length);
+  set('home-mode', trip.mode);
+</script>
+
 <style>
   .hero {
     background: linear-gradient(160deg, #FDF0EC 0%, #EAF2EC 100%);
