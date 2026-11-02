@@ -84,8 +84,12 @@ const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Hel
       </section>
     ))}
 
-    <div class="next-step">
+    <div class="next-step pack-actions no-print">
+      <button type="button" class="btn-ghost" id="share">💌 Share with my partner</button>
+      <button type="button" class="btn-ghost" id="print">🖨️ Print</button>
       <button type="button" class="btn-ghost" id="reset">Clear all ticks</button>
+      <p class="trip-status" id="share-status" role="status"></p>
+      <p><a class="btn-coral" href="/plan">Next: Your countdown →</a></p>
     </div>
   </div>
 </Base>
@@ -93,9 +97,10 @@ const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Hel
 <script>
   import packing from '../data/packing.json';
   import ages from '../data/ages.json';
-  import { saveTrip, tripFromUrl, resolveItem, LENGTHS, MODES, type PackItem, type Trip } from '../lib/trip';
-
-  const PACK_KEY = 'tinytrip:pack:v1';
+  import {
+    saveTrip, tripFromUrl, resolveItem, shareLink, shareOrCopy,
+    PACK_KEY, LENGTHS, MODES, type PackItem, type Trip,
+  } from '../lib/trip';
   const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Helpful', you: 'You 💚' };
   const ageLabel = (id?: string) => ages.find((a) => a.id === id)?.label;
 
@@ -156,7 +161,7 @@ const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Hel
   }
 
   // Trip: URL params win (e.g. linked from the readiness page), else what was saved.
-  const trip = tripFromUrl(ages.map((a) => a.id));
+  let trip = tripFromUrl(ages.map((a) => a.id));
   fields.age.value = trip.age ?? '';
   fields.mode.value = trip.mode ?? '';
   fields.length.value = trip.length ?? '';
@@ -167,8 +172,9 @@ const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Hel
       mode: fields.mode.value || undefined,
       length: fields.length.value || undefined,
     };
-    saveTrip(next);
-    applyTrip(next);
+    trip = { ...trip, ...next };
+    saveTrip(trip);
+    applyTrip(trip);
   });
   form.addEventListener('submit', (e) => e.preventDefault());
 
@@ -182,25 +188,24 @@ const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Hel
     saveTicks(); renderProgress();
   });
 
+  document.getElementById('share')!.addEventListener('click', async () => {
+    const result = await shareOrCopy(shareLink('/pack', trip), 'Our TinyTrip packing list');
+    document.getElementById('share-status')!.textContent =
+      result === 'copied' ? "Link copied. It opens this list, with everything you've ticked, on their phone."
+      : result === 'failed' ? "Couldn't share from this browser. Try copying the page address instead." : '';
+  });
+  document.getElementById('print')!.addEventListener('click', () => window.print());
+
   applyTrip(trip);
 </script>
 
 <style>
-  .trip-panel {
-    background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
-    padding: 24px 28px 18px; margin-bottom: 28px; border-top: 4px solid var(--coral);
-  }
-  .trip-panel h2 { font-family: 'Lora', serif; font-size: 1.1rem; margin-bottom: 16px; }
-  .trip-fields { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 12px; }
-  .trip-status { font-size: 0.85rem; color: var(--sage-dk); font-weight: 600; }
 
   .progress-wrap { margin-bottom: 28px; }
   .progress-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px; }
   .progress-pct { font-family: 'Lora', serif; font-size: 1.6rem; font-weight: 700; color: var(--coral-dk); }
   .progress-desc, .progress-cheer { font-size: 0.82rem; color: var(--muted); }
   .progress-cheer { text-align: right; }
-  .prog-bar { background: #E8E2DC; border-radius: 100px; height: 8px; }
-  .prog-fill { background: linear-gradient(90deg, var(--coral), var(--gold)); height: 8px; border-radius: 100px; transition: width 0.4s ease; width: 0%; }
 
   .checklist-section { margin-bottom: 24px; }
   .checklist-section[hidden], .ci[hidden] { display: none; }
@@ -221,12 +226,19 @@ const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Hel
   .ci-name { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; }
   .ci-note { display: block; font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
   .review-flag[hidden] { display: none; }
+  .pack-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .pack-actions .btn-ghost { padding: 10px 18px; font-size: 0.9rem; }
+  .pack-actions p { flex-basis: 100%; }
+  .pack-actions p:last-child { margin-top: 12px; }
+  @media print {
+    .cs-items { box-shadow: none; border: 1px solid #ccc; }
+    .ci { padding: 6px 10px; }
+    .progress-cheer { display: none; }
+  }
   .ci.checked .ci-name { text-decoration: line-through; opacity: 0.45; }
   .ci.checked .ci-note { opacity: 0.4; }
 
-  @media (max-width: 700px) { .trip-fields { grid-template-columns: 1fr; gap: 0; } }
   @media (max-width: 520px) {
-    .trip-panel { padding: 20px 16px 14px; }
     .ci { padding: 14px 14px; gap: 10px; }
     .progress-cheer { display: none; }
   }

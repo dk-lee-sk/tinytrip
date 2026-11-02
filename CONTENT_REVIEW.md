@@ -50,3 +50,15 @@ When a claim is verified: add the source, fix the wording if needed, and set `ne
 ## Destinations (`src/data/destinations.json`)
 - [ ] All tags (e.g. "World-class hospitals", "Nursing rooms common") need a source or should be reworded as
       parent-reported. Fabricated 0–100 scores were removed; decide on a credible rating method first.
+
+## Countdown (`src/data/countdown.json`)
+- [ ] Insurance: "Some policies have a minimum age or only cover named travellers"
+
+## Questions to ask (`src/data/ask.json`)
+- [ ] Airline seats: "Some rows can't take an infant, for oxygen-mask reasons"
+- [ ] Airline milk: "Allowances for baby food often differ from the usual liquids limit"
+- [ ] Car hire: "Staff often aren't allowed to fit seats"
+
+## Travel-day planner (`src/pages/travel-day.astro`)
+- [ ] Take-off / landing: "Sucking and swallowing can help little ears" (same claim as the flying guide)
+- Feed times come from the parent's own interval; the page doesn't recommend one.

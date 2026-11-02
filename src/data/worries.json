@@ -1,0 +1,82 @@
+[
+  {
+    "id": "too-young",
+    "icon": "🐣",
+    "label": "Is my baby too young?",
+    "reassure": "There's no single 'right' age. What matters is what suits your baby and the kind of trip you have in mind. Start with what fits their age now.",
+    "links": [
+      { "href": "/ready", "label": "Is baby ready? Age by age" },
+      { "href": "/plan", "label": "Start your countdown" }
+    ]
+  },
+  {
+    "id": "crying",
+    "icon": "😭",
+    "label": "Crying on the plane or train",
+    "reassure": "Babies cry, and crew and fellow passengers have seen it many times. Having a few things to try, in order, makes it feel much more manageable.",
+    "links": [
+      { "href": "/meltdown", "label": "The calm meltdown playbook" },
+      { "href": "/guides#flying", "label": "Flying with a baby: what to expect" },
+      { "href": "/travel-day", "label": "Plan the travel day" }
+    ]
+  },
+  {
+    "id": "sleep",
+    "icon": "😴",
+    "label": "Messing up their sleep",
+    "reassure": "A few wobbly nights away from home are normal, not a sign you got it wrong. Protecting the important naps and keeping bedtime familiar helps.",
+    "links": [
+      { "href": "/sleep", "label": "Sleep and time zones" },
+      { "href": "/travel-day", "label": "Line up naps with the journey" }
+    ]
+  },
+  {
+    "id": "forgetting",
+    "icon": "🧳",
+    "label": "Forgetting something important",
+    "reassure": "Most things can be bought where you're going. The few that can't, like documents and medicines, are at the top of your list.",
+    "links": [
+      { "href": "/pack", "label": "Your tailored packing list" },
+      { "href": "/plan", "label": "Your week-by-week countdown" }
+    ]
+  },
+  {
+    "id": "feeding",
+    "icon": "🍼",
+    "label": "Feeding on the go",
+    "reassure": "Breast, bottle or snacks: a little planning about when and where the feeds will happen makes them calmer, and you don't need to be perfect.",
+    "links": [
+      { "href": "/travel-day", "label": "See where feeds fall on travel day" },
+      { "href": "/ask#airline", "label": "Ask the airline about milk and baby food" }
+    ]
+  },
+  {
+    "id": "ill",
+    "icon": "🤒",
+    "label": "Baby getting ill away from home",
+    "reassure": "It's one of the most common worries. Insurance that covers baby, a small health kit and a chat with your GP or health visitor before you go all help you feel ready.",
+    "links": [
+      { "href": "/pack#sec-health", "label": "The health kit on your list" },
+      { "href": "/plan", "label": "When to sort insurance" }
+    ]
+  },
+  {
+    "id": "judged",
+    "icon": "👀",
+    "label": "Being judged by strangers",
+    "reassure": "Most people are kinder than the stares suggest. Your job is your baby, not the audience. You're doing better than you think.",
+    "links": [
+      { "href": "/meltdown", "label": "What to do in the moment" }
+    ]
+  },
+  {
+    "id": "booking",
+    "icon": "🏨",
+    "label": "Booking the wrong thing",
+    "reassure": "You don't need to know every rule, just the right questions. Ask before you pay and get the answers in writing.",
+    "links": [
+      { "href": "/ask", "label": "Questions to ask before you book" },
+      { "href": "/destinations", "label": "Ideas for an easy first trip" }
+    ]
+  }
+]

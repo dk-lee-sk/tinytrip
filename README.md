@@ -20,11 +20,11 @@ prototype is `My Drive/TinyTrip/tinytrip-v2.html`.
 
 ```text
 src/
-  data/        Content as JSON (ages, packing, guides, destinations, sleep, meltdown).
+  data/        Content as JSON (ages, packing, countdown, ask, worries, guides, destinations, sleep, meltdown).
                Stepping stone to Supabase — edit content here, not in the pages.
   layouts/     Base.astro: <head>, nav, footer with the "not medical advice" note
-  pages/       One file per route: / /ready /pack /destinations /guides /sleep /meltdown
-  lib/         trip.ts: saved trip (age, mode, length) and packing-list rules
+  pages/       One file per route: / /ready /plan /pack /ask /travel-day /sleep /meltdown /destinations /guides /thanks
+  lib/         trip.ts: saved trip (age, mode, length, date, time zones, bedtime), share links, packing-list rules
   styles/      global.css: colour tokens and shared components
 CONTENT_REVIEW.md  Health/safety claims still to verify before launch
 ```
@@ -45,3 +45,12 @@ Items in `src/data/packing.json` can carry:
 
 The trip is saved in the browser (`tinytrip:trip:v1`) from the home form, the readiness page or the trip panel
 on the packing list.
+
+## Countdown, sharing and feedback
+
+- **Countdown** (`/plan`): each task in `src/data/countdown.json` has `days` (how many days before travel to do
+  it), and an optional `show.modes` and `link`. The page can export the open tasks as a calendar file (.ics).
+- **Share links**: `shareLink()` in `trip.ts` puts the trip in the URL (`?age=&mode=&length=&date=&from=&to=&bed=`)
+  plus ticked items (`packed=`, `done=`). Opening the link saves the trip and adds those ticks on the new device.
+- **Feedback box**: on every page (turn off with `<Base feedback={false}>`). It's a Netlify Form called
+  `feedback`. Submissions appear in the Netlify dashboard under Forms once form detection is enabled for the site.

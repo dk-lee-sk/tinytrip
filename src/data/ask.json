@@ -1,0 +1,66 @@
+[
+  {
+    "id": "airline",
+    "icon": "✈️",
+    "title": "The airline",
+    "intro": "Ask before you pay, or call after booking. Rules differ between airlines and even between routes.",
+    "modes": ["flight"],
+    "questions": [
+      { "id": "air-fare", "q": "What does a ticket cost for a baby of this age, and is it a lap seat or their own seat?", "why": "Infant fares and age cut-offs vary." },
+      { "id": "air-bassinet", "q": "Do you have bassinets (sky cots) on this flight? How do I request one, and what are the weight and size limits?", "why": "They're limited and usually first come, first served." },
+      { "id": "air-seats", "q": "Which seats can we pick with a baby? Can we sit together at no extra cost?", "why": "Some rows can't take an infant, for oxygen-mask reasons.", "needsReview": true },
+      { "id": "air-gear", "q": "Can we take the stroller to the aircraft door? Do the car seat and travel cot travel free, and do they count against our allowance?", "why": "Gives you a plan for the bulky gear." },
+      { "id": "air-cabin-seat", "q": "Can we use our own car seat on board? Which models or labels do you accept?", "why": "Only if you've bought baby their own seat." },
+      { "id": "air-milk", "q": "How much breast milk, formula, baby food and water can we bring through security and on board?", "why": "Allowances for baby food often differ from the usual liquids limit.", "needsReview": true },
+      { "id": "air-baby-bag", "q": "Is there an extra cabin bag allowance for the baby?", "why": "A dedicated nappy bag makes the flight easier." },
+      { "id": "air-boarding", "q": "Do families get to board early?", "why": "Extra time to settle in and stow the gear." },
+      { "id": "air-change", "q": "Is there a changing table on this aircraft?", "why": "Not every plane has one, especially smaller ones." }
+    ]
+  },
+  {
+    "id": "train",
+    "icon": "🚂",
+    "title": "The train company",
+    "intro": "Most of these you can ask on the booking website's help chat or at the ticket desk.",
+    "modes": ["train"],
+    "questions": [
+      { "id": "train-fare", "q": "Does the baby need a ticket, and can we reserve a seat for them?", "why": "A reserved seat gives you room to spread out." },
+      { "id": "train-table", "q": "Can we book seats around a table, or near the doors?", "why": "Tables are good for feeds; being near the doors makes quick exits easier." },
+      { "id": "train-stroller", "q": "Where can we keep a stroller on board? Does it need to be folded?", "why": "Space can be tight on busy services." },
+      { "id": "train-toilet", "q": "Which carriage has the baby-changing toilet?", "why": "Then you can book seats nearby." },
+      { "id": "train-assist", "q": "Is there help with luggage at the stations, and do we need to book it?", "why": "Carrying a baby and bags up and down platforms is hard on your own." },
+      { "id": "train-family", "q": "Is there a family area or a quiet coach we should avoid?", "why": "Helps everyone relax." }
+    ]
+  },
+  {
+    "id": "stay",
+    "icon": "🏨",
+    "title": "The hotel or holiday rental",
+    "intro": "A quick email before booking. Ask them to confirm in writing, so the cot is there when you arrive.",
+    "questions": [
+      { "id": "stay-cot", "q": "Do you have a cot or travel cot? Is it free, and can you confirm it's reserved for our dates?", "why": "Some places only have a few, and some offer futons instead of cots." },
+      { "id": "stay-bedding", "q": "Does the cot come with a fitted sheet and a firm mattress?", "why": "So you know whether to bring your own." },
+      { "id": "stay-dark", "q": "Can the bedroom be made fully dark (blackout curtains or blinds)?", "why": "Naps in a bright room are hard." },
+      { "id": "stay-space", "q": "Is there space for the cot away from the door and window? Is there a separate area where we can sit after baby's bedtime?", "why": "A suite or a room with a separate area means you're not sitting in the dark at 7pm." },
+      { "id": "stay-fridge", "q": "Is there a fridge in the room, and a kettle or microwave we can use?", "why": "For milk, bottles and baby food." },
+      { "id": "stay-bath", "q": "Is there a bath, or a baby bath we can borrow?", "why": "Bathtime can keep the bedtime routine familiar." },
+      { "id": "stay-chair", "q": "Do you have high chairs in the restaurant? What time does dinner start?", "why": "An early dinner fits around baby's bedtime." },
+      { "id": "stay-access", "q": "Is there a lift, and step-free access from the car park or station?", "why": "Stairs with a stroller and bags are hard work." },
+      { "id": "stay-laundry", "q": "Is there a washing machine or a laundry service?", "why": "You can pack lighter." },
+      { "id": "stay-near", "q": "How far is the nearest pharmacy and supermarket?", "why": "For nappies, formula and anything you forgot." }
+    ]
+  },
+  {
+    "id": "car",
+    "icon": "🚗",
+    "title": "Car hire, taxis and transfers",
+    "intro": "If you won't bring your own car seat, ask these before you book any car at the destination.",
+    "questions": [
+      { "id": "car-seat-have", "q": "Can you provide a car seat for a baby of this age and weight? Is it guaranteed or 'on request'?", "why": "'On request' sometimes means it isn't there when you arrive." },
+      { "id": "car-seat-type", "q": "What type and model is the seat, and is it rear-facing?", "why": "You can look up how it fits before you go." },
+      { "id": "car-seat-install", "q": "Will it be fitted for us, or do we fit it ourselves? Can we see the instructions?", "why": "Staff often aren't allowed to fit seats, so be ready to do it yourself.", "needsReview": true },
+      { "id": "car-seat-cost", "q": "How much does the car seat cost per day? Is there a cap?", "why": "On a long trip, bringing your own can work out cheaper." },
+      { "id": "car-transfer", "q": "For airport transfers: will the car have the right seat already fitted when it collects us?", "why": "So you're not stuck at arrivals with a tired baby." }
+    ]
+  }
+]

@@ -1,0 +1,179 @@
+---
+import Base from '../layouts/Base.astro';
+import groups from '../data/ask.json';
+---
+
+<Base title="Questions to ask before you book" description="Copy-ready questions for the airline, hotel, train company and car hire when travelling with a baby.">
+  <div class="inner narrow">
+    <p class="page-eyebrow">Before you book</p>
+    <h1 class="page-title">Questions to ask before you book</h1>
+    <p class="page-sub">
+      You don't need to know the rules. You just need to ask the right questions. Copy these into an email or a
+      chat, or keep the page open on the phone. Tick each one off once you've got an answer.
+    </p>
+
+    <p class="trip-status" id="ask-status" aria-live="polite"></p>
+
+    <div class="ask-groups">
+      {groups.map((g) => (
+        <details class="ask-group" id={g.id} data-modes={(g.modes ?? []).join(',')} open>
+          <summary>
+            <span class="ag-icon" aria-hidden="true">{g.icon}</span>
+            <span class="ag-title">{g.title}</span>
+            <span class="ag-count" data-count={g.id}></span>
+            <span class="guide-arrow" aria-hidden="true">›</span>
+          </summary>
+          <div class="ag-body">
+            <p class="ag-intro">{g.intro}</p>
+            <ul class="ask-list">
+              {g.questions.map((q) => (
+                <li>
+                  <label class="ask-q">
+                    <input type="checkbox" data-q={q.id} data-group={g.id} />
+                    <span>
+                      <span class="q-text">{q.q}</span>
+                      <span class="q-why">{q.why}</span>
+                      {q.needsReview && <span class="review-flag">Being reviewed</span>}
+                    </span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+            <div class="ag-actions no-print">
+              <button type="button" class="btn-ghost" data-copy={g.id}>📋 Copy questions</button>
+              <a class="btn-ghost" data-mail={g.id} href="mailto:">✉️ Write an email</a>
+              <span class="ag-msg" role="status" data-msg={g.id}></span>
+            </div>
+          </div>
+        </details>
+      ))}
+    </div>
+
+    <div class="calm-box">
+      <h2>💚 Feeling awkward about asking?</h2>
+      <p>
+        Don't be. Airlines, hotels and rental firms get these questions every day, and a good one will be glad you
+        asked. If an answer is vague, that tells you something useful too.
+      </p>
+    </div>
+
+    <div class="next-step no-print">
+      <a class="btn-coral" href="/plan">Back to your countdown →</a>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import groups from '../data/ask.json';
+  import ages from '../data/ages.json';
+  import { tripFromUrl, loadSet, saveSet, copyText, MODES, ASK_KEY } from '../lib/trip';
+
+  const trip = tripFromUrl(ages.map((a) => a.id));
+  const asked = loadSet(ASK_KEY);
+  const ageLabel = ages.find((a) => a.id === trip.age)?.label;
+
+  // Open the groups that fit this trip; tuck away the others (e.g. train questions on a flight trip).
+  if (trip.mode) {
+    document.querySelectorAll<HTMLDetailsElement>('.ask-group').forEach((d) => {
+      const modes = d.dataset.modes ? d.dataset.modes.split(',') : [];
+      d.open = modes.length === 0 || modes.includes(trip.mode!);
+    });
+    document.getElementById('ask-status')!.textContent =
+      `Showing what fits your trip (${MODES[trip.mode]}). The other sections are folded away below.`;
+  }
+  // Coming from a link like /ask#stay: make sure that section is open.
+  const target = location.hash && document.querySelector<HTMLDetailsElement>(`details${CSS.escape(location.hash)}`);
+  if (target) target.open = true;
+
+  const boxes = [...document.querySelectorAll<HTMLInputElement>('.ask-q input')];
+  function counts() {
+    for (const g of groups) {
+      const mine = boxes.filter((b) => b.dataset.group === g.id);
+      const n = mine.filter((b) => b.checked).length;
+      document.querySelector(`[data-count="${g.id}"]`)!.textContent = n ? `${n}/${mine.length} answered` : '';
+    }
+  }
+  boxes.forEach((b) => {
+    b.checked = asked.has(b.dataset.q!);
+    b.addEventListener('change', () => {
+      b.checked ? asked.add(b.dataset.q!) : asked.delete(b.dataset.q!);
+      saveSet(ASK_KEY, asked);
+      counts();
+    });
+  });
+  counts();
+
+  // A short, polite message they can paste anywhere. Only unanswered questions, or all if every one is ticked.
+  function message(id: string) {
+    const g = groups.find((x) => x.id === id)!;
+    const open = g.questions.filter((q) => !asked.has(q.id));
+    const qs = open.length ? open : g.questions;
+    const when = trip.date
+      ? ` on ${new Date(`${trip.date}T12:00:00`).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}`
+      : '';
+    const baby = ageLabel ? `our baby (${ageLabel.replace(/ \(.*\)/, '')})` : 'our baby';
+    return [
+      'Hello,',
+      '',
+      `We're travelling with ${baby}${when} and have a few questions before we book:`,
+      '',
+      ...qs.map((q, i) => `${i + 1}. ${q.q}`),
+      '',
+      'Thank you very much!',
+    ].join('\n');
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) =>
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.copy!;
+      const ok = (await copyText(message(id))) === 'copied';
+      document.querySelector(`[data-msg="${id}"]`)!.textContent = ok
+        ? 'Copied. Paste it into an email or chat.'
+        : "Couldn't copy here. Try 'Write an email' instead.";
+    }),
+  );
+  document.querySelectorAll<HTMLAnchorElement>('[data-mail]').forEach((a) =>
+    a.addEventListener('click', () => {
+      const subject = encodeURIComponent('Travelling with a baby: a few questions');
+      a.href = `mailto:?subject=${subject}&body=${encodeURIComponent(message(a.dataset.mail!))}`;
+    }),
+  );
+</script>
+
+<style>
+  .trip-status:empty { display: none; }
+  .trip-status { margin: -16px 0 20px; }
+  .ask-groups { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+  .ask-group { background: var(--white); border-radius: 18px; box-shadow: var(--shadow); overflow: hidden; }
+  .ask-group summary {
+    display: flex; align-items: center; gap: 12px; padding: 18px 22px;
+    cursor: pointer; list-style: none;
+  }
+  .ask-group summary::-webkit-details-marker { display: none; }
+  .ag-icon { font-size: 1.5rem; }
+  .ag-title { font-weight: 800; font-size: 1rem; }
+  .ag-count { margin-left: auto; font-size: 0.75rem; font-weight: 700; color: var(--sage-dk); }
+  .guide-arrow { font-size: 1.4rem; color: var(--muted); transition: transform 0.2s; }
+  .ag-count:empty + .guide-arrow { margin-left: auto; }
+  .ask-group[open] .guide-arrow { transform: rotate(90deg); }
+  .ag-body { padding: 0 22px 20px; }
+  .ag-intro { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 10px; }
+  .ask-list { list-style: none; }
+  .ask-list li { border-top: 1px solid #F0EBE5; }
+  .ask-q { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; cursor: pointer; }
+  .ask-q input { width: 18px; height: 18px; accent-color: var(--coral-dk); margin-top: 2px; flex-shrink: 0; cursor: pointer; }
+  .q-text { display: block; font-size: 0.9rem; font-weight: 600; line-height: 1.5; }
+  .q-why { display: block; font-size: 0.8rem; color: var(--muted); line-height: 1.5; margin-top: 2px; }
+  .ask-q input:checked + span .q-text { text-decoration: line-through; opacity: 0.5; }
+  .ag-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 12px; }
+  .ag-actions .btn-ghost { padding: 9px 16px; font-size: 0.85rem; }
+  .ag-msg { font-size: 0.82rem; font-weight: 600; color: var(--sage-dk); }
+
+  @media (max-width: 520px) {
+    .ask-group summary { padding: 16px; }
+    .ag-body { padding: 0 16px 16px; }
+  }
+  @media print {
+    .ask-group { box-shadow: none; border: 1px solid #ccc; }
+  }
+</style>

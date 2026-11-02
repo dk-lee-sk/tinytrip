@@ -44,6 +44,7 @@ import sleep from '../data/sleep.json';
           <p id="sr-summary"></p>
           <ul id="sr-tips"></ul>
           <span class="review-flag">Tips being reviewed against official guidance</span>
+          <p class="sr-next"><a href="/travel-day">Now plan the travel day →</a></p>
         </div>
       </div>
 
@@ -91,9 +92,24 @@ import sleep from '../data/sleep.json';
     return `${h12}:${String(m).padStart(2, '0')}${suffix}`;
   }
 
-  const label = (id) => zones.find((z) => z.id === id).label;
+  const label = (id) => zones.find((z) => z.id === id)?.label ?? id;
   const dateInput = document.getElementById('tz-date');
   dateInput.value = new Date().toISOString().slice(0, 10);
+
+  // Share the saved trip with the rest of the site (see src/lib/trip.ts).
+  const TRIP_KEY = 'tinytrip:trip:v1';
+  let trip = {};
+  try { trip = JSON.parse(localStorage.getItem(TRIP_KEY) || '{}') || {}; } catch {}
+  const p = new URLSearchParams(location.search);
+  for (const k of ['from', 'to', 'date', 'bed']) if (p.get(k)) trip[k] = p.get(k);
+  const pick = (id, v) => {
+    const el = document.getElementById(id);
+    if (v && (el.tagName !== 'SELECT' || [...el.options].some((o) => o.value === v))) el.value = v;
+  };
+  pick('tz-home', trip.from);
+  pick('tz-dest', trip.to);
+  pick('tz-date', trip.date);
+  pick('tz-bed', trip.bed);
 
   document.getElementById('tz-form').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -101,6 +117,9 @@ import sleep from '../data/sleep.json';
     const dest = document.getElementById('tz-dest').value;
     const [bh, bm] = (document.getElementById('tz-bed').value || '19:00').split(':').map(Number);
     const date = dateInput.value ? new Date(`${dateInput.value}T12:00:00Z`) : new Date();
+    trip = { ...trip, from: home, to: dest, bed: document.getElementById('tz-bed').value || '19:00' };
+    if (dateInput.value) trip.date = dateInput.value;
+    try { localStorage.setItem(TRIP_KEY, JSON.stringify(trip)); } catch {}
 
     const diff = offsetMinutes(dest, date) - offsetMinutes(home, date); // + means destination is ahead
     const bedHome = bh * 60 + bm;
@@ -130,6 +149,9 @@ import sleep from '../data/sleep.json';
     ul.replaceChildren(...list.map((t) => Object.assign(document.createElement('li'), { textContent: t })));
     document.getElementById('sleep-result').hidden = false;
   });
+
+  // Coming back with a saved trip: show the plan straight away.
+  if (trip.from && trip.to) document.getElementById('tz-form').requestSubmit();
 </script>
 
 <style>
@@ -140,6 +162,8 @@ import sleep from '../data/sleep.json';
   }
   .sleep-result h3 { font-weight: 700; color: #2F5C80; margin-bottom: 8px; font-size: 0.95rem; }
   .sleep-result p { font-size: 0.88rem; line-height: 1.65; }
+  .sr-next { margin-top: 10px; font-weight: 700; }
+  .sr-next a { color: var(--coral-dk); }
   .sleep-result ul { margin-top: 8px; padding-left: 16px; font-size: 0.85rem; line-height: 1.8; }
   .timeline { list-style: none; margin-top: 8px; }
   .tl-item { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid #F0EBE5; }

@@ -85,6 +85,41 @@ a { color: inherit; }
 .site-footer p { max-width: 720px; margin: 0 auto; }
 .site-footer strong { color: var(--deep); }
 
+/* ── FEEDBACK (every page, above the footer) ── */
+.feedback {
+  max-width: 740px; width: calc(100% - 32px); margin: 8px auto 40px;
+  background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 20px 24px;
+}
+.fb-q { border: none; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.fb-q legend { float: left; font-weight: 800; font-size: 0.95rem; margin-right: 8px; }
+.fb-choice { position: relative; }
+.fb-choice input { position: absolute; opacity: 0; inset: 0; }
+.fb-choice span {
+  display: inline-block; cursor: pointer; font-weight: 700; font-size: 0.88rem;
+  padding: 7px 16px; border-radius: 100px; border: 2px solid var(--peach); color: var(--coral-dk);
+}
+.fb-choice input:checked + span { background: var(--blush); border-color: var(--coral); }
+.fb-choice input:focus-visible + span { outline: 3px solid var(--coral); outline-offset: 2px; }
+.fb-more { display: none; margin-top: 16px; }
+.feedback.open .fb-more { display: block; }
+.fb-more label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; }
+.fb-more label span { font-weight: 400; color: var(--muted); }
+.fb-more textarea, .fb-more input {
+  width: 100%; padding: 10px 14px; margin-bottom: 12px;
+  border: 1.5px solid #D9D1C9; border-radius: 12px; background: var(--warm);
+  font-family: 'Nunito', sans-serif; font-size: 0.92rem; color: var(--deep);
+}
+.fb-more textarea:focus, .fb-more input:focus { border-color: var(--coral); background: var(--white); }
+.fb-note { font-size: 0.78rem; color: var(--muted); margin-bottom: 12px; }
+.fb-more .btn-coral { padding: 10px 22px; font-size: 0.92rem; }
+.fb-more .btn-coral:disabled { opacity: 0.6; cursor: wait; }
+.fb-status { font-size: 0.88rem; font-weight: 700; color: var(--sage-dk); }
+.fb-status:empty { display: none; }
+.fb-status:not(:empty) { margin-top: 10px; }
+.feedback.sent .fb-q, .feedback.sent .fb-more { display: none; }
+.fb-honeypot[hidden] { display: none; }
+
 /* ── BUTTONS ── */
 .btn-coral, .btn-ghost {
   display: inline-block; text-decoration: none; text-align: center;
@@ -152,6 +187,19 @@ a { color: inherit; }
   padding: 2px 10px;
 }
 
+/* ── TRIP PANEL (shared trip details form) ── */
+.trip-panel {
+  background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 24px 28px 18px; margin-bottom: 28px; border-top: 4px solid var(--coral);
+}
+.trip-panel h2 { font-family: 'Lora', serif; font-size: 1.1rem; margin-bottom: 16px; }
+.trip-fields { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 12px; }
+.trip-status { font-size: 0.85rem; color: var(--sage-dk); font-weight: 600; }
+
+/* ── PROGRESS BAR ── */
+.prog-bar { background: #E8E2DC; border-radius: 100px; height: 8px; }
+.prog-fill { background: linear-gradient(90deg, var(--coral), var(--gold)); height: 8px; border-radius: 100px; transition: width 0.4s ease; width: 0%; }
+
 /* ── PILLS ── */
 .pill { font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
 .pill-must { background: #FFE8E8; color: #A93226; }
@@ -159,8 +207,8 @@ a { color: inherit; }
 .pill-nice, .pill-you { background: var(--sage-lt); color: var(--sage-dk); }
 
 /* ── RESPONSIVE ── */
-/* nav has 7 links, so it needs to wrap earlier than the content does */
-@media (max-width: 1180px) {
+/* nav has 10 links, so it moves to its own scrolling row well before the content needs to */
+@media (max-width: 1500px) {
   .site-nav { flex-wrap: wrap; padding: 10px 16px 0; }
   .site-nav ul {
     width: 100%; overflow-x: auto; padding-bottom: 10px;
@@ -172,8 +220,28 @@ a { color: inherit; }
   .inner { padding: 36px 16px; }
   .site-footer { padding: 20px 16px; }
 }
+@media (max-width: 700px) {
+  .trip-fields { grid-template-columns: 1fr; gap: 0; }
+}
 @media (max-width: 520px) {
+  .trip-panel { padding: 20px 16px 14px; }
   .page-title { font-size: 1.6rem; }
   .section-title { font-size: 1.5rem; }
   .form-2col { grid-template-columns: 1fr; gap: 0; }
 }
+
+/* ── PRINT ── */
+.print-only { display: none; }
+@media print {
+  .site-nav, .site-footer, .feedback, .skip-link, .no-print, button { display: none !important; }
+  .print-only { display: block; }
+  body { background: #fff; font-size: 11pt; }
+  main { animation: none; }
+  .inner { padding: 0; max-width: none; }
+  .trip-panel, .panel { box-shadow: none; border: 1px solid #ccc; }
+  a { text-decoration: none; }
+  section, li { break-inside: avoid; }
+}
+
+/* keep anchor targets clear of the sticky nav */
+[id] { scroll-margin-top: 110px; }

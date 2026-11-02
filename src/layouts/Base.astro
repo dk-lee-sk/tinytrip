@@ -4,10 +4,13 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  /** Show the "Was this page helpful?" box (default true) */
+  feedback?: boolean;
 }
 
 const {
   title,
+  feedback = true,
   description = 'A calm, step-by-step guide for first-time parents planning their first trip with a baby.',
 } = Astro.props;
 
@@ -16,11 +19,14 @@ const pageTitle = title ? `${title} · TinyTrip` : 'TinyTrip — Your First Trip
 const links = [
   { href: '/', label: 'Home' },
   { href: '/ready', label: '🍼 Is Baby Ready?' },
+  { href: '/plan', label: '🗓️ My Plan' },
   { href: '/pack', label: '📋 Pack List' },
+  { href: '/ask', label: '❓ Questions to Ask' },
+  { href: '/travel-day', label: '✈️ Travel Day' },
+  { href: '/sleep', label: '😴 Sleep' },
+  { href: '/meltdown', label: '😰 Meltdown Help' },
   { href: '/destinations', label: '🗺️ Destinations' },
   { href: '/guides', label: '📖 Guides' },
-  { href: '/sleep', label: '😴 Sleep & Schedules' },
-  { href: '/meltdown', label: '😰 Meltdown Help' },
 ];
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -74,6 +80,29 @@ const ogImage = new URL('/og.png', Astro.site);
       <slot />
     </main>
 
+    <!-- Netlify Forms picks this up at deploy time (form detection must be on in the Netlify dashboard). -->
+    {feedback && (
+    <form class="feedback" id="feedback" name="feedback" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="feedback" />
+      <input type="hidden" name="page" value={path} />
+      <p class="fb-honeypot" hidden><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+      <fieldset class="fb-q">
+        <legend>Was this page helpful?</legend>
+        <label class="fb-choice"><input type="radio" name="helpful" value="yes" required /> <span>👍 Yes</span></label>
+        <label class="fb-choice"><input type="radio" name="helpful" value="not really" /> <span>🤔 Not really</span></label>
+      </fieldset>
+      <div class="fb-more" id="fb-more">
+        <label for="fb-message">What's missing, confusing, or still worrying you? <span>(optional)</span></label>
+        <textarea id="fb-message" name="message" rows="3" maxlength="2000"></textarea>
+        <label for="fb-email">Your email, if you'd like a reply <span>(optional)</span></label>
+        <input type="email" id="fb-email" name="email" autocomplete="email" />
+        <p class="fb-note">We read every message. Please don't include medical details. This isn't a way to get medical advice.</p>
+        <button type="submit" class="btn-coral">Send feedback</button>
+      </div>
+      <p class="fb-status" id="fb-status" role="status"></p>
+    </form>
+    )}
+
     <footer class="site-footer">
       <p>
         <strong>TinyTrip shares general information, not medical advice.</strong>
@@ -82,5 +111,34 @@ const ogImage = new URL('/og.png', Astro.site);
         against official guidance.
       </p>
     </footer>
+    <script>
+      // Send feedback without leaving the page. Without JS the form posts normally and lands on /thanks.
+      const fb = document.getElementById('feedback') as HTMLFormElement | null;
+      const status = document.getElementById('fb-status');
+      if (fb && status) {
+      fb.addEventListener('change', (e) => {
+        if ((e.target as HTMLInputElement).name === 'helpful') fb.classList.add('open');
+      });
+      fb.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const body = new URLSearchParams(new FormData(fb) as unknown as Record<string, string>);
+        const button = fb.querySelector('button')!;
+        button.disabled = true;
+        try {
+          const res = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: body.toString(),
+          });
+          if (!res.ok) throw new Error(String(res.status));
+          fb.classList.add('sent');
+          status.textContent = 'Thank you 💚 Every message helps make TinyTrip better for the next parent.';
+        } catch {
+          button.disabled = false;
+          status.textContent = "Sorry, that didn't send. Please try again in a moment.";
+        }
+      });
+      }
+    </script>
   </body>
 </html>

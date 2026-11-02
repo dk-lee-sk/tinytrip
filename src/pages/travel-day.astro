@@ -1,0 +1,365 @@
+---
+import Base from '../layouts/Base.astro';
+import { MODES } from '../lib/trip';
+---
+
+<Base title="Travel-day planner" description="Line up naps, feeds and the journey on travel day with a baby.">
+  <div class="inner wide">
+    <p class="page-eyebrow">Travel day</p>
+    <h1 class="page-title">Plan the travel day</h1>
+    <p class="page-sub">
+      Tell us about the journey and your baby's usual day. We'll line them up so you can see which nap falls on
+      the plane and which feeds happen on the way. Use your baby's real routine; you know it best.
+    </p>
+
+    <div class="td-layout">
+      <form class="panel td-form" id="td-form">
+        <h2>The journey</h2>
+        <div class="form-field">
+          <label for="td-mode">Travel type</label>
+          <select id="td-mode" name="mode">
+            {Object.entries(MODES).map(([v, l]) => <option value={v}>{l}</option>)}
+          </select>
+        </div>
+        <div class="form-2col">
+          <div class="form-field">
+            <label for="td-leave">Leave home</label>
+            <input type="time" id="td-leave" name="leave" value="07:00" required />
+          </div>
+          <div class="form-field" id="field-start">
+            <label for="td-start" id="label-start">Take-off</label>
+            <input type="time" id="td-start" name="start" value="10:00" />
+          </div>
+        </div>
+        <div class="form-2col">
+          <div class="form-field">
+            <label for="td-hours" id="label-hours">Flight length (hours)</label>
+            <input type="number" id="td-hours" name="hours" min="0.5" max="24" step="0.5" value="3" required />
+          </div>
+          <div class="form-field">
+            <label for="td-after">Then to your stay (mins)</label>
+            <input type="number" id="td-after" name="after" min="0" max="600" step="15" value="60" />
+          </div>
+        </div>
+
+        <h2 class="td-sub">Baby's usual day (home time)</h2>
+        <div class="form-2col">
+          <div class="form-field">
+            <label for="td-wake">Wakes up</label>
+            <input type="time" id="td-wake" name="wake" value="06:30" required />
+          </div>
+          <div class="form-field">
+            <label for="td-bed">Bedtime</label>
+            <input type="time" id="td-bed" name="bed" value="19:00" required />
+          </div>
+        </div>
+        <fieldset class="naps">
+          <legend>Naps <span>(start time and roughly how long, leave blank if none)</span></legend>
+          {[1, 2, 3].map((n) => (
+            <div class="nap-row">
+              <label class="sr-only" for={`td-nap${n}`}>Nap {n} start</label>
+              <input type="time" id={`td-nap${n}`} name={`nap${n}`} value={n === 1 ? '08:30' : n === 2 ? '13:00' : ''} />
+              <label class="sr-only" for={`td-nap${n}-len`}>Nap {n} length in minutes</label>
+              <input type="number" id={`td-nap${n}-len`} name={`nap${n}len`} min="10" max="240" step="5" value={n === 1 ? '60' : n === 2 ? '90' : ''} placeholder="mins" />
+              <span aria-hidden="true">mins</span>
+            </div>
+          ))}
+        </fieldset>
+        <div class="form-field">
+          <label for="td-feed">Feeds or snacks, roughly every (hours)</label>
+          <input type="number" id="td-feed" name="feed" min="1" max="8" step="0.5" value="3" />
+          <p class="hint">Feeding on demand? Leave it blank and we'll skip the feed times.</p>
+        </div>
+        <button class="btn-coral btn-block" type="submit">Show my travel day →</button>
+      </form>
+
+      <section class="panel td-result" aria-live="polite" aria-labelledby="td-title">
+        <h2 id="td-title">Your travel day</h2>
+        <ul class="td-chips" id="td-chips"></ul>
+        <ol class="timeline" id="td-timeline"></ol>
+        <p class="td-zone" id="td-zone" hidden></p>
+        <p class="td-empty" id="td-empty">Fill in the journey on the left to see your day.</p>
+        <span class="review-flag">Feeding tips being reviewed against official guidance</span>
+        <div class="td-next no-print">
+          <button type="button" class="btn-ghost" id="td-print">🖨️ Print</button>
+          <a class="btn-ghost" href="/pack">Check the journey bag →</a>
+        </div>
+      </section>
+    </div>
+
+    <div class="calm-box">
+      <h2>💚 It won't go exactly to plan</h2>
+      <p>
+        Delays happen, naps get skipped, and feeds move around. That's normal, not a failure. The plan is there so
+        you know roughly what's coming. Early night tonight, and tomorrow is a fresh start.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import ages from '../data/ages.json';
+  import { tripFromUrl, saveTrip } from '../lib/trip';
+
+  const KEY = 'tinytrip:travelday:v1';
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const form = $<HTMLFormElement>('td-form');
+  const trip = tripFromUrl(ages.map((a) => a.id));
+
+  // ── Restore saved inputs (and the trip's travel type / bedtime) ──
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY) || '{}') as Record<string, string>;
+    for (const [name, value] of Object.entries(saved)) {
+      const el = form.elements.namedItem(name) as HTMLInputElement | null;
+      if (el && typeof value === 'string') el.value = value;
+    }
+  } catch {}
+  if (trip.mode) ($<HTMLSelectElement>('td-mode')).value = trip.mode;
+  if (trip.bed) ($<HTMLInputElement>('td-bed')).value = trip.bed;
+
+  const LABELS = {
+    flight: { start: 'Take-off', hours: 'Flight length (hours)' },
+    train: { start: 'Train leaves', hours: 'Train journey (hours)' },
+    road: { start: 'Set off', hours: 'Driving time, without stops (hours)' },
+  } as const;
+
+  function syncLabels() {
+    const mode = $<HTMLSelectElement>('td-mode').value as keyof typeof LABELS;
+    $('label-start').textContent = LABELS[mode].start;
+    $('label-hours').textContent = LABELS[mode].hours;
+    // On a road trip you set off when you leave home.
+    $('field-start').hidden = mode === 'road';
+  }
+
+  // ── Time helpers (minutes since midnight on travel day; may go past 24h) ──
+  const toMin = (v: string) => {
+    if (!v) return null;
+    const [h, m] = v.split(':').map(Number);
+    return h * 60 + m;
+  };
+  function clock(mins: number) {
+    const day = Math.floor(mins / 1440);
+    const t = ((mins % 1440) + 1440) % 1440;
+    const h24 = Math.floor(t / 60);
+    const s = `${h24 % 12 || 12}:${String(t % 60).padStart(2, '0')}${h24 < 12 ? 'am' : 'pm'}`;
+    return day > 0 ? `${s} (+${day})` : s;
+  }
+  const dur = (mins: number) => {
+    const h = Math.floor(mins / 60), m = Math.round(mins % 60);
+    return [h && `${h}h`, m && `${m}m`].filter(Boolean).join(' ') || '0m';
+  };
+
+  type Event = { at: number; title: string; text: string; kind: string };
+
+  function build() {
+    const f = new FormData(form);
+    const get = (k: string) => String(f.get(k) ?? '');
+    const mode = get('mode') as keyof typeof LABELS;
+    const leave = toMin(get('leave'))!;
+    let start = mode === 'road' ? leave : toMin(get('start')) ?? leave;
+    if (start < leave) start += 1440; // e.g. leave at 10pm, take off at 1am
+    const end = start + Math.round(Number(get('hours') || 0) * 60);
+    const arrive = end + Number(get('after') || 0);
+    const wake = toMin(get('wake'))!;
+    let bed = toMin(get('bed'))!;
+    if (bed <= wake) bed += 1440;
+
+    const where = (t: number) =>
+      t >= start && t < end ? 'journey' : t >= leave && t < start ? 'transit' : t >= end && t < arrive ? 'transit' : 'home';
+
+    const events: Event[] = [];
+    events.push({ at: wake, kind: 'home', title: 'Baby wakes', text: 'A normal morning as far as possible. Same feed, same nappy change, same cuddle.' });
+    events.push({ at: leave, kind: 'go', title: 'Leave home', text: mode === 'road' ? 'Nappy change just before you set off.' : 'Nappy change just before you go. Documents, nappy bag, snacks.' });
+
+    if (mode === 'flight') {
+      events.push({ at: start, kind: 'go', title: 'Take-off', text: 'If you can, have a feed, bottle, dummy or drink ready for take-off. Sucking and swallowing can help little ears.' });
+      events.push({ at: end, kind: 'go', title: 'Landing', text: 'Same again for the descent, which starts a while before touchdown. Watch for the seatbelt sign.' });
+    } else if (mode === 'train') {
+      events.push({ at: start, kind: 'go', title: 'Train leaves', text: 'Settle in, park the stroller, and find out where the changing toilet is.' });
+      events.push({ at: end, kind: 'go', title: 'Arrive at the station', text: 'Get bags and baby off without rushing. Others can wait a moment.' });
+    } else {
+      events.push({ at: end, kind: 'go', title: 'Reach your destination', text: 'Driving time plus your stops. Allow extra time; arriving later is fine.' });
+    }
+    if (arrive > end || arrive > bed) {
+      events.push({
+        at: arrive, kind: 'arrive', title: 'Arrive at your stay',
+        text: arrive >= bed
+          ? 'Arriving late: a quick nappy change, a feed and straight to bed. Unpacking can wait until morning.'
+          : 'Set up the cot first, before anything else, so bedtime is ready when you need it.',
+      });
+    }
+
+    // Naps
+    let napsOnJourney = 0;
+    for (const n of [1, 2, 3]) {
+      let t = toMin(get(`nap${n}`));
+      if (t === null) continue;
+      if (t < wake) t += 1440;
+      const len = Number(get(`nap${n}len`) || 60);
+      const w = where(t);
+      let text = `About ${dur(len)}. `;
+      if (w === 'journey') {
+        napsOnJourney++;
+        text += mode === 'flight' ? 'On the plane: try the carrier, your lap or the bassinet, with white noise if it helps.'
+          : mode === 'train' ? 'On the train: carrier, stroller or a cosy lap. A muslin over the stroller blocks out the bustle.'
+          : 'In the car seat: often a good stretch to keep driving. Stop when baby wakes.';
+      } else if (w === 'transit') {
+        text += 'On the move: the stroller or carrier is your friend. A shorter nap is fine today.';
+      } else {
+        text += t < leave ? 'At home, before you go.' : 'At your stay, in a dark room if you can.';
+      }
+      events.push({ at: t, kind: 'nap', title: `Nap ${n}`, text });
+    }
+
+    // Feeds or snacks at the parent's own interval
+    const every = Number(get('feed'));
+    let feedsOnJourney = 0;
+    if (every > 0) {
+      const step = Math.round(every * 60);
+      // Daytime feeds only; night feeds go as they normally would.
+      for (let t = wake + step; t < bed; t += step) {
+        const w = where(t);
+        let text = 'Feed, bottle or snack.';
+        if (w === 'journey') {
+          feedsOnJourney++;
+          text = mode === 'road'
+            ? 'Plan a stop around now, for a feed, a nappy change and a stretch for everyone.'
+            : 'On the way. Have everything for this one in the nappy bag, not the big bag.';
+        } else if (w === 'transit') text = 'On the move: a feed somewhere calm if you can find a quiet corner.';
+        if (mode === 'flight' && Math.abs(t - start) <= 30) text += ' Close to take-off, which is handy.';
+        events.push({ at: t, kind: 'feed', title: 'Feed or snack', text });
+      }
+    }
+
+    const bedOnTheMove = bed >= leave && bed < arrive;
+    events.push({
+      at: bed, kind: 'home', title: 'Bedtime',
+      text: bedOnTheMove
+        ? 'Bedtime on the move: keep the familiar bits (sleep bag, comforter, white noise, a feed) and let them sleep wherever they can. Night feeds as usual.'
+        : 'Same routine as at home: bath (or wash), feed, white noise, dark room. It tells baby that this new place is safe.',
+    });
+
+    // Journey shading: tag which events fall during the journey
+    events.sort((a, b) => a.at - b.at);
+    return { events, start, end, arrive, mode, napsOnJourney, feedsOnJourney };
+  }
+
+  function render() {
+    const { events, start, end, arrive, mode, napsOnJourney, feedsOnJourney } = build();
+    const icons: Record<string, string> = { home: '🏠', arrive: '🏨', go: mode === 'flight' ? '✈️' : mode === 'train' ? '🚂' : '🚗', nap: '😴', feed: '🍼' };
+    $('td-timeline').replaceChildren(
+      ...events.map((e) => {
+        const li = document.createElement('li');
+        li.className = `tl-item tl-${e.kind}${e.at >= start && e.at <= end ? ' on-journey' : ''}`;
+        li.innerHTML = `<span class="tl-time"></span><span class="tl-desc"><strong></strong><span></span></span>`;
+        li.querySelector('.tl-time')!.textContent = clock(e.at);
+        li.querySelector('strong')!.textContent = `${icons[e.kind]} ${e.title}`;
+        li.querySelector('.tl-desc span')!.textContent = e.text;
+        return li;
+      }),
+    );
+
+    const chips = [
+      `Journey ${dur(end - start)}`,
+      `Door to door ${dur(arrive - (toMin(String(new FormData(form).get('leave'))) ?? start))}`,
+      napsOnJourney ? `${napsOnJourney} nap${napsOnJourney > 1 ? 's' : ''} on the way` : 'No naps on the way',
+      ...(feedsOnJourney ? [`${feedsOnJourney} feed${feedsOnJourney > 1 ? 's' : ''} on the way`] : []),
+    ];
+    $('td-chips').replaceChildren(...chips.map((c) => Object.assign(document.createElement('li'), { textContent: c })));
+
+    // If the trip crosses time zones, say when they land on the local clock.
+    const zone = $('td-zone');
+    zone.hidden = true;
+    if (trip.from && trip.to && trip.from !== trip.to) {
+      const off = (tz: string) => {
+        const name = new Intl.DateTimeFormat('en-GB', { timeZone: tz, timeZoneName: 'longOffset' })
+          .formatToParts(trip.date ? new Date(`${trip.date}T12:00:00Z`) : new Date())
+          .find((p) => p.type === 'timeZoneName')!.value;
+        const m = name.match(/GMT([+-])(\d{1,2}):?(\d{2})?/);
+        return m ? (m[1] === '-' ? -1 : 1) * (Number(m[2]) * 60 + Number(m[3] || 0)) : 0;
+      };
+      const diff = off(trip.to) - off(trip.from);
+      if (diff) {
+        zone.hidden = false;
+        zone.textContent = `All times above are on home time. At your destination it'll be ${clock(arrive + diff)} when you arrive at your stay. See the sleep page for adjusting to the new time.`;
+      }
+    }
+
+    $('td-empty').hidden = true;
+  }
+
+  function save() {
+    const data: Record<string, string> = {};
+    new FormData(form).forEach((v, k) => (data[k] = String(v)));
+    try { localStorage.setItem(KEY, JSON.stringify(data)); } catch {}
+    // Keep the shared trip in step, so other pages agree.
+    trip.mode = data.mode;
+    if (data.bed) trip.bed = data.bed;
+    saveTrip(trip);
+  }
+
+  $('td-mode').addEventListener('change', syncLabels);
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    save();
+    render();
+    if (window.matchMedia('(max-width: 900px)').matches) $('td-title').scrollIntoView({ behavior: 'smooth' });
+  });
+  $('td-print').addEventListener('click', () => window.print());
+
+  syncLabels();
+  render();
+</script>
+
+<style>
+  .td-layout { display: grid; grid-template-columns: 1fr 1.25fr; gap: 28px; align-items: start; margin-bottom: 32px; }
+  .td-form h2, .td-result h2 { margin-bottom: 16px; }
+  .td-sub { margin-top: 8px; }
+  .hint { font-size: 0.78rem; color: var(--muted); margin-top: 6px; }
+  .form-field[hidden] { display: none; }
+  .naps { border: none; margin-bottom: 16px; }
+  .naps legend {
+    font-size: 0.78rem; font-weight: 700; color: var(--muted); margin-bottom: 6px;
+    text-transform: uppercase; letter-spacing: 0.6px;
+  }
+  .naps legend span { text-transform: none; letter-spacing: 0; font-weight: 600; }
+  .nap-row { display: grid; grid-template-columns: 1fr 90px auto; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .nap-row input {
+    width: 100%; padding: 10px 12px; border: 1.5px solid #D9D1C9; border-radius: 12px;
+    font-family: 'Nunito', sans-serif; font-size: 0.95rem; color: var(--deep); background: var(--warm);
+  }
+  .nap-row span { font-size: 0.8rem; color: var(--muted); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .td-result { position: sticky; top: 80px; }
+  .td-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+  .td-chips :global(li) { background: var(--sky-lt); color: #2F5C80; font-size: 0.78rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; }
+  .timeline { list-style: none; margin: 8px 0 12px; }
+  .timeline :global(.tl-item) { display: flex; gap: 16px; padding: 12px 10px; border-bottom: 1px solid #F0EBE5; border-radius: 10px; }
+  .timeline :global(.tl-item:last-child) { border-bottom: none; }
+  .timeline :global(.tl-item.on-journey) { background: var(--sky-lt); }
+  .timeline :global(.tl-time) { font-weight: 700; font-size: 0.85rem; color: var(--coral-dk); min-width: 76px; flex-shrink: 0; }
+  .timeline :global(.tl-desc) { font-size: 0.85rem; line-height: 1.55; }
+  .timeline :global(.tl-desc strong) { display: block; font-size: 0.9rem; margin-bottom: 2px; }
+  .td-zone { background: var(--gold-lt); border-radius: 12px; padding: 12px 14px; font-size: 0.85rem; line-height: 1.55; margin-bottom: 8px; }
+  .td-zone[hidden], .td-empty[hidden] { display: none; }
+  .td-empty { font-size: 0.9rem; color: var(--muted); }
+  .td-next { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .td-next .btn-ghost { padding: 9px 16px; font-size: 0.85rem; }
+
+  @media (max-width: 900px) {
+    .td-layout { grid-template-columns: 1fr; }
+    .td-result { position: static; }
+  }
+  @media (max-width: 520px) {
+    .panel { padding: 20px; }
+    .timeline :global(.tl-item) { gap: 10px; padding: 12px 6px; }
+    .timeline :global(.tl-time) { min-width: 64px; }
+  }
+  @media print {
+    .td-form { display: none; }
+    .td-layout { display: block; }
+    .timeline :global(.tl-item.on-journey) { background: none; border-left: 3px solid #999; }
+  }
+</style>

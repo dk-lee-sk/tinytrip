@@ -1,0 +1,364 @@
+---
+import Base from '../layouts/Base.astro';
+import ages from '../data/ages.json';
+import tasks from '../data/countdown.json';
+import { LENGTHS, MODES } from '../lib/trip';
+
+// Rough lead time shown before a date is set, e.g. "about 10 weeks before".
+function before(days: number) {
+  if (days === 0) return 'On the day';
+  if (days === 1) return 'The day before';
+  if (days < 14) return `${days} days before`;
+  return `About ${Math.round(days / 7)} weeks before`;
+}
+---
+
+<Base title="Your trip plan" description="A gentle countdown to your first trip with baby: what to sort, and when.">
+  <div class="inner">
+    <p class="page-eyebrow">Your trip plan</p>
+    <h1 class="page-title">Your countdown</h1>
+    <p class="page-sub">
+      Add your travel date and we'll spread the planning out week by week, so nothing piles up at the end.
+      Tick things off as you go. It's all saved on this device, and you can share it with whoever's coming with you.
+    </p>
+
+    <form class="trip-panel" id="trip-form" aria-labelledby="trip-heading">
+      <h2 id="trip-heading">Your trip</h2>
+      <div class="trip-fields four">
+        <div class="form-field">
+          <label for="trip-date">Travel date</label>
+          <input type="date" id="trip-date" name="date" />
+        </div>
+        <div class="form-field">
+          <label for="trip-age">Baby's age</label>
+          <select id="trip-age" name="age">
+            <option value="">Not set</option>
+            {ages.map((a) => <option value={a.id}>{a.label}</option>)}
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="trip-mode">Travel type</label>
+          <select id="trip-mode" name="mode">
+            <option value="">Not set</option>
+            {Object.entries(MODES).map(([v, l]) => <option value={v}>{l}</option>)}
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="trip-length">Trip length</label>
+          <select id="trip-length" name="length">
+            <option value="">Not set</option>
+            {Object.entries(LENGTHS).map(([v, l]) => <option value={v}>{l}</option>)}
+          </select>
+        </div>
+      </div>
+    </form>
+
+    <section class="countdown-hero" aria-live="polite">
+      <div>
+        <p class="cd-big" id="cd-big">Pick a date</p>
+        <p class="cd-sub" id="cd-sub">Add your travel date above to see what to do when.</p>
+      </div>
+      <div class="cd-progress">
+        <p class="cd-count" id="cd-count"></p>
+        <div class="prog-bar" role="progressbar" aria-labelledby="cd-count" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="cd-bar">
+          <div class="prog-fill" id="cd-fill"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="plan-actions no-print">
+      <button type="button" class="btn-ghost" id="btn-ics">📅 Add to my calendar</button>
+      <button type="button" class="btn-ghost" id="btn-share">💌 Share with my partner</button>
+      <button type="button" class="btn-ghost" id="btn-print">🖨️ Print my plan</button>
+      <p class="action-status" id="action-status" role="status"></p>
+    </div>
+
+    <section aria-labelledby="now-heading" id="group-now">
+      <h2 class="group-title" id="now-heading">Ready for you now</h2>
+      <p class="group-note" id="now-note"></p>
+      <ol class="task-list" id="list-now"></ol>
+    </section>
+    <section aria-labelledby="later-heading" id="group-later">
+      <h2 class="group-title" id="later-heading">Coming up</h2>
+      <ol class="task-list" id="list-later"></ol>
+    </section>
+    <section aria-labelledby="done-heading" id="group-done">
+      <h2 class="group-title" id="done-heading">Done 💚</h2>
+      <ol class="task-list" id="list-done"></ol>
+    </section>
+
+    <!-- All tasks, rendered once on the server; the script moves them into the groups above. -->
+    <template id="task-pool">
+      {tasks.map((t) => (
+        <li class="task" data-task={t.id} data-days={t.days}>
+          <label class="task-main">
+            <input type="checkbox" data-id={t.id} />
+            <span class="task-text">
+              <span class="task-when" data-default={before(t.days)}>{before(t.days)}</span>
+              <strong class="task-title">{t.title}</strong>
+              <span class="task-note">{t.note}</span>
+              {t.needsReview && <span class="review-flag">Being reviewed</span>}
+            </span>
+          </label>
+          {t.link && <a class="task-link no-print" href={t.link.href}>{t.link.label} →</a>}
+        </li>
+      ))}
+    </template>
+
+    <section class="pack-summary" aria-labelledby="pack-heading">
+      <h2 class="group-title" id="pack-heading">Packing</h2>
+      <p id="pack-status">Your packing list is tailored to your trip.</p>
+      <a class="btn-coral no-print" href="/pack">Open my packing list →</a>
+      <ul class="print-only pack-print" id="pack-print"></ul>
+    </section>
+  </div>
+</Base>
+
+<script>
+  import tasks from '../data/countdown.json';
+  import packing from '../data/packing.json';
+  import ages from '../data/ages.json';
+  import {
+    saveTrip, tripFromUrl, loadSet, saveSet, shareLink, shareOrCopy, daysUntil, resolveItem,
+    PACK_KEY, PLAN_KEY, LENGTHS, MODES, type Trip, type PackItem,
+  } from '../lib/trip';
+
+  type Task = (typeof tasks)[number] & { show?: { modes?: string[] } };
+
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const form = $<HTMLFormElement>('trip-form');
+  const fields = {
+    date: $<HTMLInputElement>('trip-date'),
+    age: $<HTMLSelectElement>('trip-age'),
+    mode: $<HTMLSelectElement>('trip-mode'),
+    length: $<HTMLSelectElement>('trip-length'),
+  };
+
+  // Move the server-rendered tasks out of the template so we can sort them into groups.
+  const pool = $<HTMLTemplateElement>('task-pool').content;
+  const rows = new Map<string, HTMLLIElement>();
+  pool.querySelectorAll<HTMLLIElement>('.task').forEach((li) => rows.set(li.dataset.task!, li));
+
+  let trip: Trip = tripFromUrl(ages.map((a) => a.id));
+  const done = loadSet(PLAN_KEY);
+
+  fields.date.value = trip.date ?? '';
+  fields.age.value = trip.age ?? '';
+  fields.mode.value = trip.mode ?? '';
+  fields.length.value = trip.length ?? '';
+
+  const applies = (t: Task) => !t.show?.modes || !trip.mode || t.show.modes.includes(trip.mode);
+
+  function dueDate(t: Task): Date | null {
+    if (!trip.date) return null;
+    const [y, m, d] = trip.date.split('-').map(Number);
+    return new Date(y, m - 1, d - t.days);
+  }
+  const fmt = (d: Date) => d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' });
+
+  function render() {
+    const lists = { now: $('list-now'), later: $('list-later'), done: $('list-done') };
+    Object.values(lists).forEach((l) => l.replaceChildren());
+    const visible = (tasks as Task[]).filter(applies);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let overdue = 0;
+
+    for (const t of visible) {
+      const li = rows.get(t.id)!;
+      const box = li.querySelector('input')!;
+      const when = li.querySelector<HTMLElement>('.task-when')!;
+      box.checked = done.has(t.id);
+      li.classList.toggle('checked', box.checked);
+      const due = dueDate(t);
+      if (due) {
+        const isToday = due.getTime() === today.getTime();
+        when.textContent = t.days === 0 ? `Travel day · ${fmt(due)}` : isToday ? 'Today' : due < today ? 'Worth doing now' : `From ${fmt(due)}`;
+      } else {
+        when.textContent = when.dataset.default!;
+      }
+      if (box.checked) lists.done.append(li);
+      else if (!due || due <= today) {
+        lists.now.append(li);
+        if (due && due < today) overdue++;
+      } else lists.later.append(li);
+    }
+
+    // Without a date everything is "now"; label it as a plain list instead.
+    $('now-heading').textContent = trip.date ? 'Ready for you now' : 'Your planning list';
+    $('now-note').textContent = overdue > 2
+      ? "Short on time? That's okay. Start from the top; you don't have to do everything."
+      : '';
+    $('group-now').hidden = lists.now.children.length === 0;
+    $('group-later').hidden = lists.later.children.length === 0;
+    $('group-done').hidden = lists.done.children.length === 0;
+
+    // Headline
+    const doneCount = visible.filter((t) => done.has(t.id)).length;
+    const pct = visible.length ? Math.round((doneCount / visible.length) * 100) : 0;
+    $('cd-count').textContent = `${doneCount} of ${visible.length} things sorted`;
+    $('cd-fill').style.width = `${pct}%`;
+    $('cd-bar').setAttribute('aria-valuenow', String(pct));
+
+    const big = $('cd-big');
+    const sub = $('cd-sub');
+    if (!trip.date) {
+      big.textContent = 'Pick a date';
+      sub.textContent = 'Add your travel date above to see what to do when.';
+    } else {
+      const n = daysUntil(trip.date);
+      const parts = [ages.find((a) => a.id === trip.age)?.label, trip.mode && MODES[trip.mode], trip.length && LENGTHS[trip.length]].filter(Boolean);
+      if (n > 1) big.textContent = `${n} days to go`;
+      else if (n === 1) big.textContent = 'Tomorrow!';
+      else if (n === 0) big.textContent = "It's travel day 💚";
+      else big.textContent = 'Hope the trip went well';
+      sub.textContent = n < 0
+        ? "We'd love to hear how it went. Use the feedback box at the bottom of this page."
+        : parts.length ? parts.join(' · ') : 'Add a few trip details to tailor the list.';
+    }
+    renderPacking();
+  }
+
+  function renderPacking() {
+    const packed = loadSet(PACK_KEY);
+    const items = packing.flatMap((s) => (s.items as PackItem[]).map((i) => resolveItem(i, trip)).filter(Boolean)) as PackItem[];
+    const left = items.filter((i) => !packed.has(i.id));
+    $('pack-status').textContent = packed.size === 0
+      ? `${items.length} items on your tailored list. Nothing ticked yet.`
+      : `${items.length - left.length} of ${items.length} items packed.`;
+    // Printed plan includes what's still to pack.
+    $('pack-print').replaceChildren(...left.map((i) => Object.assign(document.createElement('li'), { textContent: `☐ ${i.name}` })));
+  }
+
+  form.addEventListener('change', () => {
+    trip = {
+      ...trip,
+      date: fields.date.value || undefined,
+      age: fields.age.value || undefined,
+      mode: fields.mode.value || undefined,
+      length: fields.length.value || undefined,
+    };
+    saveTrip(trip);
+    render();
+  });
+  form.addEventListener('submit', (e) => e.preventDefault());
+
+  rows.forEach((li, id) => {
+    li.querySelector('input')!.addEventListener('change', (e) => {
+      (e.target as HTMLInputElement).checked ? done.add(id) : done.delete(id);
+      saveSet(PLAN_KEY, done);
+      render();
+      li.querySelector('input')!.focus();
+    });
+  });
+
+  // ── Actions ──
+  const status = $('action-status');
+  const say = (msg: string) => { status.textContent = msg; };
+
+  // Calendar file: one all-day reminder per task, so it works with any calendar app.
+  function ics(): string {
+    const esc = (s: string) => s.replace(/\\/g, '\\\\').replace(/[,;]/g, (c) => `\\${c}`).replace(/\n/g, '\\n');
+    const ymd = (d: Date) => `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+    const events = (tasks as Task[]).filter((t) => applies(t) && !done.has(t.id)).map((t) => {
+      let start = dueDate(t)!;
+      if (start < today) start = today;
+      const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1);
+      const link = t.link ? `\n${new URL(t.link.href, location.origin)}` : '';
+      return [
+        'BEGIN:VEVENT',
+        `UID:${t.id}-${trip.date}@tinytrip`,
+        `DTSTAMP:${stamp}`,
+        `DTSTART;VALUE=DATE:${ymd(start)}`,
+        `DTEND;VALUE=DATE:${ymd(end)}`,
+        `SUMMARY:${esc(`TinyTrip: ${t.title}`)}`,
+        `DESCRIPTION:${esc(t.note + link)}`,
+        'TRANSP:TRANSPARENT',
+        'END:VEVENT',
+      ].join('\r\n');
+    });
+    return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//TinyTrip//Countdown//EN', 'CALSCALE:GREGORIAN', ...events, 'END:VCALENDAR'].join('\r\n') + '\r\n';
+  }
+
+  $('btn-ics').addEventListener('click', () => {
+    if (!trip.date) {
+      say('Add your travel date first, then we can put the reminders in your calendar.');
+      fields.date.focus();
+      return;
+    }
+    const blob = new Blob([ics()], { type: 'text/calendar' });
+    const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'tinytrip-countdown.ics' });
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    say('Calendar file downloaded. Open it to add the reminders to your calendar.');
+  });
+
+  $('btn-share').addEventListener('click', async () => {
+    const result = await shareOrCopy(shareLink('/plan', trip), 'Our TinyTrip plan');
+    if (result === 'copied') say("Link copied. Send it to your partner: it opens this plan with everything you've ticked.");
+    else if (result === 'failed') say("Couldn't share from this browser. Try copying the page address instead.");
+    else say('');
+  });
+
+  $('btn-print').addEventListener('click', () => window.print());
+
+  render();
+</script>
+
+<style>
+  .trip-fields.four { grid-template-columns: 1.2fr 1.3fr 1fr 1fr; }
+
+  .countdown-hero {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: center;
+    background: linear-gradient(140deg, var(--blush), var(--sage-lt));
+    border-radius: var(--radius); padding: 28px 32px; margin-bottom: 20px;
+  }
+  .cd-big { font-family: 'Lora', serif; font-size: 2rem; font-weight: 700; color: var(--coral-dk); }
+  .cd-sub { font-size: 0.9rem; color: var(--muted); margin-top: 4px; line-height: 1.55; }
+  .cd-count { font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; }
+
+  .plan-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+  .plan-actions .btn-ghost { padding: 10px 18px; font-size: 0.9rem; }
+  .action-status { flex-basis: 100%; font-size: 0.85rem; color: var(--sage-dk); font-weight: 600; min-height: 1.2em; }
+
+  .group-title { font-family: 'Lora', serif; font-size: 1.15rem; margin-bottom: 10px; }
+  .group-note { font-size: 0.85rem; color: var(--muted); margin: -4px 0 10px; }
+  .group-note:empty { display: none; }
+  section[hidden] { display: none; }
+  .task-list { list-style: none; background: var(--white); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; margin-bottom: 28px; }
+  .task { border-bottom: 1px solid #F0EBE5; padding: 14px 20px; }
+  .task:last-child { border-bottom: none; }
+  .task-main { display: flex; gap: 14px; align-items: flex-start; cursor: pointer; }
+  .task-main input { width: 18px; height: 18px; accent-color: var(--coral-dk); margin-top: 20px; flex-shrink: 0; cursor: pointer; }
+  .task-text { flex: 1; }
+  .task-when { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--sage-dk); margin-bottom: 2px; }
+  .task-title { display: block; font-size: 0.95rem; margin-bottom: 2px; }
+  .task-note { display: block; font-size: 0.83rem; color: var(--muted); line-height: 1.55; }
+  .task-link { display: inline-block; margin: 8px 0 0 32px; font-size: 0.83rem; font-weight: 700; color: var(--coral-dk); }
+  .task.checked .task-title { text-decoration: line-through; opacity: 0.5; }
+  .task.checked .task-note { opacity: 0.45; }
+  .task.checked .task-link { display: none; }
+
+  .pack-summary { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px 28px; }
+  .pack-summary p { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
+  .pack-print { list-style: none; columns: 2; font-size: 0.8rem; line-height: 1.7; }
+
+  @media (max-width: 800px) {
+    .trip-fields.four { grid-template-columns: 1fr 1fr; gap: 0 12px; }
+    .countdown-hero { grid-template-columns: 1fr; padding: 22px 20px; }
+  }
+  @media (max-width: 520px) {
+    .trip-fields.four { grid-template-columns: 1fr; }
+    .task { padding: 14px; }
+    .task-link { margin-left: 32px; }
+    .plan-actions .btn-ghost { flex: 1 1 100%; }
+  }
+  @media print {
+    .countdown-hero { background: none; padding: 0; }
+    .task-list { box-shadow: none; border: 1px solid #ccc; }
+    .pack-summary { box-shadow: none; padding: 0; }
+  }
+</style>
