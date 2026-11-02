@@ -156,6 +156,8 @@ export type PackItem = {
   note: string;
   priority: string;
   needsReview?: boolean;
+  /** ids from src/data/sources.json */
+  sources?: string[];
   show?: Condition;
   variants?: ({ when: Condition } & Partial<Pick<PackItem, 'name' | 'note' | 'priority' | 'needsReview'>>)[];
 };

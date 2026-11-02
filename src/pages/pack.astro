@@ -3,9 +3,10 @@ import Base from '../layouts/Base.astro';
 import packing from '../data/packing.json';
 import ages from '../data/ages.json';
 import { LENGTHS, MODES, resolveItem, type PackItem } from '../lib/trip';
+import Sources from '../components/Sources.astro';
 
 // Server render shows the full list (no trip known yet); the script below tailors it in the browser.
-const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Helpful', you: 'You 💚' };
+const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important', nice: 'Nice to have', you: 'For you 💚' };
 ---
 
 <Base title="Your packing list">
@@ -74,7 +75,8 @@ const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Hel
                 <span class="ci-text">
                   <strong class="ci-name">{item.name}</strong>
                   <span class="ci-note">{item.note}</span>
-                  <span class="review-flag" hidden={!item.needsReview}>Being reviewed</span>
+                  <Sources ids={item.sources} />
+                  <span class="review-flag" hidden={!item.needsReview}>Still being double-checked</span>
                 </span>
                 <span class={`pill pill-${item.priority} ci-pill`}>{pillLabel[item.priority]}</span>
               </label>
@@ -101,7 +103,7 @@ const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Hel
     saveTrip, tripFromUrl, resolveItem, shareLink, shareOrCopy,
     PACK_KEY, LENGTHS, MODES, type PackItem, type Trip,
   } from '../lib/trip';
-  const pillLabel: Record<string, string> = { must: 'Must', key: 'Key', nice: 'Helpful', you: 'You 💚' };
+  const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important', nice: 'Nice to have', you: 'For you 💚' };
   const ageLabel = (id?: string) => ages.find((a) => a.id === id)?.label;
 
   const form = document.getElementById('trip-form') as HTMLFormElement;

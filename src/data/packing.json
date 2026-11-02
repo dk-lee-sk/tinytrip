@@ -7,14 +7,54 @@
     "badgeLabel": "Must-haves",
     "items": [
       {
-        "id": "car-seat", "name": "Car seat that fits baby's age and size", "note": "Correctly installed every time. The #1 safety item for any car journey.", "priority": "must",
+        "id": "car-seat",
+        "name": "Car seat that fits baby's age and size",
+        "note": "Correctly installed every time. The #1 safety item for any car journey.",
+        "priority": "must",
         "variants": [
-          { "when": { "modes": ["flight", "train"] }, "priority": "key", "note": "Only if you'll drive, rent a car or take taxis at your destination. Some rental firms and taxi services can provide one — book ahead." }
+          {
+            "when": {
+              "modes": [
+                "flight",
+                "train"
+              ]
+            },
+            "priority": "key",
+            "note": "Only if you'll drive, rent a car or take taxis at your destination. Some rental firms and taxi services can provide one — book ahead."
+          }
         ]
       },
-      { "id": "insurance", "name": "Travel health insurance with infant cover", "note": "Many standard policies exclude babies under 8 weeks. Double-check yours.", "priority": "must", "needsReview": true },
-      { "id": "passport", "name": "Baby's passport (if travelling internationally)", "note": "Takes 4–6 weeks to process — apply early. Newborns need their own.", "priority": "must", "needsReview": true },
-      { "id": "vaccination-record", "name": "Vaccination record copy", "note": "Some destinations and paediatricians require these on arrival.", "priority": "must", "needsReview": true }
+      {
+        "id": "insurance",
+        "name": "Travel health insurance with infant cover",
+        "note": "Check your baby is named on the policy and that it covers medical treatment and getting home. A GHIC or EHIC isn't a substitute for insurance.",
+        "priority": "must",
+        "needsReview": true,
+        "sources": [
+          "govuk-insurance"
+        ]
+      },
+      {
+        "id": "passport",
+        "name": "Baby's passport (if travelling internationally)",
+        "note": "Babies need their own passport. HM Passport Office says to allow up to 3 weeks. Not in the UK? Check your own passport office.",
+        "priority": "must",
+        "needsReview": true,
+        "sources": [
+          "govuk-child-passport",
+          "hmpo-times"
+        ]
+      },
+      {
+        "id": "vaccination-record",
+        "name": "Vaccination record copy",
+        "note": "Some countries ask for proof of certain vaccinations, such as yellow fever, on arrival. Check your destination on TravelHealthPro.",
+        "priority": "must",
+        "needsReview": true,
+        "sources": [
+          "nathnac"
+        ]
+      }
     ]
   },
   {
@@ -24,17 +64,117 @@
     "badge": "key",
     "badgeLabel": "Essential",
     "items": [
-      { "id": "formula", "name": "Formula + extra supply (if formula-feeding)", "note": "Bring 30% more than you think you need. Brands vary abroad.", "priority": "key", "needsReview": true },
-      { "id": "nursing-cover", "name": "Nursing cover / portable privacy wrap", "note": "Optional — but helpful in busy airports and restaurants.", "priority": "nice", "show": { "ages": ["newborn", "early", "rolling", "sitter"] } },
-      { "id": "bottles", "name": "Bottles + portable steriliser", "note": "A microwave steam bag works in most hotel rooms.", "priority": "key", "show": { "ages": ["newborn", "early", "rolling", "sitter"] }, "needsReview": true },
       {
-        "id": "takeoff-feed", "name": "A feed ready for take-off and landing", "note": "Breast, bottle or dummy — sucking and swallowing can help with ear pressure.", "priority": "key",
-        "show": { "modes": ["flight"] }, "needsReview": true,
-        "variants": [ { "when": { "ages": ["walker", "toddler"] }, "note": "A drink with a straw or spout, or a chewy snack — swallowing can help with ear pressure." } ]
+        "id": "formula",
+        "name": "Formula + extra supply (if formula-feeding)",
+        "note": "Bring enough for the journey plus extra for delays. Your brand might not be sold where you're going. In the UK, you can take enough for the journey in hand luggage.",
+        "priority": "key",
+        "needsReview": true,
+        "sources": [
+          "govuk-baby-food",
+          "cdc-infants"
+        ]
       },
-      { "id": "bibs", "name": "Bibs × 6 minimum", "note": "You will always need more bibs than you think.", "priority": "key", "show": { "ages": ["newborn", "early", "rolling", "sitter", "walker"] } },
-      { "id": "snacks", "name": "Snacks they already know and like", "note": "Pack more than seems reasonable. A hungry baby on the move is a meltdown waiting to happen.", "priority": "key", "show": { "ages": ["sitter", "walker", "toddler"] } },
-      { "id": "cup", "name": "Sippy cup or straw cup", "note": "Spill-resistant, and easier than a bottle once they're drinking water.", "priority": "key", "show": { "ages": ["sitter", "walker", "toddler"] } }
+      {
+        "id": "nursing-cover",
+        "name": "Nursing cover / portable privacy wrap",
+        "note": "Optional — but helpful in busy airports and restaurants.",
+        "priority": "nice",
+        "show": {
+          "ages": [
+            "newborn",
+            "early",
+            "rolling",
+            "sitter"
+          ]
+        }
+      },
+      {
+        "id": "bottles",
+        "name": "Bottles + portable steriliser",
+        "note": "Keep sterilising bottles until baby is 12 months old. A microwave steam bag is handy if your room has a microwave. Follow the pack's instructions.",
+        "priority": "key",
+        "show": {
+          "ages": [
+            "newborn",
+            "early",
+            "rolling",
+            "sitter"
+          ]
+        },
+        "needsReview": true,
+        "sources": [
+          "nhs-bottle"
+        ]
+      },
+      {
+        "id": "takeoff-feed",
+        "name": "A feed ready for take-off and landing",
+        "note": "Breast, bottle or dummy. Sucking and swallowing can help with ear pressure.",
+        "priority": "key",
+        "show": {
+          "modes": [
+            "flight"
+          ]
+        },
+        "needsReview": true,
+        "variants": [
+          {
+            "when": {
+              "ages": [
+                "walker",
+                "toddler"
+              ]
+            },
+            "note": "A drink with a straw or spout, or a snack to chew. Swallowing and chewing can help with ear pressure."
+          }
+        ],
+        "sources": [
+          "aap-flying",
+          "cdc-infants"
+        ]
+      },
+      {
+        "id": "bibs",
+        "name": "Bibs × 6 minimum",
+        "note": "You will always need more bibs than you think.",
+        "priority": "key",
+        "show": {
+          "ages": [
+            "newborn",
+            "early",
+            "rolling",
+            "sitter",
+            "walker"
+          ]
+        }
+      },
+      {
+        "id": "snacks",
+        "name": "Snacks they already know and like",
+        "note": "Pack more than seems reasonable. A hungry baby on the move is a meltdown waiting to happen.",
+        "priority": "key",
+        "show": {
+          "ages": [
+            "sitter",
+            "walker",
+            "toddler"
+          ]
+        }
+      },
+      {
+        "id": "cup",
+        "name": "Sippy cup or straw cup",
+        "note": "Spill-resistant, and easier than a bottle once they're drinking water.",
+        "priority": "key",
+        "show": {
+          "ages": [
+            "sitter",
+            "walker",
+            "toddler"
+          ]
+        }
+      }
     ]
   },
   {
@@ -45,12 +185,40 @@
     "badgeLabel": "Essential",
     "items": [
       {
-        "id": "nappies", "name": "Nappies and wipes for the journey + first day", "note": "You can buy more at your destination — no need to fill a suitcase.", "priority": "must",
-        "variants": [ { "when": { "lengths": ["weekend"] }, "name": "Nappies and wipes for the whole trip", "note": "For a short trip it's easiest to bring everything — plus a few spares for delays." } ]
+        "id": "nappies",
+        "name": "Nappies and wipes for the journey + first day",
+        "note": "You can buy more at your destination — no need to fill a suitcase.",
+        "priority": "must",
+        "variants": [
+          {
+            "when": {
+              "lengths": [
+                "weekend"
+              ]
+            },
+            "name": "Nappies and wipes for the whole trip",
+            "note": "For a short trip it's easiest to bring everything — plus a few spares for delays."
+          }
+        ]
       },
-      { "id": "changing-mat", "name": "Portable changing mat", "note": "Some airports and restaurants lack changing facilities. Be prepared.", "priority": "key" },
-      { "id": "nappy-bags", "name": "Nappy sacks or small rubbish bags", "note": "For dirty nappies and wet clothes when there's no bin in sight.", "priority": "key" },
-      { "id": "spare-outfits", "name": "Spare outfits in your hand luggage", "note": "At least two for baby — and a spare top for you. Blowouts love a long journey.", "priority": "must" }
+      {
+        "id": "changing-mat",
+        "name": "Portable changing mat",
+        "note": "Some airports and restaurants lack changing facilities. Be prepared.",
+        "priority": "key"
+      },
+      {
+        "id": "nappy-bags",
+        "name": "Nappy sacks or small rubbish bags",
+        "note": "For dirty nappies and wet clothes when there's no bin in sight.",
+        "priority": "key"
+      },
+      {
+        "id": "spare-outfits",
+        "name": "Spare outfits in your hand luggage",
+        "note": "At least two for baby — and a spare top for you. Blowouts love a long journey.",
+        "priority": "must"
+      }
     ]
   },
   {
@@ -60,14 +228,59 @@
     "badge": "key",
     "badgeLabel": "Essential",
     "items": [
-      { "id": "travel-cot", "name": "Portable travel cot or book a hotel crib", "note": "Confirm with hotel 48h in advance. Specify infant, not toddler crib.", "priority": "must" },
-      { "id": "white-noise", "name": "White noise app or portable speaker", "note": "Recreates home sleep sounds — powerful for unsettled environments.", "priority": "key" },
-      { "id": "blackout-blind", "name": "Portable blackout blind", "note": "Clip-on, fits most windows. Game-changer for naps in bright rooms.", "priority": "key" },
       {
-        "id": "sleep-sack", "name": "Baby's familiar sleep bag", "note": "Scent and feel of home. Huge comfort anchor for babies.", "priority": "key", "needsReview": true,
-        "variants": [ { "when": { "ages": ["newborn", "early"] }, "name": "Baby's familiar sleep bag or swaddle", "note": "Scent and feel of home. If you swaddle, stop once baby shows signs of rolling." } ]
+        "id": "travel-cot",
+        "name": "Portable travel cot or book a hotel crib",
+        "note": "Confirm with hotel 48h in advance. Specify infant, not toddler crib.",
+        "priority": "must"
       },
-      { "id": "comforter", "name": "Their favourite comfort toy (and a backup if you have one)", "note": "Losing it on day one is a trip-defining event. Keep it on a clip or in a known pocket.", "priority": "key", "show": { "ages": ["sitter", "walker", "toddler"] } }
+      {
+        "id": "white-noise",
+        "name": "White noise app or portable speaker",
+        "note": "Recreates home sleep sounds — powerful for unsettled environments.",
+        "priority": "key"
+      },
+      {
+        "id": "blackout-blind",
+        "name": "Portable blackout blind",
+        "note": "Clip-on, fits most windows. Game-changer for naps in bright rooms.",
+        "priority": "key"
+      },
+      {
+        "id": "sleep-sack",
+        "name": "Baby's familiar sleep bag",
+        "note": "Scent and feel of home. Huge comfort anchor for babies.",
+        "priority": "key",
+        "needsReview": true,
+        "variants": [
+          {
+            "when": {
+              "ages": [
+                "newborn",
+                "early"
+              ]
+            },
+            "name": "Baby's familiar sleep bag or swaddle",
+            "note": "Scent and feel of home. If you swaddle, the Lullaby Trust advises stopping once baby shows signs of rolling."
+          }
+        ],
+        "sources": [
+          "lullaby-swaddling"
+        ]
+      },
+      {
+        "id": "comforter",
+        "name": "Their favourite comfort toy (and a backup if you have one)",
+        "note": "Losing it on day one is a trip-defining event. Keep it on a clip or in a known pocket.",
+        "priority": "key",
+        "show": {
+          "ages": [
+            "sitter",
+            "walker",
+            "toddler"
+          ]
+        }
+      }
     ]
   },
   {
@@ -78,14 +291,69 @@
     "badgeLabel": "Essential",
     "items": [
       {
-        "id": "paracetamol", "name": "Infant paracetamol (age-appropriate)", "note": "Check dosage weight-range on pack. Bring 2 bottles.", "priority": "must", "needsReview": true,
-        "variants": [ { "when": { "ages": ["newborn", "early"] }, "priority": "key", "note": "Babies this young shouldn't be given medicine without advice. Ask your GP, pharmacist or health visitor what to bring before you go." } ]
+        "id": "paracetamol",
+        "name": "Infant paracetamol (age-appropriate)",
+        "note": "The NHS says most children over 2 months can have it. Check the dose for their age on the pack, and ask a pharmacist if you're not sure.",
+        "priority": "must",
+        "needsReview": true,
+        "variants": [
+          {
+            "when": {
+              "ages": [
+                "newborn",
+                "early"
+              ]
+            },
+            "priority": "key",
+            "note": "The NHS says babies of 2–3 months can only have paracetamol if they weigh over 4kg and were born after 37 weeks. Ask your GP, pharmacist or health visitor what to bring."
+          }
+        ],
+        "sources": [
+          "nhs-paracetamol"
+        ]
       },
-      { "id": "thermometer", "name": "Digital thermometer", "note": "Ask your health visitor or pharmacist which type suits your baby's age.", "priority": "must", "needsReview": true },
-      { "id": "ors", "name": "Oral rehydration sachets (ORS)", "note": "For vomiting or diarrhoea — can't always find abroad. Check the pack for age guidance.", "priority": "key", "needsReview": true },
-      { "id": "nappy-cream", "name": "Nappy rash cream", "note": "Travel can trigger flare-ups from heat and different water.", "priority": "key" },
-      { "id": "wipes", "name": "Anti-bac wipes × 100+", "note": "Used for surfaces, tray tables, changing mats. Stock up.", "priority": "key" },
-      { "id": "sun", "name": "Sunhat and stroller sunshade", "note": "Shade is the best sun protection for young babies — ask your pharmacist about sun cream for their age.", "priority": "key", "needsReview": true }
+      {
+        "id": "thermometer",
+        "name": "Digital thermometer",
+        "note": "The NHS recommends a digital thermometer, used under the armpit for children under 5.",
+        "priority": "must",
+        "needsReview": true,
+        "sources": [
+          "nhs-temperature"
+        ]
+      },
+      {
+        "id": "ors",
+        "name": "Oral rehydration sachets (ORS)",
+        "note": "A pharmacist can recommend rehydration sachets. If you're worried about a baby under 12 months who's being sick or has diarrhoea, get medical advice straight away (in the UK, call 111).",
+        "priority": "key",
+        "needsReview": true,
+        "sources": [
+          "nhs-dv"
+        ]
+      },
+      {
+        "id": "nappy-cream",
+        "name": "Nappy rash cream",
+        "note": "Travel can trigger flare-ups from heat and different water.",
+        "priority": "key"
+      },
+      {
+        "id": "wipes",
+        "name": "Anti-bac wipes × 100+",
+        "note": "Used for surfaces, tray tables, changing mats. Stock up.",
+        "priority": "key"
+      },
+      {
+        "id": "sun",
+        "name": "Sunhat and stroller sunshade",
+        "note": "The NHS advises keeping babies under 6 months out of direct strong sunlight, so shade is your friend. Ask a pharmacist about sun cream for older babies.",
+        "priority": "key",
+        "needsReview": true,
+        "sources": [
+          "nhs-sun"
+        ]
+      }
     ]
   },
   {
@@ -95,14 +363,108 @@
     "badge": "key",
     "badgeLabel": "Your trip",
     "items": [
-      { "id": "flight-docs", "name": "Check the airline's infant rules before you book", "note": "Lap-infant fares, bassinet seats, minimum age and what baby gear you can bring free all vary by airline.", "priority": "must", "show": { "modes": ["flight"] }, "needsReview": true },
-      { "id": "you-clothes", "name": "A change of clothes for you in hand luggage", "note": "Spit-up and spills don't stay on the baby.", "priority": "key", "show": { "modes": ["flight", "train"] } },
-      { "id": "car-breaks", "name": "Plan regular breaks out of the car seat", "note": "Commonly advised: stop at least every 2 hours so baby can stretch out of the seat. Build them into your route.", "priority": "must", "show": { "modes": ["road"] }, "needsReview": true },
-      { "id": "car-shades", "name": "Window sunshades for the car", "note": "Keeps direct sun off baby on long drives.", "priority": "key", "show": { "modes": ["road"] } },
-      { "id": "car-mirror", "name": "Rear-facing seat mirror", "note": "So the front-seat adult can glance at baby without turning round.", "priority": "nice", "show": { "modes": ["road"] } },
-      { "id": "train-seats", "name": "Reserve seats near the baby-change or with a table", "note": "A table seat gives you space to feed and change; near the end of the carriage gives you room to walk.", "priority": "key", "show": { "modes": ["train"] } },
-      { "id": "entertainment", "name": "A few small new toys or books", "note": "Something new holds attention far longer than old favourites. Hand them out one at a time.", "priority": "key", "show": { "ages": ["sitter", "walker", "toddler"] } },
-      { "id": "shows", "name": "Downloaded shows or music", "note": "Downloaded, not streamed — signal disappears exactly when you need it. No guilt.", "priority": "nice", "show": { "ages": ["walker", "toddler"] } }
+      {
+        "id": "flight-docs",
+        "name": "Check the airline's infant rules before you book",
+        "note": "Minimum ages, lap fares, bassinets and free baby gear all vary. For example, British Airways takes babies from 48 hours old, easyJet from 14 days and Ryanair from 8 days.",
+        "priority": "must",
+        "show": {
+          "modes": [
+            "flight"
+          ]
+        },
+        "needsReview": true,
+        "sources": [
+          "ba-tickets",
+          "easyjet-children",
+          "ryanair-infants"
+        ]
+      },
+      {
+        "id": "you-clothes",
+        "name": "A change of clothes for you in hand luggage",
+        "note": "Spit-up and spills don't stay on the baby.",
+        "priority": "key",
+        "show": {
+          "modes": [
+            "flight",
+            "train"
+          ]
+        }
+      },
+      {
+        "id": "car-breaks",
+        "name": "Plan regular breaks out of the car seat",
+        "note": "The Lullaby Trust advises regular breaks on long drives so baby can come out of the seat and stretch, and moving them to a flat sleep space once you arrive.",
+        "priority": "must",
+        "show": {
+          "modes": [
+            "road"
+          ]
+        },
+        "needsReview": true,
+        "sources": [
+          "lullaby-carseats"
+        ]
+      },
+      {
+        "id": "car-shades",
+        "name": "Window sunshades for the car",
+        "note": "Keeps direct sun off baby on long drives.",
+        "priority": "key",
+        "show": {
+          "modes": [
+            "road"
+          ]
+        }
+      },
+      {
+        "id": "car-mirror",
+        "name": "Rear-facing seat mirror",
+        "note": "So the front-seat adult can glance at baby without turning round.",
+        "priority": "nice",
+        "show": {
+          "modes": [
+            "road"
+          ]
+        }
+      },
+      {
+        "id": "train-seats",
+        "name": "Reserve seats near the baby-change or with a table",
+        "note": "A table seat gives you space to feed and change; near the end of the carriage gives you room to walk.",
+        "priority": "key",
+        "show": {
+          "modes": [
+            "train"
+          ]
+        }
+      },
+      {
+        "id": "entertainment",
+        "name": "A few small new toys or books",
+        "note": "Something new holds attention far longer than old favourites. Hand them out one at a time.",
+        "priority": "key",
+        "show": {
+          "ages": [
+            "sitter",
+            "walker",
+            "toddler"
+          ]
+        }
+      },
+      {
+        "id": "shows",
+        "name": "Downloaded shows or music",
+        "note": "Downloaded, not streamed — signal disappears exactly when you need it. No guilt.",
+        "priority": "nice",
+        "show": {
+          "ages": [
+            "walker",
+            "toddler"
+          ]
+        }
+      }
     ]
   },
   {
@@ -113,13 +475,61 @@
     "badgeLabel": "Helpful",
     "items": [
       {
-        "id": "stroller", "name": "Lightweight stroller", "note": "Compact and easy to fold one-handed.", "priority": "key",
-        "variants": [ { "when": { "modes": ["flight"] }, "name": "Lightweight stroller (gate-check compatible)", "note": "Ask at check-in — most airlines let you take it to the gate.", "needsReview": true } ]
+        "id": "stroller",
+        "name": "Lightweight stroller",
+        "note": "Compact and easy to fold one-handed.",
+        "priority": "key",
+        "variants": [
+          {
+            "when": {
+              "modes": [
+                "flight"
+              ]
+            },
+            "name": "Lightweight, foldable stroller",
+            "note": "Ask at check-in whether you can use it to the gate. Some airlines, like British Airways, return slimline pushchairs to the aircraft door at certain airports.",
+            "needsReview": true
+          }
+        ],
+        "sources": [
+          "ba-baggage"
+        ]
       },
-      { "id": "carrier", "name": "Baby carrier / sling", "note": "Hands-free and better than a stroller in crowds or cobblestones.", "priority": "key" },
-      { "id": "nappy-bag", "name": "Nappy bag with packing cubes", "note": "Compartmentalise feed, change, sleep items. Saves you at 2am.", "priority": "nice" },
-      { "id": "laundry", "name": "Travel wash or a place with a washing machine", "note": "On longer trips it's lighter to wash than to pack for every day.", "priority": "nice", "show": { "lengths": ["week"] } },
-      { "id": "earphones", "name": "Noise-cancelling earphones (yours!)", "note": "You deserve this. Especially on the return flight.", "priority": "you", "show": { "modes": ["flight", "train"] } }
+      {
+        "id": "carrier",
+        "name": "Baby carrier / sling",
+        "note": "Hands-free and better than a stroller in crowds or cobblestones.",
+        "priority": "key"
+      },
+      {
+        "id": "nappy-bag",
+        "name": "Nappy bag with packing cubes",
+        "note": "Compartmentalise feed, change, sleep items. Saves you at 2am.",
+        "priority": "nice"
+      },
+      {
+        "id": "laundry",
+        "name": "Travel wash or a place with a washing machine",
+        "note": "On longer trips it's lighter to wash than to pack for every day.",
+        "priority": "nice",
+        "show": {
+          "lengths": [
+            "week"
+          ]
+        }
+      },
+      {
+        "id": "earphones",
+        "name": "Noise-cancelling earphones (yours!)",
+        "note": "You deserve this. Especially on the return flight.",
+        "priority": "you",
+        "show": {
+          "modes": [
+            "flight",
+            "train"
+          ]
+        }
+      }
     ]
   }
 ]

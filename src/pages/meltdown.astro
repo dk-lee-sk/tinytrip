@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import meltdown from '../data/meltdown.json';
+import Sources from '../components/Sources.astro';
 ---
 
 <Base title="The meltdown guide">
@@ -8,8 +9,8 @@ import meltdown from '../data/meltdown.json';
     <p class="page-eyebrow">When things go sideways</p>
     <h1 class="page-title">The meltdown guide</h1>
     <p class="page-sub">
-      Every parent's nightmare: a full meltdown in an airport, restaurant, or train. Here's your calm, practical
-      playbook. Bookmark this page.
+      It happens to every parent sooner or later: a full meltdown in an airport, a restaurant or on a train.
+      Here's a calm, practical playbook to come back to. Bookmark it, just in case.
     </p>
 
     <div class="calm-box">
@@ -24,7 +25,8 @@ import meltdown from '../data/meltdown.json';
           <div>
             <h2>{s.title}</h2>
             <p>{s.text}</p>
-            {s.needsReview && <span class="review-flag">Being reviewed</span>}
+            <Sources ids={s.sources} />
+            {s.needsReview && <span class="review-flag">Still being double-checked</span>}
           </div>
         </li>
       ))}

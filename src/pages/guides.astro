@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import guides from '../data/guides.json';
+import Sources from '../components/Sources.astro';
 ---
 
 <Base title="Travel guides">
@@ -29,7 +30,8 @@ import guides from '../data/guides.json';
               </>
             ))}
             <div class="guide-tip">💡 <strong>{g.tip.label}:</strong> {g.tip.text}</div>
-            {g.needsReview && <span class="review-flag">Being reviewed against official guidance</span>}
+            <Sources ids={g.sources} />
+            {g.needsReview && <span class="review-flag">Still being double-checked</span>}
           </div>
         </details>
       ))}

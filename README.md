@@ -32,7 +32,9 @@ CONTENT_REVIEW.md  Health/safety claims still to verify before launch
 ## Content rules
 
 - No made-up numbers: no user counts, ratings or scores until there is real data behind them.
-- Any health, safety or travel-rule claim gets `"needsReview": true` in its JSON until it has a source.
+- Any health, safety or travel-rule claim cites its official source: add the page to `src/data/sources.json`
+  and list its id in the item's `sources` array (shown on the site as "From: NHS ↗"). It keeps
+  `"needsReview": true` until the wording is approved.
   See `CONTENT_REVIEW.md`.
 - Tone: warm, non-judgmental, "knowledgeable friend".
 

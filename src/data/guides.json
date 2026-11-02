@@ -2,35 +2,74 @@
   {
     "id": "flying",
     "icon": "✈️",
-    "title": "Flying with a newborn — what to actually expect",
-    "summary": "Pressure, feeding, and what flight attendants secretly know",
+    "title": "Flying with a baby: what to really expect",
+    "summary": "Little ears, choosing seats, and what the crew can (and can't) do",
     "needsReview": true,
     "sections": [
-      { "heading": "Ear pressure", "text": "Babies can't equalise pressure by yawning on demand. Feed during take-off and landing — sucking and swallowing does the work for them. Breastfeed, bottle, or dummy all work equally well." },
-      { "heading": "Best seats to book", "list": [
-        "Bulkhead rows — extra legroom and bassinet-eligible on long haul",
-        "Aisle seat for you — faster access for nappy changes",
-        "Avoid the back row — it's louder and seats don't fully recline"
-      ] },
-      { "heading": "What flight attendants actually do", "text": "They have seen everything. A crying baby is not an emergency. Ask them for hot water to warm bottles — most will help without hesitation." }
+      {
+        "heading": "Little ears",
+        "text": "Changes in air pressure during take-off and landing can make little ears uncomfortable. A feed, a bottle or a dummy can help, because sucking and swallowing helps balance the pressure. Landing is often the trickier part, so keep something back for the descent."
+      },
+      {
+        "heading": "Choosing seats",
+        "list": [
+          "On long-haul flights, bassinets fix to the bulkhead rows. Ask for one when you book",
+          "An aisle seat makes nappy-change trips easier",
+          "Babies can't sit in, or right next to, an emergency exit row"
+        ]
+      },
+      {
+        "heading": "Your lap or their own seat?",
+        "text": "Babies under 2 can usually travel on your lap. The American Academy of Pediatrics says a baby is safest in their own seat in an approved car seat, so if that's an option for you, ask the airline which car seats they accept."
+      },
+      {
+        "heading": "The crew",
+        "text": "They've seen it all before, and a crying baby is part of flying. Services differ between airlines, though. Ryanair, for example, says it doesn't warm baby bottles, so bring a flask or ready-made milk just in case."
+      }
     ],
-    "tip": { "label": "Honest truth", "text": "The flight is almost never as bad as you feared. Most babies sleep more than usual due to engine noise. Prepare for the worst, expect something manageable." }
+    "tip": {
+      "label": "Gentle truth",
+      "text": "The flight is usually more manageable than the version in your head. And if your baby cries, the American Academy of Pediatrics says to feel free to ignore the stares. You're doing a good job."
+    },
+    "sources": [
+      "aap-flying",
+      "cdc-infants",
+      "ba-seating",
+      "aerlingus-children",
+      "ryanair-infants"
+    ]
   },
   {
     "id": "packing",
     "icon": "🧳",
-    "title": "How to actually pack — a first-timer's framework",
+    "title": "How to pack: a first-timer's framework",
     "summary": "The rule of three and what you'll wish you'd left at home",
     "sections": [
-      { "heading": "The rule of three", "text": "For any item that can get dirty (clothes, bibs, muslins), pack what you think you need — then add three more. Babies will always exceed your estimates at the worst moment." },
-      { "heading": "What to leave behind", "list": [
-        "Baby bath — hotels have sinks, or buy a cheap inflatable locally",
-        "Baby monitor — keep baby in your room, problem solved",
-        "Every toy they own — two familiar toys maximum"
-      ] },
-      { "heading": "What to buy at destination", "text": "Nappies, wipes, baby food (6m+), and formula are available globally. Don't add luggage weight for these unless you're going somewhere very remote." }
+      {
+        "heading": "The rule of three",
+        "text": "For any item that can get dirty (clothes, bibs, muslins), pack what you think you need — then add three more. Babies will always exceed your estimates at the worst moment."
+      },
+      {
+        "heading": "What to leave behind",
+        "list": [
+          "Baby bath — hotels have sinks, or buy a cheap inflatable locally",
+          "Baby monitor — keep baby in your room, problem solved",
+          "Every toy they own — two familiar toys maximum"
+        ]
+      },
+      {
+        "heading": "What you can buy there",
+        "text": "Nappies, wipes and baby food are sold in most places. Formula is too, but brands and recipes differ, so if your baby is settled on one, bring enough from home. Save the luggage space for things that are harder to replace."
+      }
     ],
-    "tip": { "label": "Weight hack", "text": "Wear your bulkiest items on the plane. Stuff muslins and socks into shoes in your bag." }
+    "tip": {
+      "label": "Weight hack",
+      "text": "Wear your bulkiest items on the plane. Stuff muslins and socks into shoes in your bag."
+    },
+    "needsReview": true,
+    "sources": [
+      "cdc-infants"
+    ]
   },
   {
     "id": "hotels",
@@ -38,14 +77,23 @@
     "title": "Booking the right hotel for a baby",
     "summary": "Questions to ask before you confirm that non-refundable rate",
     "sections": [
-      { "heading": "Always confirm before booking", "list": [
-        "Do you have a cot/crib available, and what size mattress?",
-        "Is the room large enough for a travel cot on the floor?",
-        "Do you have blackout curtains — or can you provide a blind?",
-        "Is there a microwave or kettle in the room (for sterilising)?"
-      ] },
-      { "heading": "Room location", "text": "Request away from lifts, ice machines, and street-facing rooms. Ground floor for night-waking walks. Away from pool if you're a light sleeper — pumps run all night." }
+      {
+        "heading": "Always confirm before booking",
+        "list": [
+          "Do you have a cot/crib available, and what size mattress?",
+          "Is the room large enough for a travel cot on the floor?",
+          "Do you have blackout curtains — or can you provide a blind?",
+          "Is there a microwave or kettle in the room (for sterilising)?"
+        ]
+      },
+      {
+        "heading": "Room location",
+        "text": "Request away from lifts, ice machines, and street-facing rooms. Ground floor for night-waking walks. Away from pool if you're a light sleeper — pumps run all night."
+      }
     ],
-    "tip": { "label": "Tip", "text": "Suite-style rooms where the bedroom is separated from a living area are worth the upgrade — you can sit up after baby sleeps without a screen glow problem." }
+    "tip": {
+      "label": "Tip",
+      "text": "Suite-style rooms where the bedroom is separated from a living area are worth the upgrade — you can sit up after baby sleeps without a screen glow problem."
+    }
   }
 ]

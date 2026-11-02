@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import ages from '../data/ages.json';
+import Sources from '../components/Sources.astro';
 ---
 
 <Base title="Is my baby ready to travel?">
@@ -41,7 +42,8 @@ import ages from '../data/ages.json';
           <p><strong>{a.listHeading}:</strong></p>
           <ul>{a.points.map((p) => <li>{p}</li>)}</ul>
           {a.flightNote && <p class="flight-note" data-flight-note hidden>✈️ {a.flightNote}</p>}
-          {a.needsReview && <span class="review-flag">Being reviewed against official guidance</span>}
+          <Sources ids={a.sources} />
+          {a.needsReview && <span class="review-flag">Still being double-checked</span>}
         </section>
       ))}
     </div>

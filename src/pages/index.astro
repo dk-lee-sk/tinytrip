@@ -28,6 +28,18 @@ const promises = [
   <section class="hero">
     <div class="hero-blob blob1" aria-hidden="true"></div>
     <div class="hero-blob blob2" aria-hidden="true"></div>
+    <svg class="hero-doodle" viewBox="0 0 300 140" aria-hidden="true" focusable="false">
+      <path d="M18 112c40-6 62-30 58-52-3-17-24-19-28-4-5 18 26 30 60 18 38-13 70-48 140-58"
+            fill="none" stroke="#E07A5F" stroke-width="2.5" stroke-dasharray="2 9" stroke-linecap="round" opacity="0.7" />
+      <path d="M14 104c-6-6 2-14 7-8 5-6 13 2 7 8l-7 7z" fill="#F5C4B0" />
+      <g transform="translate(250 6) rotate(-14)">
+        <path d="M2 14 L40 10 Q48 10 48 14 Q48 18 40 18 L2 14Z" fill="#fff" stroke="#B8573D" stroke-width="2" stroke-linejoin="round" />
+        <path d="M18 13 L28 0 L33 1 L28 12Z M20 16 L28 28 L33 27 L28 17Z M4 14 L0 6 L5 6 L10 13Z" fill="#E07A5F" />
+      </g>
+      <g fill="#fff" opacity="0.9">
+        <ellipse cx="200" cy="96" rx="26" ry="9" /><ellipse cx="190" cy="90" rx="13" ry="10" /><ellipse cx="208" cy="88" rx="11" ry="9" />
+      </g>
+    </svg>
     <div class="hero-copy">
       <p class="hero-eyebrow">🎉 Built for first-time parents</p>
       <h1>Your first trip<br />with baby.<br /><em>You've got this.</em></h1>
@@ -163,6 +175,7 @@ const promises = [
   .hero-blob { position: absolute; border-radius: 50%; opacity: 0.25; }
   .blob1 { width: 340px; height: 340px; background: var(--peach); top: -80px; right: 5%; }
   .blob2 { width: 200px; height: 200px; background: var(--sky); bottom: -60px; left: 30%; }
+  .hero-doodle { position: absolute; top: 18px; left: 34%; width: 300px; z-index: 1; pointer-events: none; }
   .hero-copy { position: relative; z-index: 2; }
   .hero-eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
@@ -177,8 +190,8 @@ const promises = [
   .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
   .hero-card {
-    background: var(--white); border-radius: 24px; padding: 36px;
-    box-shadow: var(--shadow-lg); position: relative; z-index: 2;
+    background: var(--white); border-radius: 28px; padding: 36px;
+    box-shadow: var(--shadow-lg); position: relative; z-index: 2; border: 1px solid var(--line);
   }
   .hero-card h2 { font-family: 'Lora', serif; font-size: 1.2rem; margin-bottom: 6px; }
   .subtitle { font-size: 0.85rem; color: var(--muted); margin-bottom: 24px; }
@@ -230,6 +243,7 @@ const promises = [
 
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; gap: 32px; padding: 40px 16px; }
+    .hero-doodle { top: 8px; left: auto; right: -20px; width: 170px; opacity: 0.8; }
     h1 { font-size: 2.2rem; }
     .hero-card { padding: 24px; }
     .trust-row { flex-wrap: wrap; }

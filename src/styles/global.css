@@ -4,7 +4,8 @@
   --coral:    #E07A5F;
   --coral-dk: #B8573D; /* darker coral for text on light backgrounds (contrast) */
   --deep:     #2D2926;
-  --warm:     #F9F4EF;
+  --warm:     #FBF4EC; /* creamy page background */
+  --cream:    #FFFBF6;
   --sage:     #7B9E87;
   --sage-dk:  #4E7259;
   --sage-lt:  #EAF2EC;
@@ -13,18 +14,23 @@
   --gold:     #E8C170;
   --gold-lt:  #FDF6E3;
   --white:    #FFFFFF;
-  --line:     #EDE8E3;
+  --line:     #F1E6DC;
   --muted:    rgba(45,41,38,0.68);
-  --shadow:   0 4px 24px rgba(45,41,38,0.08);
-  --shadow-lg:0 12px 48px rgba(45,41,38,0.13);
-  --radius:   20px;
+  /* shadows tinted warm rather than grey */
+  --shadow:   0 6px 28px rgba(150,90,60,0.09);
+  --shadow-lg:0 14px 48px rgba(150,90,60,0.15);
+  --radius:   22px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Nunito', sans-serif;
-  background: var(--warm);
+  /* soft peach and sage glows, like morning light */
+  background:
+    radial-gradient(1100px 520px at 105% -5%, rgba(245,196,176,0.30), transparent 60%),
+    radial-gradient(900px 520px at -10% 35%, rgba(200,223,212,0.35), transparent 60%),
+    var(--warm);
   color: var(--deep);
   min-height: 100vh;
   overflow-x: hidden;
@@ -77,12 +83,13 @@ a { color: inherit; }
 /* ── FOOTER ── */
 .site-footer {
   border-top: 1.5px solid var(--line);
-  background: var(--white);
+  background: var(--cream);
   padding: 24px 36px;
   font-size: 0.82rem; line-height: 1.6; color: var(--muted);
   text-align: center;
 }
 .site-footer p { max-width: 720px; margin: 0 auto; }
+.site-footer .footer-love { font-family: 'Lora', serif; font-style: italic; font-size: 0.95rem; color: var(--coral-dk); margin-bottom: 8px; }
 .site-footer strong { color: var(--deep); }
 
 /* ── FEEDBACK (every page, above the footer) ── */
@@ -123,13 +130,13 @@ a { color: inherit; }
 /* ── BUTTONS ── */
 .btn-coral, .btn-ghost {
   display: inline-block; text-decoration: none; text-align: center;
-  border-radius: 14px; padding: 14px 28px;
+  border-radius: 100px; padding: 14px 28px;
   font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 700;
   cursor: pointer; transition: all 0.2s;
 }
 .btn-coral {
   background: var(--coral-dk); color: var(--white); border: none;
-  box-shadow: 0 4px 16px rgba(224,122,95,0.35);
+  box-shadow: 0 6px 18px rgba(184,87,61,0.28);
 }
 .btn-coral:hover { background: #9E4A33; transform: translateY(-2px); }
 .btn-ghost { background: var(--white); color: var(--coral-dk); border: 2px solid var(--peach); }
@@ -159,18 +166,30 @@ a { color: inherit; }
 .inner.narrow { max-width: 740px; }
 .page-eyebrow, .section-eyebrow {
   font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.8px; color: var(--sage-dk); margin-bottom: 10px;
+  letter-spacing: 0.8px; color: var(--sage-dk); margin-bottom: 12px;
+}
+.page-eyebrow {
+  display: inline-block; background: var(--sage-lt);
+  padding: 5px 14px; border-radius: 100px;
+}
+.page-title::after {
+  content: ''; display: block; width: 76px; height: 10px; margin-top: 10px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 76 10'%3E%3Cpath d='M2 6c6-5 10-5 16 0s10 5 16 0 10-5 16 0 10 5 16 0 6-3 8-2' fill='none' stroke='%23F5C4B0' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat;
 }
 .page-title { font-family: 'Lora', serif; font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
 .page-sub { font-size: 0.95rem; color: var(--muted); margin-bottom: 36px; line-height: 1.65; }
 .section-title { font-family: 'Lora', serif; font-size: 1.9rem; font-weight: 700; margin-bottom: 8px; }
 .section-sub { font-size: 0.95rem; color: var(--muted); margin-bottom: 36px; }
 
-.panel { background: var(--white); border-radius: 20px; padding: 28px; box-shadow: var(--shadow); }
+.panel { background: var(--white); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); }
+
+/* a hairline warm edge on cards, so white sits softly on cream */
+.panel, .trip-panel, .cs-items, .task-list, .ask-group, .step-card, .guide-item,
+.guide-card, .feedback, .pack-summary, .readiness-intro, .dest-card { border: 1px solid var(--line); }
 .panel h2 { font-family: 'Lora', serif; font-size: 1.05rem; margin-bottom: 20px; }
 
 .calm-box {
-  background: var(--sage-lt); border-radius: 16px;
+  background: linear-gradient(135deg, var(--sage-lt), #F3F7EF); border-radius: var(--radius);
   padding: 24px 28px; border-left: 4px solid var(--sage);
 }
 .calm-box h2 { font-family: 'Lora', serif; font-size: 1rem; color: var(--sage-dk); margin-bottom: 10px; }
@@ -178,13 +197,30 @@ a { color: inherit; }
 
 .next-step { margin-top: 32px; text-align: center; }
 
-/* small "this needs expert review" marker on unverified health content */
+/* quiet marker on content whose final wording is still being reviewed */
 .review-flag {
-  display: inline-block; margin-top: 8px;
-  font-size: 0.72rem; font-weight: 700;
-  color: #8A6000; background: var(--gold-lt);
-  border: 1px dashed var(--gold); border-radius: 100px;
-  padding: 2px 10px;
+  display: inline-block; margin-top: 6px;
+  font-size: 0.7rem; font-weight: 600;
+  color: var(--muted); background: transparent;
+  border: 1px dashed #D9CFC5; border-radius: 100px;
+  padding: 1px 9px;
+}
+
+/* "From: NHS ↗" links under a claim */
+.sources {
+  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 5px 6px;
+  margin: 8px 8px 0 0; font-size: 0.72rem; line-height: 1.4; vertical-align: middle;
+}
+.sources + .review-flag { vertical-align: middle; }
+.sources-label { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.sources a {
+  color: #2F5C80; background: var(--sky-lt); text-decoration: none; font-weight: 700;
+  padding: 2px 9px; border-radius: 100px; border: 1px solid #DCEAF5;
+}
+.sources a:hover { text-decoration: underline; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
 }
 
 /* ── TRIP PANEL (shared trip details form) ── */
@@ -202,7 +238,7 @@ a { color: inherit; }
 
 /* ── PILLS ── */
 .pill { font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
-.pill-must { background: #FFE8E8; color: #A93226; }
+.pill-must { background: var(--blush); color: var(--coral-dk); border: 1px solid var(--peach); }
 .pill-key  { background: var(--gold-lt); color: #8A6000; }
 .pill-nice, .pill-you { background: var(--sage-lt); color: var(--sage-dk); }
 
@@ -233,7 +269,8 @@ a { color: inherit; }
 /* ── PRINT ── */
 .print-only { display: none; }
 @media print {
-  .site-nav, .site-footer, .feedback, .skip-link, .no-print, button { display: none !important; }
+  .site-nav, .site-footer, .feedback, .skip-link, .no-print, .sources, button { display: none !important; }
+  body { background: #fff !important; }
   .print-only { display: block; }
   body { background: #fff; font-size: 11pt; }
   main { animation: none; }

@@ -3,95 +3,156 @@
     "id": "passport",
     "days": 70,
     "title": "Check baby's passport or ID",
-    "note": "Travelling abroad? Babies need their own passport. Processing times vary by country and season, so check your passport office's current wait and apply early.",
-    "link": { "href": "/pack", "label": "See documents on the packing list" }
+    "note": "Travelling abroad? Your baby needs their own passport. HM Passport Office says it usually takes up to 3 weeks, and longer if they need more information, so there's no harm starting early. Not in the UK? Check your own passport office.",
+    "link": {
+      "href": "/pack",
+      "label": "See documents on the packing list"
+    },
+    "needsReview": true,
+    "sources": [
+      "govuk-child-passport",
+      "hmpo-times"
+    ]
   },
   {
     "id": "insurance",
     "days": 56,
     "title": "Get travel insurance that covers baby",
-    "note": "Read the small print for your baby's age. Some policies have a minimum age or only cover named travellers.",
-    "needsReview": true
+    "note": "Check that your baby is named on the policy, and that it covers medical treatment, hospital stays and getting home if you need to. A GHIC or EHIC card is handy but isn't a replacement for insurance.",
+    "needsReview": true,
+    "sources": [
+      "govuk-insurance"
+    ]
   },
   {
     "id": "talk-gp",
     "days": 42,
     "title": "Mention the trip to your GP, health visitor or paediatrician",
-    "note": "Especially for a very young baby, a baby with a health condition, or a destination that needs vaccinations. Ask about medicines you can bring too."
+    "note": "Especially for a very young baby, a baby with a health condition, or a destination that needs vaccinations. Ask about medicines you can bring too.",
+    "sources": [
+      "nathnac"
+    ]
   },
   {
     "id": "book-transport",
     "days": 42,
     "title": "Book your seats",
     "note": "Ask about bassinet seats, infant fares and what baby gear travels free before you pay.",
-    "show": { "modes": ["flight"] },
-    "link": { "href": "/ask#airline", "label": "Questions to ask the airline" }
+    "show": {
+      "modes": [
+        "flight"
+      ]
+    },
+    "link": {
+      "href": "/ask#airline",
+      "label": "Questions to ask the airline"
+    }
   },
   {
     "id": "book-train",
     "days": 35,
     "title": "Book your train seats",
     "note": "Ask about seats with a table, space for a stroller and where the baby-changing toilets are.",
-    "show": { "modes": ["train"] },
-    "link": { "href": "/ask#train", "label": "Questions to ask the train company" }
+    "show": {
+      "modes": [
+        "train"
+      ]
+    },
+    "link": {
+      "href": "/ask#train",
+      "label": "Questions to ask the train company"
+    }
   },
   {
     "id": "book-stay",
     "days": 35,
     "title": "Book somewhere to stay",
     "note": "A cot, blackout curtains and a fridge make a bigger difference than a fancy pool.",
-    "link": { "href": "/ask#stay", "label": "Questions to ask the hotel or host" }
+    "link": {
+      "href": "/ask#stay",
+      "label": "Questions to ask the hotel or host"
+    }
   },
   {
     "id": "car-seat-plan",
     "days": 28,
     "title": "Decide on the car seat",
     "note": "Bring yours, hire one, or skip cars at the destination. Whatever you choose, sort it before you go.",
-    "link": { "href": "/ask#car", "label": "Questions to ask car hire and taxis" }
+    "link": {
+      "href": "/ask#car",
+      "label": "Questions to ask car hire and taxis"
+    }
   },
   {
     "id": "route-plan",
     "days": 21,
     "title": "Plan the route and the stops",
     "note": "Look for services or towns where you can stop for feeds and nappy changes. Shorter driving days are fine.",
-    "show": { "modes": ["road"] }
+    "show": {
+      "modes": [
+        "road"
+      ]
+    }
   },
   {
     "id": "practice-run",
     "days": 14,
     "title": "Do a practice run",
     "note": "A day out with the full nappy bag, or a nap in the travel cot at home. You'll find out what you really use.",
-    "link": { "href": "/guides#packing", "label": "How to pack: a first-timer's framework" }
+    "link": {
+      "href": "/guides#packing",
+      "label": "How to pack: a first-timer's framework"
+    }
   },
   {
     "id": "travel-day",
     "days": 14,
     "title": "Sketch out the travel day",
     "note": "Line up naps, feeds and the journey so there are fewer surprises on the day.",
-    "link": { "href": "/travel-day", "label": "Open the travel-day planner" }
+    "link": {
+      "href": "/travel-day",
+      "label": "Open the travel-day planner"
+    }
   },
   {
     "id": "start-list",
     "days": 10,
     "title": "Start your packing list",
     "note": "Tick off what you already have and order anything missing while there's still time for delivery.",
-    "link": { "href": "/pack", "label": "Open your packing list" }
+    "link": {
+      "href": "/pack",
+      "label": "Open your packing list"
+    }
   },
   {
     "id": "baggage",
     "days": 7,
     "title": "Check the baggage rules for baby gear",
     "note": "Stroller, car seat, travel cot, milk and food: what can go in the cabin, and what goes in the hold?",
-    "show": { "modes": ["flight"] },
-    "link": { "href": "/ask#airline", "label": "Questions to ask the airline" }
+    "show": {
+      "modes": [
+        "flight"
+      ]
+    },
+    "link": {
+      "href": "/ask#airline",
+      "label": "Questions to ask the airline"
+    }
   },
   {
     "id": "sleep-shift",
     "days": 4,
     "title": "Check the time difference",
     "note": "If you're crossing time zones, you can start nudging bedtime a few days before you leave.",
-    "show": { "modes": ["flight"] },
-    "link": { "href": "/sleep", "label": "Open the time-zone helper" }
+    "show": {
+      "modes": [
+        "flight"
+      ]
+    },
+    "link": {
+      "href": "/sleep",
+      "label": "Open the time-zone helper"
+    }
   },
   {
     "id": "pack-bags",
@@ -110,6 +171,9 @@
     "days": 0,
     "title": "Travel day: you've got this",
     "note": "Something will go off-plan, and that's normal. Have a quick look at the meltdown guide so it's fresh in your mind.",
-    "link": { "href": "/meltdown", "label": "Read the meltdown guide" }
+    "link": {
+      "href": "/meltdown",
+      "label": "Read the meltdown guide"
+    }
   }
 ]

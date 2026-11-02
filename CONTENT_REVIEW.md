@@ -1,64 +1,113 @@
 # Content review list
 
-Health, safety and travel-rule claims that must be checked against an authoritative source
-(e.g. NHS, AAP, CDC, IATA / airline policies, government passport offices) and ideally reviewed by a
-health professional before public launch.
+Health, safety and travel-rule claims on TinyTrip, with the draft wording now on the site and the official
+source each one is based on. Sources live in `src/data/sources.json` and appear on the site as
+"From: NHS ↗" links under each claim.
 
-Each item is marked `"needsReview": true` in `src/data/*.json`, which shows a "Being reviewed" tag on the site.
-When a claim is verified: add the source, fix the wording if needed, and set `needsReview` to `false`.
+**Status:** all items below were redrafted on 2 Nov 2026 from official pages (checked that day). They still
+carry `"needsReview": true`, which shows a quiet "Still being double-checked" note on the site.
+
+**To approve an item:** read the wording and the linked source. Ideally also ask a health visitor or
+paediatric nurse to read the health items. Then set `"needsReview": false` on it and tick it here.
+
+Rules change, so re-check airline and government pages every few months. UK sources come first because the
+site is written for UK parents; a "Not in the UK?" note is added where rules differ by country.
 
 ## Is baby ready? (`src/data/ages.json`)
-- [ ] Newborns under 6 weeks "not recommended for long-haul flights"; paediatricians advise waiting 6–8 weeks for air travel
-- [ ] "Short car trips (1–2 hours) are perfectly safe from day one" (car-seat time limits for newborns?)
-- [ ] "Most airlines allow infants from 2 weeks old"
-- [ ] 3–6 months: "babies often sleep well with engine white noise"; "bassinet eligibility on most airlines"
-- [ ] "Lap infant fares apply until 24 months on most airlines"
+
+- [ ] **0–6 weeks, flying:** "the American Academy of Pediatrics says it's generally safe once a healthy baby is at
+  least 7 days old, but suggests waiting until 2–3 months if you can." Source: [AAP, Flying with baby](https://www.healthychildren.org/English/safety-prevention/on-the-go/Pages/Flying-with-Baby.aspx).
+  *Replaces the unsourced "paediatricians advise waiting 6–8 weeks".*
+- [ ] **0–6 weeks, airline minimum ages:** British Airways from 48 hours (recommends one week); easyJet from 14
+  days; premature babies may need medical clearance. Sources: [BA](https://www.britishairways.com/content/information/family-travel/tickets-and-travel-documents),
+  [easyJet](https://www.easyjet.com/en/help/boarding-and-flying/flying-with-children), [Aer Lingus](https://www.aerlingus.com/prepare/travelling-with-children/booking-information/).
+  *Replaces "most airlines allow infants from 2 weeks".*
+- [ ] **0–6 weeks, car trips:** "The Lullaby Trust suggests avoiding long drives with very young babies, and stopping
+  for regular breaks." Source: [Lullaby Trust, Car seats](https://www.lullabytrust.org.uk/baby-safety/baby-product-information/car-seats/).
+  *Replaces "short car trips are perfectly safe from day one".*
+- [ ] **6 weeks–3 months:** healthy babies can usually fly; check with GP if born early or unwell; feeding or a dummy
+  can help ear pressure. Sources: AAP (above), [CDC Yellow Book](https://www.cdc.gov/yellow-book/hcp/family-travel/traveling-safely-with-infants-and-children.html).
+- [ ] **3–6 months, bassinets:** limited; BA carrycots are for babies up to 6 months and 8kg. Source:
+  [BA, Family seating](https://www.britishairways.com/content/information/family-travel/seating).
+  *Removed: "babies often sleep well with engine white noise" (no source).*
+- [ ] **6–12 months, lap travel:** lap travel until the 2nd birthday; own seat from then on if they turn 2 mid-trip.
+  Sources: BA (tickets page), easyJet.
 
 ## Packing list (`src/data/packing.json`)
-- [ ] "Many standard policies exclude babies under 8 weeks" (travel insurance)
-- [ ] Passport "takes 4–6 weeks to process" (varies by country — consider linking per-country)
-- [ ] Vaccination records "required on arrival" by some destinations
-- [ ] "Bring 30% more formula than you think"
-- [ ] Infant paracetamol "bring 2 bottles"; dosage note (minimum age / weight; medicine rules abroad)
-- [ ] "Ear thermometers are fastest" (NHS guidance on thermometer types for under-1s)
-- [ ] Oral rehydration sachets — age suitability
-- [ ] Familiar sleep sack/swaddle (safe-sleep guidance on swaddling once rolling)
-- [ ] "Most airlines let you take the stroller to the gate" (flight variant)
-- [ ] Feed / drink during take-off and landing helps with ear pressure (flight item, and toddler variant)
-- [ ] Swaddle: "stop once baby shows signs of rolling" (0–3 month variant)
-- [ ] Sun: "shade is the best protection for young babies"; sun cream age guidance
-- [ ] Road trips: "stop at least every 2 hours" out of the car seat
-- [ ] Airline infant rules item (lap fares, bassinets, minimum age vary by airline)
-- [ ] Paracetamol variant for 0–3 months: "shouldn't be given medicine without advice"
 
-## Is baby ready? — flight note
-- [ ] Newborn + flight: "talk to your GP or health visitor first; many airlines have a minimum age"
+- [ ] **Insurance:** baby named on the policy; covers treatment and getting home; GHIC/EHIC isn't a substitute.
+  Source: [GOV.UK, Foreign travel insurance](https://www.gov.uk/guidance/foreign-travel-insurance).
+  *Removed: "many policies exclude babies under 8 weeks" (no source found).*
+- [ ] **Passport:** babies need their own; allow up to 3 weeks. Sources: [GOV.UK, Child passport](https://www.gov.uk/get-a-child-passport),
+  [HM Passport Office](https://www.gov.uk/government/organisations/hm-passport-office/about-our-services). *Was "4–6 weeks".*
+- [ ] **Vaccination record:** some countries ask for proof (e.g. yellow fever). Source: [NaTHNaC TravelHealthPro](https://travelhealthpro.org.uk/countries).
+- [ ] **Formula:** enough for the journey plus extra for delays; brand may not be sold abroad; UK hand-luggage
+  allowance. Sources: [GOV.UK, Baby food and milk](https://www.gov.uk/hand-luggage-restrictions/baby-food-and-baby-milk), CDC.
+  *Removed: "bring 30% more" (no source).*
+- [ ] **Bottles:** sterilise until 12 months; microwave steam bags; follow pack instructions. Source:
+  [NHS, Bottle feeding advice](https://www.nhs.uk/conditions/baby/breastfeeding-and-bottle-feeding/bottle-feeding/advice/).
+- [ ] **Take-off feed:** sucking/swallowing (and chewing for toddlers) can help ear pressure. Sources: AAP, CDC.
+- [ ] **Swaddle:** stop once baby shows signs of rolling. Source: [Lullaby Trust, Swaddling](https://www.lullabytrust.org.uk/baby-safety/baby-product-information/swaddling/).
+- [ ] **Paracetamol:** most children over 2 months; 2–3 months only if over 4kg and born after 37 weeks. Source:
+  [NHS, Paracetamol for children](https://www.nhs.uk/medicines/paracetamol-for-children/). *Removed: "bring 2 bottles".*
+- [ ] **Thermometer:** digital, under the armpit for under-5s. Source: [NHS, Taking your baby's temperature](https://www.nhs.uk/conditions/baby/health/how-to-take-your-babys-temperature/).
+  *Was "ear thermometers are fastest"; the NHS warns they can mislead in babies.*
+- [ ] **Rehydration sachets:** a pharmacist can recommend them; get advice straight away for a baby under 12 months
+  (UK: call 111). Source: [NHS, Diarrhoea and vomiting](https://www.nhs.uk/symptoms/diarrhoea-and-vomiting/).
+- [ ] **Sun:** keep babies under 6 months out of direct strong sunlight. Source: [NHS, Sun safety](https://www.nhs.uk/live-well/seasonal-health/sunscreen-and-sun-safety/).
+- [ ] **Airline infant rules:** BA from 48 hours, easyJet from 14 days, Ryanair from 8 days. Sources: BA, easyJet,
+  [Ryanair](https://help.ryanair.com/hc/en-gb/articles/12891532701457-What-are-the-rules-for-travelling-with-infants-0-2).
+- [ ] **Car breaks:** regular breaks on long drives; flat sleep space on arrival. Source: Lullaby Trust (car seats).
+  *Removed the fixed "every 2 hours": the Lullaby Trust says there's no published evidence for a set limit.*
+- [ ] **Stroller (flights):** ask at check-in; BA returns slimline pushchairs to the aircraft door at some airports.
+  Source: [BA, Pushchairs](https://www.britishairways.com/content/information/family-travel/baggage).
+  *Was "most airlines let you take it to the gate".*
 
 ## Guides (`src/data/guides.json`)
-- [ ] Ear pressure: feed during take-off and landing
-- [ ] "Most babies sleep more than usual due to engine noise"
-- [ ] "Formula available globally" (brands/stages differ; some countries restrict import)
+
+- [ ] **Flying, ears:** feed/bottle/dummy at take-off and landing; descent often trickier. Sources: AAP, CDC.
+- [ ] **Flying, seats:** bassinets at bulkhead rows on long-haul; no babies in or next to exit rows. Sources: BA, Aer Lingus.
+- [ ] **Flying, lap or own seat (new):** the AAP says a baby is safest in their own seat in an approved car seat. Source: AAP.
+- [ ] **Flying, crew:** services vary; Ryanair says it doesn't warm bottles. Source: Ryanair.
+  *Was "ask for hot water, most will help".*
+- [ ] **Flying, tip:** AAP says to "feel free to ignore the stares". *Removed: "most babies sleep more than usual
+  due to engine noise" (no source).*
+- [ ] **Packing, buying abroad:** formula sold widely but brands differ, so bring your usual one. Source: CDC.
+  *Was "formula is available globally".*
 
 ## Meltdown guide (`src/data/meltdown.json`)
-- [ ] Co-regulation claim (step 2). Original prototype said babies "read your cortisol level directly" and
-      "language processing shuts down" — softened to plain-language versions; confirm the softened wording.
+
+- [ ] **Step 2:** stay calm to comfort baby; it's OK to put baby down safely and take a few minutes; never shake a
+  baby. Source: [ICON, Babies cry, you can cope](https://iconcope.org/). *Replaces the co-regulation wording.*
 
 ## Sleep (`src/data/sleep.json`)
-- [ ] East/west bedtime pre-shift tips and light-exposure advice for infants
-- [ ] Sample 6–12 month schedule (two naps, ~7pm bedtime) as a "typical" pattern
 
-## Destinations (`src/data/destinations.json`)
-- [ ] All tags (e.g. "World-class hospitals", "Nursing rooms common") need a source or should be reworded as
-      parent-reported. Fabricated 0–100 scores were removed; decide on a credible rating method first.
+- [ ] **Time-zone tips:** shift bedtime a few days before; daylight on arrival; short trips can stay on home time.
+  Labelled as general jet-lag advice with little research on babies. Sources: [NHS 111 Wales, Jet lag](https://111.wales.nhs.uk/encyclopaedia/j/article/jetlag),
+  [CDC, Jet lag](https://www.cdc.gov/yellow-book/hcp/travel-air-sea/jet-lag-disorder.html).
+- [ ] **Example day (6–12 months):** now labelled "one example"; 1–3 naps at 6–9 months; calm, predictable bedtime
+  routine. Sources: [NHS Wirral leaflet](https://www.wchc.nhs.uk/wp-content/uploads/2019/12/SaferSleep_6-12months.pdf),
+  [NHS, Sleep and young children](https://www.nhs.uk/baby/health/sleep-and-young-children/).
 
 ## Countdown (`src/data/countdown.json`)
-- [ ] Insurance: "Some policies have a minimum age or only cover named travellers"
+
+- [ ] **Passport:** up to 3 weeks (HM Passport Office). **Insurance:** as packing list (GOV.UK). **GP chat:** links to TravelHealthPro.
 
 ## Questions to ask (`src/data/ask.json`)
-- [ ] Airline seats: "Some rows can't take an infant, for oxygen-mask reasons"
-- [ ] Airline milk: "Allowances for baby food often differ from the usual liquids limit"
-- [ ] Car hire: "Staff often aren't allowed to fit seats"
+
+- [ ] **Airline seats:** babies can't sit in or next to exit rows. Sources: Aer Lingus, BA.
+  *Removed the oxygen-mask reason: no airline page we checked confirms it.*
+- [ ] **Airline milk:** UK allows enough for the journey, over 100ml, screened at security. Source: GOV.UK.
+- [ ] **Car hire:** Enterprise and Avis say staff can't fit seats. Sources: [Enterprise](https://www.enterprise.co.uk/en/car-hire-faqs/france-products/car-seat-hire.html),
+  [Avis](https://www.avis.com/en/legal-documents/rental-terms).
 
 ## Travel-day planner (`src/pages/travel-day.astro`)
-- [ ] Take-off / landing: "Sucking and swallowing can help little ears" (same claim as the flying guide)
+
+- [ ] Take-off/landing feed tip and bedtime routine. Sources: AAP, CDC, NHS (sleep).
 - Feed times come from the parent's own interval; the page doesn't recommend one.
+
+## Not yet drafted
+
+- **Destinations (`src/data/destinations.json`):** tags like "World-class hospitals" or "Nursing rooms common" still
+  need either a source per destination or a decision on how to describe destinations credibly. Best done together
+  with the destination rating method (see the brief's open decisions).

@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import groups from '../data/ask.json';
+import Sources from '../components/Sources.astro';
 ---
 
 <Base title="Questions to ask before you book" description="Copy-ready questions for the airline, hotel, train company and car hire when travelling with a baby.">
@@ -33,7 +34,8 @@ import groups from '../data/ask.json';
                     <span>
                       <span class="q-text">{q.q}</span>
                       <span class="q-why">{q.why}</span>
-                      {q.needsReview && <span class="review-flag">Being reviewed</span>}
+                      <Sources ids={q.sources} />
+                      {q.needsReview && <span class="review-flag">Still being double-checked</span>}
                     </span>
                   </label>
                 </li>

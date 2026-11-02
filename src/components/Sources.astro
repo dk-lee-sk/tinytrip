@@ -1,0 +1,29 @@
+---
+// Small "From: NHS ↗ · GOV.UK ↗" line under a claim, linking to the official page it's based on.
+import registry from '../data/sources.json';
+
+interface Props {
+  ids?: string[];
+  class?: string;
+}
+
+type Source = { org: string; title: string; url: string };
+const all = registry as Record<string, Source>;
+const { ids = [], class: className } = Astro.props;
+const list = ids.map((id) => all[id]).filter(Boolean);
+
+// When one organisation appears twice (e.g. two British Airways pages), add the page name so the links differ.
+const orgCount = list.reduce<Record<string, number>>((n, s) => ({ ...n, [s.org]: (n[s.org] ?? 0) + 1 }), {});
+---
+
+{list.length > 0 && (
+  <span class:list={["sources", className]}>
+    <span class="sources-label">From</span>
+    {list.map((s) => (
+      <a href={s.url} target="_blank" rel="noopener" title={`${s.org}: ${s.title}`}>
+        {orgCount[s.org] > 1 ? `${s.org} (${s.title})` : s.org}<span aria-hidden="true"> ↗</span>
+        <span class="visually-hidden"> (opens in a new tab)</span>
+      </a>
+    ))}
+  </span>
+)}

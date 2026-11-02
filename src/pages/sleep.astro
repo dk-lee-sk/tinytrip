@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import sleep from '../data/sleep.json';
+import Sources from '../components/Sources.astro';
 ---
 
 <Base title="Sleep & schedules">
@@ -43,13 +44,17 @@ import sleep from '../data/sleep.json';
           <h3 id="sr-title"></h3>
           <p id="sr-summary"></p>
           <ul id="sr-tips"></ul>
-          <span class="review-flag">Tips being reviewed against official guidance</span>
+          <p class="sr-note">{sleep.tipsNote}</p>
+          <Sources ids={sleep.tipsSources} />
+          <span class="review-flag">Still being double-checked</span>
           <p class="sr-next"><a href="/travel-day">Now plan the travel day →</a></p>
         </div>
       </div>
 
       <div class="panel">
         <h2>📅 {sleep.schedule.title}</h2>
+        <p class="sched-note">{sleep.schedule.note}</p>
+        <Sources ids={sleep.schedule.sources} />
         <ol class="timeline">
           {sleep.schedule.items.map((s) => (
             <li class="tl-item">
@@ -162,6 +167,8 @@ import sleep from '../data/sleep.json';
   }
   .sleep-result h3 { font-weight: 700; color: #2F5C80; margin-bottom: 8px; font-size: 0.95rem; }
   .sleep-result p { font-size: 0.88rem; line-height: 1.65; }
+  .sr-note, .sched-note { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin-top: 10px; }
+  .sched-note { margin: -8px 0 0; }
   .sr-next { margin-top: 10px; font-weight: 700; }
   .sr-next a { color: var(--coral-dk); }
   .sleep-result ul { margin-top: 8px; padding-left: 16px; font-size: 0.85rem; line-height: 1.8; }

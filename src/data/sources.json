@@ -1,0 +1,137 @@
+{
+  "nhs-paracetamol": {
+    "org": "NHS",
+    "title": "Paracetamol for children",
+    "url": "https://www.nhs.uk/medicines/paracetamol-for-children/"
+  },
+  "nhs-temperature": {
+    "org": "NHS",
+    "title": "How to take your baby's temperature",
+    "url": "https://www.nhs.uk/conditions/baby/health/how-to-take-your-babys-temperature/"
+  },
+  "nhs-sun": {
+    "org": "NHS",
+    "title": "Sunscreen and sun safety",
+    "url": "https://www.nhs.uk/live-well/seasonal-health/sunscreen-and-sun-safety/"
+  },
+  "nhs-dv": {
+    "org": "NHS",
+    "title": "Diarrhoea and vomiting",
+    "url": "https://www.nhs.uk/symptoms/diarrhoea-and-vomiting/"
+  },
+  "nhs-bottle": {
+    "org": "NHS",
+    "title": "Bottle feeding advice",
+    "url": "https://www.nhs.uk/conditions/baby/breastfeeding-and-bottle-feeding/bottle-feeding/advice/"
+  },
+  "nhs-sleep": {
+    "org": "NHS",
+    "title": "Sleep and young children",
+    "url": "https://www.nhs.uk/baby/health/sleep-and-young-children/"
+  },
+  "nhs-wales-jetlag": {
+    "org": "NHS 111 Wales",
+    "title": "Jet lag",
+    "url": "https://111.wales.nhs.uk/encyclopaedia/j/article/jetlag"
+  },
+  "lullaby-swaddling": {
+    "org": "The Lullaby Trust",
+    "title": "Swaddling",
+    "url": "https://www.lullabytrust.org.uk/baby-safety/baby-product-information/swaddling/"
+  },
+  "lullaby-carseats": {
+    "org": "The Lullaby Trust",
+    "title": "Car seats",
+    "url": "https://www.lullabytrust.org.uk/baby-safety/baby-product-information/car-seats/"
+  },
+  "icon": {
+    "org": "ICON",
+    "title": "Babies cry, you can cope",
+    "url": "https://iconcope.org/"
+  },
+  "govuk-baby-food": {
+    "org": "GOV.UK",
+    "title": "Hand luggage: baby food and baby milk",
+    "url": "https://www.gov.uk/hand-luggage-restrictions/baby-food-and-baby-milk"
+  },
+  "govuk-child-passport": {
+    "org": "GOV.UK",
+    "title": "Get a passport for your child",
+    "url": "https://www.gov.uk/get-a-child-passport"
+  },
+  "hmpo-times": {
+    "org": "HM Passport Office",
+    "title": "How long it takes to get a passport",
+    "url": "https://www.gov.uk/government/organisations/hm-passport-office/about-our-services"
+  },
+  "govuk-insurance": {
+    "org": "GOV.UK",
+    "title": "Foreign travel insurance",
+    "url": "https://www.gov.uk/guidance/foreign-travel-insurance"
+  },
+  "nathnac": {
+    "org": "NaTHNaC TravelHealthPro",
+    "title": "Country information",
+    "url": "https://travelhealthpro.org.uk/countries"
+  },
+  "aap-flying": {
+    "org": "American Academy of Pediatrics",
+    "title": "Flying with baby",
+    "url": "https://www.healthychildren.org/English/safety-prevention/on-the-go/Pages/Flying-with-Baby.aspx"
+  },
+  "cdc-infants": {
+    "org": "CDC Yellow Book",
+    "title": "Traveling safely with infants and children",
+    "url": "https://www.cdc.gov/yellow-book/hcp/family-travel/traveling-safely-with-infants-and-children.html"
+  },
+  "cdc-jetlag": {
+    "org": "CDC Yellow Book",
+    "title": "Jet lag disorder",
+    "url": "https://www.cdc.gov/yellow-book/hcp/travel-air-sea/jet-lag-disorder.html"
+  },
+  "ba-tickets": {
+    "org": "British Airways",
+    "title": "Tickets and travel documents (newborns)",
+    "url": "https://www.britishairways.com/content/information/family-travel/tickets-and-travel-documents"
+  },
+  "ba-seating": {
+    "org": "British Airways",
+    "title": "Family seating and carrycots",
+    "url": "https://www.britishairways.com/content/information/family-travel/seating"
+  },
+  "ba-baggage": {
+    "org": "British Airways",
+    "title": "Car seats, pushchairs and children's bags",
+    "url": "https://www.britishairways.com/content/information/family-travel/baggage"
+  },
+  "easyjet-children": {
+    "org": "easyJet",
+    "title": "Flying with children",
+    "url": "https://www.easyjet.com/en/help/boarding-and-flying/flying-with-children"
+  },
+  "ryanair-infants": {
+    "org": "Ryanair",
+    "title": "Rules for travelling with infants",
+    "url": "https://help.ryanair.com/hc/en-gb/articles/12891532701457-What-are-the-rules-for-travelling-with-infants-0-2"
+  },
+  "aerlingus-children": {
+    "org": "Aer Lingus",
+    "title": "Travelling with children: booking information",
+    "url": "https://www.aerlingus.com/prepare/travelling-with-children/booking-information/"
+  },
+  "enterprise-seats": {
+    "org": "Enterprise",
+    "title": "Child car seat hire",
+    "url": "https://www.enterprise.co.uk/en/car-hire-faqs/france-products/car-seat-hire.html"
+  },
+  "avis-terms": {
+    "org": "Avis",
+    "title": "Rental terms (child seats)",
+    "url": "https://www.avis.com/en/legal-documents/rental-terms"
+  },
+  "nhs-wirral-sleep": {
+    "org": "NHS Wirral Community Health and Care",
+    "title": "Your baby's sleep at 6–12 months",
+    "url": "https://www.wchc.nhs.uk/wp-content/uploads/2019/12/SaferSleep_6-12months.pdf"
+  }
+}

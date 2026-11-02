@@ -1,14 +1,33 @@
 {
   "reassurance": {
-    "title": "💚 Before anything else — you're not failing.",
-    "text": "Babies cry. Toddlers tantrum. Every single parent in that airport has either been there or will be. No one is judging you as much as you think. Your job right now is to stay calm — babies take their cues from you."
+    "title": "💚 Before anything else: you're not failing.",
+    "text": "Babies cry. Toddlers tantrum. Every parent in that airport has been there or will be, and most people are far kinder than the stares suggest. You don't have to fix it fast. You just have to stay with your little one."
   },
   "steps": [
-    { "title": "Remove from stimulus", "text": "Find the quietest nearby space — a corner, a hallway, outside. Too much noise and light makes meltdowns worse. Less input usually means faster calm. Don't try to fix the problem in the middle of the crowd." },
-    { "title": "Steady yourself first — one slow breath", "text": "Take one slow breath before you do anything. Babies pick up on how you're feeling, so the calmer you are, the easier it is for them to settle.", "needsReview": true },
-    { "title": "Name it and hold", "text": "Say quietly: \"You're tired. You're overwhelmed. I've got you.\" Then hold them close, skin-to-skin if you can. Keep words to a minimum — a very upset baby can't take much in." },
-    { "title": "The distraction pivot (for 6m+)", "text": "Only once the peak has passed: something new to look at or hear — pointing at something (\"look — a dog!\"), a familiar sound on your phone, or a snack. Don't offer during peak crying; it won't land." },
-    { "title": "Assess and adapt the plan", "text": "Was it hunger? Overtiredness? Overstimulation? Identify the trigger so you can adjust the rest of the day. Cut one planned activity if needed — a rested baby beats a packed itinerary." }
+    {
+      "title": "Find a quieter spot",
+      "text": "Find the quietest nearby space — a corner, a hallway, outside. Too much noise and light makes meltdowns worse. Less input usually means faster calm. Don't try to fix the problem in the middle of the crowd."
+    },
+    {
+      "title": "Steady yourself first: one slow breath",
+      "text": "Take one slow breath before you do anything. The calmer you feel, the easier it is to comfort your baby. Crying can be really hard to listen to, so if it ever feels like too much, it's OK to put your baby down somewhere safe and take a few minutes to calm down. Never shake a baby.",
+      "needsReview": true,
+      "sources": [
+        "icon"
+      ]
+    },
+    {
+      "title": "Name it and hold",
+      "text": "Say quietly: \"You're tired. You're overwhelmed. I've got you.\" Then hold them close, skin-to-skin if you can. Keep words to a minimum — a very upset baby can't take much in."
+    },
+    {
+      "title": "The distraction pivot (for 6m+)",
+      "text": "Only once the peak has passed: something new to look at or hear — pointing at something (\"look — a dog!\"), a familiar sound on your phone, or a snack. Don't offer during peak crying; it won't land."
+    },
+    {
+      "title": "Assess and adapt the plan",
+      "text": "Was it hunger? Overtiredness? Overstimulation? Identify the trigger so you can adjust the rest of the day. Cut one planned activity if needed — a rested baby beats a packed itinerary."
+    }
   ],
   "kit": {
     "title": "🧳 Meltdown prevention kit (always in your bag)",
