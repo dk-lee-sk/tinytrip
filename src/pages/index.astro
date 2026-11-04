@@ -2,23 +2,24 @@
 import Base from '../layouts/Base.astro';
 import ages from '../data/ages.json';
 import worries from '../data/worries.json';
+import { KIDS } from '../lib/trip';
 
 const tools = [
-  { href: '/ready', icon: '🍼', title: 'Is baby ready to travel?', text: 'Age-by-age guidance on when and how to start' },
-  { href: '/plan', icon: '🗓️', title: 'Your countdown', text: 'What to sort, week by week, so nothing piles up' },
-  { href: '/pack', icon: '📋', title: 'What to pack', text: 'A complete list — because you have no baseline yet' },
-  { href: '/ask', icon: '❓', title: 'Questions to ask', text: 'Copy-ready questions for the airline, hotel and car hire' },
-  { href: '/travel-day', icon: '✈️', title: 'Travel-day planner', text: 'See which nap lands on the plane and when feeds fall' },
-  { href: '/destinations', icon: '🗺️', title: 'Where to go', text: 'Starting ideas for easy first trips' },
-  { href: '/guides', icon: '📖', title: 'Practical guides', text: 'Flying, packing and choosing a hotel' },
-  { href: '/sleep', icon: '😴', title: 'Sleep & schedules', text: 'How to protect naps and handle time zones' },
-  { href: '/meltdown', icon: '😰', title: 'Meltdown guide', text: 'Calm, practical steps when things go sideways in public' },
+  { href: '/ready', icon: '🍼', title: 'Is baby ready?', text: 'What to expect at each age' },
+  { href: '/plan', icon: '🗓️', title: 'Your countdown', text: 'What to sort, and when' },
+  { href: '/pack', icon: '📋', title: 'What to pack', text: 'A list tailored to your trip' },
+  { href: '/ask', icon: '❓', title: 'Questions to ask', text: 'For the airline, hotel and car hire' },
+  { href: '/travel-day', icon: '✈️', title: 'Travel-day planner', text: 'Where naps and feeds fall' },
+  { href: '/destinations', icon: '🗺️', title: 'Where to go', text: 'Ideas for easy first trips' },
+  { href: '/guides', icon: '📖', title: 'Practical guides', text: 'Flying, packing and hotels' },
+  { href: '/sleep', icon: '😴', title: 'Sleep & time zones', text: 'Protecting naps away from home' },
+  { href: '/meltdown', icon: '😰', title: 'Meltdown help', text: 'Calm steps for tricky moments' },
 ];
 
 // Honest statements only — no user counts or ratings until we have real data.
 const promises = [
   { big: 'Free', label: 'No paywall, no sign-up needed' },
-  { big: '0–2 yrs', label: 'Written for babies and toddlers' },
+  { big: '0–2 yrs+', label: 'Babies first, older kids too' },
   { big: 'Step by step', label: 'Start wherever you feel stuck' },
   { big: '0', label: 'Judgment. Ever.' },
 ];
@@ -43,10 +44,7 @@ const promises = [
     <div class="hero-copy">
       <p class="hero-eyebrow">🎉 Built for first-time parents</p>
       <h1>Your first trip<br />with baby.<br /><em>You've got this.</em></h1>
-      <p class="hero-sub">
-        Travelling with a newborn feels daunting. TinyTrip guides you through every step — from “am I even
-        ready?” to packing, sleeping, meltdowns, and choosing where to go.
-      </p>
+      <p class="hero-sub">From “are we ready?” to packing and naps, one small step at a time.</p>
       <div class="hero-actions">
         <a class="btn-coral" href="/ready">Start here: Is baby ready? →</a>
         <a class="btn-ghost" href="/pack">Jump to packing list</a>
@@ -55,13 +53,21 @@ const promises = [
 
     <form class="hero-card" action="/ready" method="get">
       <h2>Plan your first trip</h2>
-      <p class="subtitle">Tell us about your baby and we'll guide the rest.</p>
-      <div class="form-field">
-        <label for="home-age">Baby's age</label>
-        <select id="home-age" name="age" required>
-          <option value="">Select age...</option>
-          {ages.map((a) => <option value={a.id}>{a.label}</option>)}
-        </select>
+      <p class="subtitle">Tell us a little, and we'll guide the rest.</p>
+      <div class="form-2col">
+        <div class="form-field">
+          <label for="home-kids">Children</label>
+          <select id="home-kids" name="kids">
+            {Object.entries(KIDS).map(([v, l]) => <option value={v}>{l}</option>)}
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="home-age">Youngest's age</label>
+          <select id="home-age" name="age" required>
+            <option value="">Select age...</option>
+            {ages.map((a) => <option value={a.id}>{a.label}</option>)}
+          </select>
+        </div>
       </div>
       <div class="form-2col">
         <div class="form-field">
@@ -83,7 +89,7 @@ const promises = [
       </div>
       <div class="reassure-note">
         <span aria-hidden="true">💚</span>
-        <span>There's no “too early” or “too late” — every baby is different. We'll help you figure out what's right for <em>yours</em>.</span>
+        <span>Every child is different. We'll help you find what's right for <em>yours</em>.</span>
       </div>
       <button class="btn-coral btn-block" type="submit">Build my travel plan →</button>
     </form>
@@ -123,7 +129,7 @@ const promises = [
   <section class="home-guides">
     <p class="section-eyebrow">Everything you need</p>
     <h2 class="section-title">We guide you through all of it</h2>
-    <p class="section-sub">Nine tools, zero overwhelm. Pick wherever you want to start.</p>
+    <p class="section-sub">Start wherever you like.</p>
     <ul class="guide-cards">
       {tools.map((t) => (
         <li>

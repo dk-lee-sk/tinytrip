@@ -1,32 +1,32 @@
 {
   "reassurance": {
     "title": "💚 Before anything else: you're not failing.",
-    "text": "Babies cry. Toddlers tantrum. Every parent in that airport has been there or will be, and most people are far kinder than the stares suggest. You don't have to fix it fast. You just have to stay with your little one."
+    "text": "Babies cry and toddlers tantrum. Every parent has been there, and most people are kinder than the stares suggest. You don't have to fix it fast."
   },
   "steps": [
     {
       "title": "Find a quieter spot",
-      "text": "Find the quietest nearby space — a corner, a hallway, outside. Too much noise and light makes meltdowns worse. Less input usually means faster calm. Don't try to fix the problem in the middle of the crowd."
+      "text": "Move somewhere calmer: a corner, a corridor, outside. Less noise and light helps."
     },
     {
       "title": "Steady yourself first: one slow breath",
-      "text": "Take one slow breath before you do anything. The calmer you feel, the easier it is to comfort your baby. Crying can be really hard to listen to, so if it ever feels like too much, it's OK to put your baby down somewhere safe and take a few minutes to calm down. Never shake a baby.",
+      "text": "One slow breath first. Your calm helps them settle. If it all feels too much, it's OK to put your baby down somewhere safe for a few minutes. Never shake a baby.",
       "needsReview": true,
       "sources": [
         "icon"
       ]
     },
     {
-      "title": "Name it and hold",
-      "text": "Say quietly: \"You're tired. You're overwhelmed. I've got you.\" Then hold them close, skin-to-skin if you can. Keep words to a minimum — a very upset baby can't take much in."
+      "title": "Hold them close",
+      "text": "Hold them close and say softly: “I've got you.” Keep words to a minimum."
     },
     {
-      "title": "The distraction pivot (for 6m+)",
-      "text": "Only once the peak has passed: something new to look at or hear — pointing at something (\"look — a dog!\"), a familiar sound on your phone, or a snack. Don't offer during peak crying; it won't land."
+      "title": "Gently distract (6 months+)",
+      "text": "Once the worst has passed, offer something new: a dog to spot, a song, a snack."
     },
     {
-      "title": "Assess and adapt the plan",
-      "text": "Was it hunger? Overtiredness? Overstimulation? Identify the trigger so you can adjust the rest of the day. Cut one planned activity if needed — a rested baby beats a packed itinerary."
+      "title": "Adjust the plan",
+      "text": "Hungry? Tired? Too much going on? Adjust the rest of the day. Dropping one plan is fine."
     }
   ],
   "kit": {

@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import packing from '../data/packing.json';
 import ages from '../data/ages.json';
-import { LENGTHS, MODES, resolveItem, type PackItem } from '../lib/trip';
+import { LENGTHS, MODES, KIDS, resolveItem, type PackItem } from '../lib/trip';
 import Sources from '../components/Sources.astro';
 
 // Server render shows the full list (no trip known yet); the script below tailors it in the browser.
@@ -11,18 +11,21 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
 
 <Base title="Your packing list">
   <div class="inner">
-    <p class="page-eyebrow">Packing for a baby</p>
+    <p class="page-eyebrow">Packing</p>
     <h1 class="page-title">Your packing list</h1>
-    <p class="page-sub">
-      Don't know where to start? Neither did any parent before you. Tell us about your trip and we'll tailor the
-      list — then check off as you go. Everything is saved on this device.
-    </p>
+    <p class="page-sub">Tell us about your trip, then tick things off as you go. Saved on this device.</p>
 
     <form class="trip-panel" id="trip-form" aria-labelledby="trip-heading">
       <h2 id="trip-heading">Your trip</h2>
-      <div class="trip-fields">
+      <div class="trip-fields four">
         <div class="form-field">
-          <label for="trip-age">Baby's age</label>
+          <label for="trip-kids">Children</label>
+          <select id="trip-kids" name="kids">
+            {Object.entries(KIDS).map(([v, l]) => <option value={v}>{l}</option>)}
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="trip-age">Youngest's age</label>
           <select id="trip-age" name="age">
             <option value="">Any age</option>
             {ages.map((a) => <option value={a.id}>{a.label}</option>)}
@@ -46,13 +49,18 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
       <p class="trip-status" id="trip-status" aria-live="polite">Showing the full list. Pick your trip details to tailor it.</p>
     </form>
 
+    <p class="multi-note" id="multi-note" hidden>
+      👫 Travelling with more than one? We've added a few extra things below.
+      <a href="/ready#multi">More tips</a>
+    </p>
+
     <div class="progress-wrap">
       <div class="progress-top">
         <div>
           <div class="progress-pct" id="pct">0%</div>
           <div class="progress-desc" id="pct-desc">0 items packed</div>
         </div>
-        <div class="progress-cheer">Keep going — you're doing great 💚</div>
+        <div class="progress-cheer">You're doing great 💚</div>
       </div>
       <div class="prog-bar" role="progressbar" aria-labelledby="pct-desc" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="prog-bar">
         <div class="prog-fill" id="prog-fill"></div>
@@ -68,18 +76,22 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
         </div>
         <div class="cs-items">
           {(section.items as PackItem[]).map((raw) => {
-            const item = resolveItem(raw, {})!;
+            // Items that depend on the trip (e.g. only for several children) are hidden by the script below.
+            const item = resolveItem(raw, {}) ?? raw;
             return (
-              <label class="ci" data-row={item.id}>
-                <input type="checkbox" data-item={item.id} />
-                <span class="ci-text">
+              <div class="ci" data-row={item.id}>
+                <label class="ci-main">
+                  <input type="checkbox" data-item={item.id} />
                   <strong class="ci-name">{item.name}</strong>
+                </label>
+                <span class={`pill pill-${item.priority} ci-pill`}>{pillLabel[item.priority]}</span>
+                <details class="ci-more">
+                  <summary>More info</summary>
                   <span class="ci-note">{item.note}</span>
                   <Sources ids={item.sources} />
                   <span class="review-flag" hidden={!item.needsReview}>Still being double-checked</span>
-                </span>
-                <span class={`pill pill-${item.priority} ci-pill`}>{pillLabel[item.priority]}</span>
-              </label>
+                </details>
+              </div>
             );
           })}
         </div>
@@ -101,13 +113,14 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
   import ages from '../data/ages.json';
   import {
     saveTrip, tripFromUrl, resolveItem, shareLink, shareOrCopy,
-    PACK_KEY, LENGTHS, MODES, type PackItem, type Trip,
+    PACK_KEY, LENGTHS, MODES, KIDS, type PackItem, type Trip,
   } from '../lib/trip';
   const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important', nice: 'Nice to have', you: 'For you 💚' };
   const ageLabel = (id?: string) => ages.find((a) => a.id === id)?.label;
 
   const form = document.getElementById('trip-form') as HTMLFormElement;
   const fields = {
+    kids: document.getElementById('trip-kids') as HTMLSelectElement,
     age: document.getElementById('trip-age') as HTMLSelectElement,
     mode: document.getElementById('trip-mode') as HTMLSelectElement,
     length: document.getElementById('trip-length') as HTMLSelectElement,
@@ -123,7 +136,14 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
   }
 
   function describe(trip: Trip) {
-    const parts = [ageLabel(trip.age), trip.mode && MODES[trip.mode], trip.length && LENGTHS[trip.length]].filter(Boolean);
+    const many = trip.kids && trip.kids !== '1';
+    const age = ageLabel(trip.age);
+    const parts = [
+      many && KIDS[trip.kids!],
+      age && (many ? `youngest ${age}` : age),
+      trip.mode && MODES[trip.mode],
+      trip.length && LENGTHS[trip.length],
+    ].filter(Boolean);
     return parts.length
       ? `Tailored for: ${parts.join(' · ')}`
       : 'Showing the full list. Pick your trip details to tailor it.';
@@ -148,6 +168,7 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
       document.querySelector<HTMLElement>(`[data-section="${section.id}"]`)!.hidden = visible === 0;
     }
     document.getElementById('trip-status')!.textContent = describe(trip);
+    document.getElementById('multi-note')!.hidden = !trip.kids || trip.kids === '1';
     renderProgress();
   }
 
@@ -164,12 +185,14 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
 
   // Trip: URL params win (e.g. linked from the readiness page), else what was saved.
   let trip = tripFromUrl(ages.map((a) => a.id));
+  fields.kids.value = trip.kids ?? '1';
   fields.age.value = trip.age ?? '';
   fields.mode.value = trip.mode ?? '';
   fields.length.value = trip.length ?? '';
 
   form.addEventListener('change', () => {
     const next: Trip = {
+      kids: fields.kids.value || undefined,
       age: fields.age.value || undefined,
       mode: fields.mode.value || undefined,
       length: fields.length.value || undefined,
@@ -217,16 +240,28 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
   .cs-badge { margin-left: auto; }
   .cs-items { background: var(--white); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
   .ci {
-    display: flex; align-items: flex-start; gap: 14px;
-    padding: 14px 20px; border-bottom: 1px solid #F0EBE5;
-    cursor: pointer; transition: background 0.15s;
+    display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 12px;
+    padding: 12px 20px; border-bottom: 1px solid #F0EBE5; transition: background 0.15s;
   }
   .ci:last-child { border-bottom: none; }
   .ci:hover { background: var(--warm); }
-  .ci input { width: 18px; height: 18px; accent-color: var(--coral-dk); margin-top: 2px; flex-shrink: 0; cursor: pointer; }
-  .ci-text { flex: 1; }
-  .ci-name { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; }
-  .ci-note { display: block; font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+  .ci-main { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+  .ci input { width: 18px; height: 18px; accent-color: var(--coral-dk); flex-shrink: 0; cursor: pointer; }
+  .ci-name { font-size: 0.9rem; font-weight: 700; }
+  .ci-more { grid-column: 1 / -1; padding-left: 30px; }
+  .ci-more summary {
+    font-size: 0.75rem; font-weight: 700; color: var(--muted); cursor: pointer;
+    width: fit-content; list-style: none;
+  }
+  .ci-more summary::-webkit-details-marker { display: none; }
+  .ci-more summary::after { content: ' ▾'; }
+  .ci-more[open] summary::after { content: ' ▴'; }
+  .ci-note { display: block; margin-top: 4px; font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+  .multi-note {
+    background: var(--sky-lt); border: 1px solid #DCEAF5; border-radius: 14px;
+    padding: 10px 16px; font-size: 0.85rem; margin: -8px 0 24px;
+  }
+  .multi-note[hidden] { display: none; }
   .review-flag[hidden] { display: none; }
   .pack-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
   .pack-actions .btn-ghost { padding: 10px 18px; font-size: 0.9rem; }
@@ -235,13 +270,14 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
   @media print {
     .cs-items { box-shadow: none; border: 1px solid #ccc; }
     .ci { padding: 6px 10px; }
+    .ci-more summary { display: none; }
     .progress-cheer { display: none; }
   }
   .ci.checked .ci-name { text-decoration: line-through; opacity: 0.45; }
   .ci.checked .ci-note { opacity: 0.4; }
 
   @media (max-width: 520px) {
-    .ci { padding: 14px 14px; gap: 10px; }
+    .ci { padding: 12px 14px; gap: 4px 10px; }
     .progress-cheer { display: none; }
   }
 </style>

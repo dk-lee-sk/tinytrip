@@ -14,6 +14,14 @@
         "variants": [
           {
             "when": {
+              "ages": [
+                "older"
+              ]
+            },
+            "name": "Car seat or booster that fits their age and size"
+          },
+          {
+            "when": {
               "modes": [
                 "flight",
                 "train"
@@ -32,6 +40,16 @@
         "needsReview": true,
         "sources": [
           "govuk-insurance"
+        ],
+        "variants": [
+          {
+            "when": {
+              "ages": [
+                "older"
+              ]
+            },
+            "name": "Travel insurance that covers every child"
+          }
         ]
       },
       {
@@ -43,6 +61,16 @@
         "sources": [
           "govuk-child-passport",
           "hmpo-times"
+        ],
+        "variants": [
+          {
+            "when": {
+              "ages": [
+                "older"
+              ]
+            },
+            "name": "Child's passport (if travelling abroad)"
+          }
         ]
       },
       {
@@ -123,7 +151,8 @@
             "when": {
               "ages": [
                 "walker",
-                "toddler"
+                "toddler",
+                "older"
               ]
             },
             "note": "A drink with a straw or spout, or a snack to chew. Swallowing and chewing can help with ear pressure."
@@ -158,7 +187,8 @@
           "ages": [
             "sitter",
             "walker",
-            "toddler"
+            "toddler",
+            "older"
           ]
         }
       },
@@ -171,7 +201,8 @@
           "ages": [
             "sitter",
             "walker",
-            "toddler"
+            "toddler",
+            "older"
           ]
         }
       }
@@ -192,6 +223,15 @@
         "variants": [
           {
             "when": {
+              "ages": [
+                "older"
+              ]
+            },
+            "name": "Nappies or pull-ups (if they still use them) and spare pants",
+            "note": "Accidents happen more when routines change. Pack extra pants in hand luggage."
+          },
+          {
+            "when": {
               "lengths": [
                 "weekend"
               ]
@@ -205,7 +245,18 @@
         "id": "changing-mat",
         "name": "Portable changing mat",
         "note": "Some airports and restaurants lack changing facilities. Be prepared.",
-        "priority": "key"
+        "priority": "key",
+        "variants": [
+          {
+            "when": {
+              "ages": [
+                "older"
+              ]
+            },
+            "name": "Portable changing mat (if they still use nappies)",
+            "priority": "nice"
+          }
+        ]
       },
       {
         "id": "nappy-bags",
@@ -218,6 +269,30 @@
         "name": "Spare outfits in your hand luggage",
         "note": "At least two for baby — and a spare top for you. Blowouts love a long journey.",
         "priority": "must"
+      },
+      {
+        "id": "potty",
+        "name": "Travel potty or fold-up toilet seat",
+        "note": "Handy if they're toilet training. Public toilets are rarely close when you need one.",
+        "priority": "nice",
+        "show": {
+          "ages": [
+            "toddler",
+            "older"
+          ]
+        }
+      },
+      {
+        "id": "kid-bags",
+        "name": "A labelled bag of spare clothes for each child",
+        "note": "No digging through one big bag at the worst moment.",
+        "priority": "key",
+        "show": {
+          "kids": [
+            "2",
+            "3"
+          ]
+        }
       }
     ]
   },
@@ -256,6 +331,15 @@
           {
             "when": {
               "ages": [
+                "older"
+              ]
+            },
+            "name": "Their own pillowcase or blanket",
+            "note": "A familiar smell helps a new bed feel like theirs."
+          },
+          {
+            "when": {
+              "ages": [
                 "newborn",
                 "early"
               ]
@@ -277,7 +361,8 @@
           "ages": [
             "sitter",
             "walker",
-            "toddler"
+            "toddler",
+            "older"
           ]
         }
       }
@@ -297,6 +382,16 @@
         "priority": "must",
         "needsReview": true,
         "variants": [
+          {
+            "when": {
+              "ages": [
+                "older"
+              ]
+            },
+            "name": "Children's paracetamol or ibuprofen",
+            "note": "Check the dose for their age on the pack, and ask a pharmacist if you're not sure.",
+            "priority": "key"
+          },
           {
             "when": {
               "ages": [
@@ -449,7 +544,8 @@
           "ages": [
             "sitter",
             "walker",
-            "toddler"
+            "toddler",
+            "older"
           ]
         }
       },
@@ -461,7 +557,60 @@
         "show": {
           "ages": [
             "walker",
+            "toddler",
+            "older"
+          ]
+        }
+      },
+      {
+        "id": "own-backpack",
+        "name": "A small backpack they carry themselves",
+        "note": "Let them choose a few toys and a snack. It gives them a job and something to look forward to.",
+        "priority": "you",
+        "show": {
+          "ages": [
+            "toddler",
+            "older"
+          ]
+        }
+      },
+      {
+        "id": "lap-rule",
+        "name": "A grown-up for each lap baby",
+        "note": "Each adult can only hold one baby on their lap. With two under-2s, book a second adult or a seat for one of them.",
+        "priority": "must",
+        "show": {
+          "modes": [
+            "flight"
+          ],
+          "kids": [
+            "2",
+            "3"
+          ],
+          "ages": [
+            "newborn",
+            "early",
+            "rolling",
+            "sitter",
+            "walker",
             "toddler"
+          ]
+        },
+        "sources": [
+          "ba-seating",
+          "easyjet-children"
+        ],
+        "needsReview": true
+      },
+      {
+        "id": "sibling-job",
+        "name": "A job for older siblings",
+        "note": "Snack keeper, ticket holder or music chooser. Helpers are happier travellers.",
+        "priority": "nice",
+        "show": {
+          "kids": [
+            "2",
+            "3"
           ]
         }
       }
@@ -499,13 +648,34 @@
         "id": "carrier",
         "name": "Baby carrier / sling",
         "note": "Hands-free and better than a stroller in crowds or cobblestones.",
-        "priority": "key"
+        "priority": "key",
+        "variants": [
+          {
+            "when": {
+              "ages": [
+                "older"
+              ]
+            },
+            "name": "A carrier or light stroller for tired legs",
+            "priority": "nice"
+          }
+        ]
       },
       {
         "id": "nappy-bag",
         "name": "Nappy bag with packing cubes",
         "note": "Compartmentalise feed, change, sleep items. Saves you at 2am.",
-        "priority": "nice"
+        "priority": "nice",
+        "variants": [
+          {
+            "when": {
+              "ages": [
+                "older"
+              ]
+            },
+            "name": "Day bag with snacks, wipes and a spare outfit"
+          }
+        ]
       },
       {
         "id": "laundry",
@@ -527,6 +697,18 @@
           "modes": [
             "flight",
             "train"
+          ]
+        }
+      },
+      {
+        "id": "double-stroller",
+        "name": "Double stroller, or a stroller plus a carrier",
+        "note": "Keeps your hands free for bags and boarding passes.",
+        "priority": "key",
+        "show": {
+          "kids": [
+            "2",
+            "3"
           ]
         }
       }

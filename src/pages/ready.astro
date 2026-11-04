@@ -1,30 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
 import ages from '../data/ages.json';
+import multi from '../data/multi.json';
 import Sources from '../components/Sources.astro';
 ---
 
 <Base title="Is my baby ready to travel?">
   <div class="inner">
-    <p class="page-eyebrow">Step 1 of your journey</p>
+    <p class="page-eyebrow">Step 1</p>
     <h1 class="page-title">Is my baby ready to travel?</h1>
-    <p class="page-sub">
-      This is the question every first-time parent asks — and the answer is almost always “yes, with the right
-      preparation.” Tap your baby's age to see what to expect.
-    </p>
+    <p class="page-sub">Usually, yes, with a little planning. Tap an age to see what to expect.</p>
 
     <p class="trip-summary" id="trip-summary" hidden></p>
 
-    <div class="readiness-intro">
-      <h2>💚 First, a deep breath.</h2>
-      <p>
-        Babies travel every day. Airlines, trains, and hotels are well-practised at hosting families with infants.
-        The biggest challenge isn't logistics — it's your confidence as a parent. That's exactly what TinyTrip is
-        here to build.
-      </p>
-    </div>
-
-    <div class="age-grid" role="group" aria-label="Choose your baby's age">
+    <div class="age-grid" role="group" aria-label="Choose your child's age">
       {ages.map((a) => (
         <button type="button" class="age-card" data-age={a.id} aria-pressed="false" aria-controls={`result-${a.id}`}>
           <span class="ac-icon" aria-hidden="true">{a.icon}</span>
@@ -48,6 +37,19 @@ import Sources from '../components/Sources.astro';
       ))}
     </div>
 
+    <section class="multi" id="multi" aria-labelledby="multi-heading">
+      <h2 id="multi-heading">👫 {multi.title}</h2>
+      <ul>
+        {multi.points.map((p) => (
+          <li>
+            {p.text}
+            <Sources ids={p.sources} />
+            {p.needsReview && <span class="review-flag">Still being double-checked</span>}
+          </li>
+        ))}
+      </ul>
+    </section>
+
     <div class="next-step">
       <a class="btn-coral" href="/pack" id="next-pack">Next: Build my packing list →</a>
     </div>
@@ -56,7 +58,7 @@ import Sources from '../components/Sources.astro';
 
 <script>
   import ages from '../data/ages.json';
-  import { saveTrip, tripFromUrl, LENGTHS, MODES } from '../lib/trip';
+  import { saveTrip, tripFromUrl, LENGTHS, MODES, KIDS } from '../lib/trip';
 
   const cards = document.querySelectorAll<HTMLButtonElement>('.age-card');
   const results = document.querySelectorAll<HTMLElement>('.readiness-result');
@@ -67,7 +69,11 @@ import Sources from '../components/Sources.astro';
   function showSummary() {
     const el = document.getElementById('trip-summary')!;
     const age = ages.find((a) => a.id === trip.age)?.label;
-    const parts = [age, trip.mode && MODES[trip.mode], trip.length && LENGTHS[trip.length]].filter(Boolean);
+    const many = trip.kids && trip.kids !== '1';
+    const parts = [many && KIDS[trip.kids!], age && (many ? `youngest ${age}` : age),
+      trip.mode && MODES[trip.mode], trip.length && LENGTHS[trip.length]].filter(Boolean);
+    // Several children: bring the "more than one" tips up front.
+    document.getElementById('multi')!.classList.toggle('highlight', !!many);
     el.hidden = parts.length === 0;
     el.textContent = `Your trip: ${parts.join(' · ')}`;
     document.querySelectorAll<HTMLElement>('[data-flight-note]').forEach((n) => (n.hidden = trip.mode !== 'flight'));
@@ -111,22 +117,27 @@ import Sources from '../components/Sources.astro';
     background: var(--white); border-radius: 12px; padding: 12px 14px; margin-top: 14px;
     font-size: 0.86rem; line-height: 1.6; border-left: 3px solid var(--coral);
   }
-  .readiness-intro { background: var(--white); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); margin-bottom: 28px; }
-  .readiness-intro h2 { font-family: 'Lora', serif; font-size: 1.15rem; margin-bottom: 10px; }
-  .readiness-intro p { font-size: 0.9rem; line-height: 1.7; color: var(--muted); }
-
-  .age-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 32px; }
+  .age-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
   .age-card {
     font: inherit; color: inherit; text-align: left;
-    background: var(--white); border-radius: 18px; padding: 24px 20px;
+    background: var(--white); border-radius: 18px; padding: 18px 16px;
     box-shadow: var(--shadow); cursor: pointer; transition: all 0.2s;
     border: 2.5px solid transparent;
   }
   .age-card:hover { border-color: var(--coral); }
   .age-card.selected { border-color: var(--coral); background: var(--blush); }
-  .ac-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
-  .ac-title { display: block; font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; }
-  .ac-blurb { display: block; font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+  .ac-icon { font-size: 1.7rem; margin-bottom: 8px; display: block; }
+  .ac-title { display: block; font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; }
+  .ac-blurb { display: block; font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+
+  .multi {
+    margin-top: 28px; background: var(--white); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 24px 28px; box-shadow: var(--shadow);
+  }
+  .multi.highlight { background: var(--sky-lt); border-color: #DCEAF5; }
+  .multi h2 { font-family: 'Lora', serif; font-size: 1.05rem; margin-bottom: 10px; }
+  .multi ul { padding-left: 18px; }
+  .multi li { font-size: 0.88rem; line-height: 1.6; margin-bottom: 8px; }
 
   .readiness-result {
     background: var(--sage-lt); border-radius: var(--radius);
@@ -138,9 +149,10 @@ import Sources from '../components/Sources.astro';
   .readiness-result ul { padding-left: 18px; }
   .readiness-result li { font-size: 0.88rem; line-height: 1.75; }
 
-  @media (max-width: 900px) { .age-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 520px) {
-    .age-grid { grid-template-columns: 1fr; }
-    .readiness-result { padding: 22px 20px; }
+  @media (max-width: 900px) { .age-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 620px) {
+    .age-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .ac-blurb { display: none; }
+    .readiness-result, .multi { padding: 20px; }
   }
 </style>

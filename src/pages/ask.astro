@@ -8,10 +8,7 @@ import Sources from '../components/Sources.astro';
   <div class="inner narrow">
     <p class="page-eyebrow">Before you book</p>
     <h1 class="page-title">Questions to ask before you book</h1>
-    <p class="page-sub">
-      You don't need to know the rules. You just need to ask the right questions. Copy these into an email or a
-      chat, or keep the page open on the phone. Tick each one off once you've got an answer.
-    </p>
+    <p class="page-sub">You don't need to know the rules, just what to ask. Copy these, and tick each one off once answered.</p>
 
     <p class="trip-status" id="ask-status" aria-live="polite"></p>
 
@@ -31,13 +28,16 @@ import Sources from '../components/Sources.astro';
                 <li>
                   <label class="ask-q">
                     <input type="checkbox" data-q={q.id} data-group={g.id} />
-                    <span>
-                      <span class="q-text">{q.q}</span>
+                    <span><span class="q-text">{q.q}</span></span>
+                  </label>
+                  {q.why && (
+                    <details class="q-more">
+                      <summary>Why ask?</summary>
                       <span class="q-why">{q.why}</span>
                       <Sources ids={q.sources} />
                       {q.needsReview && <span class="review-flag">Still being double-checked</span>}
-                    </span>
-                  </label>
+                    </details>
+                  )}
                 </li>
               ))}
             </ul>
@@ -165,7 +165,14 @@ import Sources from '../components/Sources.astro';
   .ask-q { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; cursor: pointer; }
   .ask-q input { width: 18px; height: 18px; accent-color: var(--coral-dk); margin-top: 2px; flex-shrink: 0; cursor: pointer; }
   .q-text { display: block; font-size: 0.9rem; font-weight: 600; line-height: 1.5; }
-  .q-why { display: block; font-size: 0.8rem; color: var(--muted); line-height: 1.5; margin-top: 2px; }
+  .q-why { display: block; font-size: 0.8rem; color: var(--muted); line-height: 1.5; margin-top: 4px; }
+  .q-more { margin: -6px 0 10px 30px; }
+  .q-more summary {
+    font-size: 0.75rem; font-weight: 700; color: var(--muted); cursor: pointer; width: fit-content; list-style: none;
+  }
+  .q-more summary::-webkit-details-marker { display: none; }
+  .q-more summary::after { content: ' ▾'; }
+  .q-more[open] summary::after { content: ' ▴'; }
   .ask-q input:checked + span .q-text { text-decoration: line-through; opacity: 0.5; }
   .ag-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 12px; }
   .ag-actions .btn-ghost { padding: 9px 16px; font-size: 0.85rem; }

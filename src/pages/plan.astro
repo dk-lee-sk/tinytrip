@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import ages from '../data/ages.json';
 import tasks from '../data/countdown.json';
-import { LENGTHS, MODES } from '../lib/trip';
+import { LENGTHS, MODES, KIDS } from '../lib/trip';
 import Sources from '../components/Sources.astro';
 
 // Rough lead time shown before a date is set, e.g. "about 10 weeks before".
@@ -18,20 +18,23 @@ function before(days: number) {
   <div class="inner">
     <p class="page-eyebrow">Your trip plan</p>
     <h1 class="page-title">Your countdown</h1>
-    <p class="page-sub">
-      Add your travel date and we'll spread the planning out week by week, so nothing piles up at the end.
-      Tick things off as you go. It's all saved on this device, and you can share it with whoever's coming with you.
-    </p>
+    <p class="page-sub">Add your travel date and we'll spread the jobs out, week by week. Saved on this device.</p>
 
     <form class="trip-panel" id="trip-form" aria-labelledby="trip-heading">
       <h2 id="trip-heading">Your trip</h2>
-      <div class="trip-fields four">
+      <div class="trip-fields five">
         <div class="form-field">
           <label for="trip-date">Travel date</label>
           <input type="date" id="trip-date" name="date" />
         </div>
         <div class="form-field">
-          <label for="trip-age">Baby's age</label>
+          <label for="trip-kids">Children</label>
+          <select id="trip-kids" name="kids">
+            {Object.entries(KIDS).map(([v, l]) => <option value={v}>{l}</option>)}
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="trip-age">Youngest's age</label>
           <select id="trip-age" name="age">
             <option value="">Not set</option>
             {ages.map((a) => <option value={a.id}>{a.label}</option>)}
@@ -97,11 +100,14 @@ function before(days: number) {
             <span class="task-text">
               <span class="task-when" data-default={before(t.days)}>{before(t.days)}</span>
               <strong class="task-title">{t.title}</strong>
-              <span class="task-note">{t.note}</span>
-              <Sources ids={t.sources} />
-              {t.needsReview && <span class="review-flag">Still being double-checked</span>}
             </span>
           </label>
+          <details class="task-more">
+            <summary>More info</summary>
+            <span class="task-note">{t.note}</span>
+            <Sources ids={t.sources} />
+            {t.needsReview && <span class="review-flag">Still being double-checked</span>}
+          </details>
           {t.link && <a class="task-link no-print" href={t.link.href}>{t.link.label} →</a>}
         </li>
       ))}
@@ -122,7 +128,7 @@ function before(days: number) {
   import ages from '../data/ages.json';
   import {
     saveTrip, tripFromUrl, loadSet, saveSet, shareLink, shareOrCopy, daysUntil, resolveItem,
-    PACK_KEY, PLAN_KEY, LENGTHS, MODES, type Trip, type PackItem,
+    PACK_KEY, PLAN_KEY, LENGTHS, MODES, KIDS, type Trip, type PackItem,
   } from '../lib/trip';
 
   type Task = (typeof tasks)[number] & { show?: { modes?: string[] } };
@@ -131,6 +137,7 @@ function before(days: number) {
   const form = $<HTMLFormElement>('trip-form');
   const fields = {
     date: $<HTMLInputElement>('trip-date'),
+    kids: $<HTMLSelectElement>('trip-kids'),
     age: $<HTMLSelectElement>('trip-age'),
     mode: $<HTMLSelectElement>('trip-mode'),
     length: $<HTMLSelectElement>('trip-length'),
@@ -145,6 +152,7 @@ function before(days: number) {
   const done = loadSet(PLAN_KEY);
 
   fields.date.value = trip.date ?? '';
+  fields.kids.value = trip.kids ?? '1';
   fields.age.value = trip.age ?? '';
   fields.mode.value = trip.mode ?? '';
   fields.length.value = trip.length ?? '';
@@ -209,7 +217,10 @@ function before(days: number) {
       sub.textContent = 'Add your travel date above to see what to do when.';
     } else {
       const n = daysUntil(trip.date);
-      const parts = [ages.find((a) => a.id === trip.age)?.label, trip.mode && MODES[trip.mode], trip.length && LENGTHS[trip.length]].filter(Boolean);
+      const many = trip.kids && trip.kids !== '1';
+      const age = ages.find((a) => a.id === trip.age)?.label;
+      const parts = [many && KIDS[trip.kids!], age && (many ? `youngest ${age}` : age),
+        trip.mode && MODES[trip.mode], trip.length && LENGTHS[trip.length]].filter(Boolean);
       if (n > 1) big.textContent = `${n} days to go`;
       else if (n === 1) big.textContent = 'Tomorrow!';
       else if (n === 0) big.textContent = "It's travel day 💚";
@@ -236,6 +247,7 @@ function before(days: number) {
     trip = {
       ...trip,
       date: fields.date.value || undefined,
+      kids: fields.kids.value || undefined,
       age: fields.age.value || undefined,
       mode: fields.mode.value || undefined,
       length: fields.length.value || undefined,
@@ -311,8 +323,6 @@ function before(days: number) {
 </script>
 
 <style>
-  .trip-fields.four { grid-template-columns: 1.2fr 1.3fr 1fr 1fr; }
-
   .countdown-hero {
     display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: center;
     background: linear-gradient(140deg, var(--blush), var(--sage-lt));
@@ -338,22 +348,27 @@ function before(days: number) {
   .task-text { flex: 1; }
   .task-when { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--sage-dk); margin-bottom: 2px; }
   .task-title { display: block; font-size: 0.95rem; margin-bottom: 2px; }
-  .task-note { display: block; font-size: 0.83rem; color: var(--muted); line-height: 1.55; }
-  .task-link { display: inline-block; margin: 8px 0 0 32px; font-size: 0.83rem; font-weight: 700; color: var(--coral-dk); }
+  .task-note { display: block; margin-top: 4px; font-size: 0.83rem; color: var(--muted); line-height: 1.55; }
+  .task-more { margin: 4px 0 0 32px; }
+  .task-more summary {
+    font-size: 0.75rem; font-weight: 700; color: var(--muted); cursor: pointer; width: fit-content; list-style: none;
+  }
+  .task-more summary::-webkit-details-marker { display: none; }
+  .task-more summary::after { content: ' ▾'; }
+  .task-more[open] summary::after { content: ' ▴'; }
+  .task-link { display: inline-block; margin: 6px 0 0 32px; font-size: 0.83rem; font-weight: 700; color: var(--coral-dk); }
   .task.checked .task-title { text-decoration: line-through; opacity: 0.5; }
   .task.checked .task-note { opacity: 0.45; }
-  .task.checked .task-link { display: none; }
+  .task.checked .task-link, .task.checked .task-more { display: none; }
 
   .pack-summary { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px 28px; }
   .pack-summary p { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
   .pack-print { list-style: none; columns: 2; font-size: 0.8rem; line-height: 1.7; }
 
   @media (max-width: 800px) {
-    .trip-fields.four { grid-template-columns: 1fr 1fr; gap: 0 12px; }
     .countdown-hero { grid-template-columns: 1fr; padding: 22px 20px; }
   }
   @media (max-width: 520px) {
-    .trip-fields.four { grid-template-columns: 1fr; }
     .task { padding: 14px; }
     .task-link { margin-left: 32px; }
     .plan-actions .btn-ghost { flex: 1 1 100%; }
@@ -362,5 +377,6 @@ function before(days: number) {
     .countdown-hero { background: none; padding: 0; }
     .task-list { box-shadow: none; border: 1px solid #ccc; }
     .pack-summary { box-shadow: none; padding: 0; }
+    .task-more summary { display: none; }
   }
 </style>

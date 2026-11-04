@@ -1,96 +1,96 @@
 [
   {
     "id": "newborn",
-    "label": "0–6 weeks (newborn)",
+    "label": "0–6 weeks",
     "icon": "🐣",
-    "blurb": "Very new. Short, local trips only — we'll show you what's safe.",
-    "title": "0–6 weeks: Start small, and that's more than fine.",
-    "body": "These first weeks are for getting to know each other, so there's no rush. If you do need to fly, the American Academy of Pediatrics says it's generally safe once a healthy baby is at least 7 days old, but suggests waiting until 2–3 months if you can.",
-    "listHeading": "What you can do now",
+    "blurb": "Short, gentle trips to start.",
+    "title": "0–6 weeks: Start small.",
+    "body": "No rush. If you need to fly, the American Academy of Pediatrics says it's generally safe from 7 days old for a healthy baby, but 2–3 months is ideal.",
+    "listHeading": "Try this",
     "points": [
-      "Short car journeys are a gentle way to start. The Lullaby Trust suggests avoiding long drives with very young babies, and stopping for regular breaks",
-      "A night or two somewhere nearby makes a lovely practice trip",
-      "Get comfortable with your baby kit first. Everything else can wait"
+      "Short car trips, with regular breaks",
+      "A night away nearby is great practice",
+      "Check the airline's minimum age before booking"
     ],
-    "flightNote": "Each airline sets its own minimum age. British Airways accepts babies from 48 hours old but recommends waiting a week; easyJet's minimum is 14 days. If your baby was born early or had any complications, check with your GP and the airline first, as some ask for medical clearance.",
-    "needsReview": true,
     "sources": [
       "aap-flying",
       "lullaby-carseats",
       "ba-tickets",
       "easyjet-children",
       "aerlingus-children"
-    ]
+    ],
+    "needsReview": true,
+    "flightNote": "British Airways accepts babies from 48 hours old (it recommends a week); easyJet from 14 days. Born early? Ask your GP and the airline first."
   },
   {
     "id": "early",
     "label": "6 weeks – 3 months",
     "icon": "🌱",
-    "blurb": "Immune system strengthening. A great window for short flights.",
-    "title": "6 weeks – 3 months: A lovely time for a first short trip.",
-    "body": "Healthy babies this age can usually fly, and because they're not on the move yet, journeys can be simpler than you'd expect. If your baby was born early or has a health condition, have a quick chat with your GP or health visitor first.",
-    "listHeading": "Good news",
+    "blurb": "A lovely window for a first trip.",
+    "title": "6 weeks – 3 months: A good time for a first trip.",
+    "body": "Healthy babies can usually fly now. Born early or unwell? Check with your GP first.",
+    "listHeading": "Try this",
     "points": [
-      "Lots of sleep at this age can make long journeys calmer than you'd think",
-      "Not crawling yet, so keeping them safe and settled is simpler",
-      "Feeding or a dummy during take-off and landing can help with ear pressure"
+      "Lots of sleep can mean calmer journeys",
+      "Not crawling yet, so easier to settle",
+      "A feed or dummy at take-off helps little ears"
     ],
-    "needsReview": true,
     "sources": [
       "aap-flying",
       "cdc-infants",
       "aerlingus-children"
-    ]
+    ],
+    "needsReview": true
   },
   {
     "id": "rolling",
     "label": "3 – 6 months",
     "icon": "☀️",
-    "blurb": "Often called the travel \"sweet spot.\" Alert but not yet mobile.",
-    "title": "3–6 months: The travel sweet spot. Seriously.",
-    "body": "Many parents call this the easiest window to travel. Babies are alert and engaging but not yet crawling or walking. They sleep in carriers and strollers. They're charmed by new faces.",
-    "listHeading": "What this age allows",
+    "blurb": "Curious, but not on the move yet.",
+    "title": "3–6 months: Often an easy age to travel.",
+    "body": "Babies are alert but not crawling, and nap happily in a carrier or stroller.",
+    "listHeading": "Try this",
     "points": [
-      "Long-haul flights: ask about a bassinet when you book. They're limited, and each airline has its own limits (British Airways' carrycots are for babies up to 6 months and 8kg)",
-      "Restaurant dinners (they'll be entertained by the environment)",
-      "Naps in a carrier or stroller let you keep exploring"
+      "Ask for a bassinet on long flights (BA's fit babies up to 6 months and 8kg)",
+      "Restaurants are easier while they're happy to watch",
+      "Naps on the go keep your day flexible"
     ],
-    "needsReview": true,
     "sources": [
       "ba-seating"
-    ]
+    ],
+    "needsReview": true
   },
   {
     "id": "sitter",
     "label": "6 – 12 months",
     "icon": "🌟",
-    "blurb": "More interactive, with more opinions. Can still travel on your lap.",
-    "title": "6–12 months: Wonderful — with a bit more planning.",
-    "body": "Babies at this age are interactive, curious, and developing strong opinions about what they want. This is wonderful — and means you'll want more activities and more snacks.",
-    "listHeading": "Key considerations",
+    "blurb": "More curious, more opinions.",
+    "title": "6–12 months: More fun, a bit more planning.",
+    "body": "They're interactive and curious, so pack snacks and a few small toys.",
+    "listHeading": "Try this",
     "points": [
-      "Babies can travel on your lap until their 2nd birthday. If they turn 2 during the trip, they'll need their own seat from then on",
-      "Solid foods mean you can buy food locally — lighter packing",
-      "Crawling babies need safe spaces — check hotel room carefully"
+      "They can travel on your lap until their 2nd birthday",
+      "Eating solids? You can buy some food there",
+      "Check the room for crawling hazards"
     ],
-    "needsReview": true,
     "sources": [
       "ba-tickets",
       "easyjet-children"
-    ]
+    ],
+    "needsReview": true
   },
   {
     "id": "walker",
     "label": "12 – 18 months",
     "icon": "🚶",
-    "blurb": "Walking + curious = plan for exploration time at every stop.",
-    "title": "12–18 months: They want to walk. Let them.",
-    "body": "New walkers are explorers. Build walking time into every stop — airports, parks, hotel corridors. A toddler who's moved their body is a toddler who sleeps.",
-    "listHeading": "Tips for this age",
+    "blurb": "New walkers love to explore.",
+    "title": "12–18 months: Let them walk.",
+    "body": "New walkers want to move. Build in time to explore at every stop.",
+    "listHeading": "Try this",
     "points": [
-      "Choose destinations with parks, beaches, or open walking space",
-      "Schedule activities in the morning alert window",
-      "Carry a carrier as backup when legs give out suddenly"
+      "Pick places with parks or open space",
+      "Plan outings for the morning",
+      "Bring a carrier for tired legs"
     ],
     "needsReview": false
   },
@@ -98,15 +98,34 @@
     "id": "toddler",
     "label": "18 months – 2 years",
     "icon": "🎒",
-    "blurb": "Strong opinions and big personality. Still very manageable with prep.",
-    "title": "18 months – 2 years: Big personality, big fun.",
-    "body": "Toddlers at this age have preferences, language emerging, and strong feelings about things. That's also what makes travel with them memorable.",
-    "listHeading": "Make it work",
+    "blurb": "Big feelings, big fun.",
+    "title": "18 months – 2 years: Big feelings, big fun.",
+    "body": "Toddlers have strong opinions. Small choices go a long way.",
+    "listHeading": "Try this",
     "points": [
-      "Give them \"choices\" within your plan (\"Do you want to go to the park or the beach first?\")",
-      "Keep snacks visible and accessible at all times",
-      "Download 2–3 favourite shows for transit — no guilt"
+      "Offer simple choices: “park or beach first?”",
+      "Keep snacks within reach",
+      "Download a few shows, guilt-free"
     ],
     "needsReview": false
+  },
+  {
+    "id": "older",
+    "label": "2 years +",
+    "icon": "🧒",
+    "blurb": "General tips for older kids.",
+    "title": "2 years +: Let them help plan.",
+    "body": "Older children enjoy trips more when they know what's coming. These are general tips, and you know your child best.",
+    "listHeading": "Try this",
+    "points": [
+      "Show them pictures of where you're going",
+      "Let them pack a small backpack of their own",
+      "From age 2 they need their own seat on a plane"
+    ],
+    "sources": [
+      "easyjet-children",
+      "ba-tickets"
+    ],
+    "needsReview": true
   }
 ]

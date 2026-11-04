@@ -32,6 +32,14 @@ site is written for UK parents; a "Not in the UK?" note is added where rules dif
   *Removed: "babies often sleep well with engine white noise" (no source).*
 - [ ] **6–12 months, lap travel:** lap travel until the 2nd birthday; own seat from then on if they turn 2 mid-trip.
   Sources: BA (tickets page), easyJet.
+- [ ] **2 years + (new):** general tips only; "From age 2 they need their own seat on a plane." Sources: easyJet, BA (tickets page).
+
+## Travelling with more than one (`src/data/multi.json`, packing `lap-rule`, ask `air-multi`) (new)
+
+- [ ] **Lap babies:** "Each adult can only hold one baby on their lap on a plane. With two under-2s, you'll need a second
+  adult or a seat for one of them." Sources: [BA, Family seating](https://www.britishairways.com/content/information/family-travel/seating), easyJet.
+  Same claim appears on the packing list (flights, 2+ children, youngest under 2) and in Questions to ask.
+- Other multi-child tips (labelled bags, double stroller, jobs for siblings, nap planning) are practical, not rule-based.
 
 ## Packing list (`src/data/packing.json`)
 

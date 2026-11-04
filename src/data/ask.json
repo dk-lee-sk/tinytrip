@@ -14,6 +14,16 @@
         "why": "Infant fares and age cut-offs vary."
       },
       {
+        "id": "air-multi",
+        "q": "Travelling with more than one baby or toddler: how many lap babies can each adult have, and do we need an extra seat?",
+        "why": "Each adult can usually hold only one baby on their lap.",
+        "sources": [
+          "ba-seating",
+          "easyjet-children"
+        ],
+        "needsReview": true
+      },
+      {
         "id": "air-bassinet",
         "q": "Do you have bassinets (sky cots) on this flight? How do I request one, and what are the weight and size limits?",
         "why": "They're limited and usually first come, first served.",

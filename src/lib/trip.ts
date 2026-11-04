@@ -2,7 +2,10 @@
 // Kept in localStorage for now; moves to Supabase when accounts arrive.
 
 export type Trip = {
+  /** Age band of the youngest child (id from src/data/ages.json) */
   age?: string;
+  /** How many children are coming: '1', '2' or '3' (three or more) */
+  kids?: string;
   length?: string;
   mode?: string;
   /** Departure date, YYYY-MM-DD */
@@ -18,6 +21,12 @@ export const LENGTHS: Record<string, string> = {
   weekend: 'Weekend (2–3 nights)',
   short: 'Short (4–6 nights)',
   week: 'Week+',
+};
+
+export const KIDS: Record<string, string> = {
+  '1': 'One child',
+  '2': 'Two children',
+  '3': 'Three or more',
 };
 
 export const MODES: Record<string, string> = {
@@ -92,6 +101,7 @@ export function tripFromUrl(validAges: string[]): Trip {
   take('age', (v) => validAges.includes(v));
   take('length', (v) => v in LENGTHS);
   take('mode', (v) => v in MODES);
+  take('kids', (v) => v in KIDS);
   take('date', isDate);
   take('from', isZone);
   take('to', isZone);
@@ -148,7 +158,7 @@ export function daysUntil(date: string): number {
 
 // ── Packing list rules ──
 
-type Condition = { ages?: string[]; modes?: string[]; lengths?: string[] };
+type Condition = { ages?: string[]; modes?: string[]; lengths?: string[]; kids?: string[] };
 
 export type PackItem = {
   id: string;
@@ -167,7 +177,11 @@ export type PackItem = {
 function matches(c: Condition, trip: Trip, strict: boolean): boolean {
   const check = (list: string[] | undefined, value: string | undefined) =>
     !list || (value ? list.includes(value) : !strict);
-  return check(c.ages, trip.age) && check(c.modes, trip.mode) && check(c.lengths, trip.length);
+  return (
+    check(c.ages, trip.age) && check(c.modes, trip.mode) && check(c.lengths, trip.length) &&
+    // "kids" conditions only apply once the parent has said more than one child is coming.
+    (!c.kids || (trip.kids ? c.kids.includes(trip.kids) : false))
+  );
 }
 
 /** How an item should look for this trip, or null if it doesn't apply. */
