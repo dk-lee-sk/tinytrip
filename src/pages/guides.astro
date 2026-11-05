@@ -2,74 +2,47 @@
 import Base from '../layouts/Base.astro';
 import guides from '../data/guides.json';
 import Sources from '../components/Sources.astro';
+
+const g = guides[0];
 ---
 
-<Base title="Travel guides">
-  <div class="inner">
-    <p class="page-eyebrow">Knowledge for new parents</p>
-    <h1 class="page-title">Travel guides for first-timers</h1>
-    <p class="page-sub">Straight answers to the questions you're too tired to Google at 3am.</p>
+<Base title="Flying with a baby" description="Little ears, choosing seats, lap or own seat, and what the crew can and can't do.">
+  <article class="inner narrow" id={g.id}>
+    <p class="page-eyebrow">Guide</p>
+    <h1 class="page-title">Flying with a baby</h1>
+    <p class="page-sub">{g.summary}.</p>
 
-    <div class="guides-list">
-      {guides.map((g) => (
-        <details class="guide-item" name="guides" id={g.id}>
-          <summary class="guide-header">
-            <span class="guide-emoji" aria-hidden="true">{g.icon}</span>
-            <span>
-              <span class="g-title">{g.title}</span>
-              <span class="g-summary">{g.summary}</span>
-            </span>
-            <span class="guide-arrow" aria-hidden="true">›</span>
-          </summary>
-          <div class="guide-body">
-            {g.sections.map((s) => (
-              <>
-                <h2>{s.heading}</h2>
-                {s.text && <p>{s.text}</p>}
-                {s.list && <ul>{s.list.map((li) => <li>{li}</li>)}</ul>}
-              </>
-            ))}
-            <div class="guide-tip">💡 <strong>{g.tip.label}:</strong> {g.tip.text}</div>
-            <Sources ids={g.sources} />
-            {g.needsReview && <span class="review-flag">Still being double-checked</span>}
-          </div>
-        </details>
+    <div class="guide-body">
+      {g.sections.map((s) => (
+        <>
+          <h2>{s.heading}</h2>
+          {s.text && <p>{s.text}</p>}
+          {s.list && <ul>{s.list.map((li) => <li>{li}</li>)}</ul>}
+        </>
       ))}
+      <div class="guide-tip"><strong>{g.tip.label}:</strong> {g.tip.text}</div>
+      <Sources ids={g.sources} />
+      {g.needsReview && <span class="review-flag">Still being double-checked</span>}
     </div>
-  </div>
+
+    <p class="next-step"><a class="btn-ghost" href="/ask#airline">Questions to ask the airline →</a></p>
+  </article>
 </Base>
 
 <style>
-  .guides-list { display: grid; gap: 18px; }
-  .guide-item {
-    background: var(--white); border-radius: 18px; box-shadow: var(--shadow);
-    overflow: hidden; border-left: 5px solid transparent; transition: box-shadow 0.2s;
-  }
-  .guide-item:hover { box-shadow: var(--shadow-lg); }
-  .guide-item[open] { border-left-color: var(--coral); }
-  .guide-header { display: flex; align-items: center; gap: 16px; padding: 20px 24px; cursor: pointer; list-style: none; }
-  .guide-header::-webkit-details-marker { display: none; }
-  .guide-emoji { font-size: 1.8rem; flex-shrink: 0; }
-  .g-title { display: block; font-weight: 700; font-size: 1rem; margin-bottom: 3px; }
-  .g-summary { display: block; font-size: 0.82rem; color: var(--muted); }
-  .guide-arrow { margin-left: auto; font-size: 1.2rem; color: var(--muted); transition: transform 0.2s; }
-  .guide-item[open] .guide-arrow { transform: rotate(90deg); }
   .guide-body {
-    padding: 20px 24px 24px 60px; border-top: 1px solid #F0EBE5;
-    font-size: 0.88rem; line-height: 1.75; animation: rise 0.25s ease both;
+    background: var(--white); border-radius: 18px; box-shadow: var(--shadow);
+    padding: 28px 32px; font-size: 0.92rem; line-height: 1.75;
   }
-  .guide-body h2 { font-weight: 700; font-size: 0.9rem; margin: 14px 0 6px; color: var(--coral-dk); }
+  .guide-body h2 { font-weight: 700; font-size: 1rem; margin: 20px 0 6px; color: var(--coral-dk); }
   .guide-body h2:first-child { margin-top: 0; }
-  .guide-body ul { padding-left: 16px; }
+  .guide-body ul { padding-left: 18px; }
   .guide-body li { margin-bottom: 6px; }
   .guide-tip {
     background: var(--gold-lt); border-left: 3px solid var(--gold);
-    border-radius: 0 10px 10px 0; padding: 12px 16px; margin-top: 14px; font-size: 0.85rem;
+    border-radius: 0 10px 10px 0; padding: 12px 16px; margin-top: 18px; font-size: 0.88rem;
   }
   .guide-tip strong { color: #8A6000; }
 
-  @media (max-width: 520px) {
-    .guide-header { padding: 16px; gap: 12px; }
-    .guide-body { padding: 16px; }
-  }
+  @media (max-width: 520px) { .guide-body { padding: 20px 18px; } }
 </style>

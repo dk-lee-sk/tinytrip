@@ -1,8 +1,0 @@
-[
-  { "id": "singapore", "name": "Singapore", "region": "Southeast Asia", "flag": "🇸🇬", "colour": "sky", "tags": ["🏥 World-class hospitals", "🛗 Stroller-friendly", "🇬🇧 English spoken"] },
-  { "id": "tokyo", "name": "Tokyo, Japan", "region": "East Asia", "flag": "🇯🇵", "colour": "gold", "tags": ["🚼 Nursing rooms common", "🚇 Lifts on metro", "🍜 Baby food widely sold"] },
-  { "id": "lisbon", "name": "Lisbon, Portugal", "region": "Europe", "flag": "🇵🇹", "colour": "sage", "tags": ["☀️ Mild climate", "🏖️ Beach day trips", "💶 Affordable"] },
-  { "id": "melbourne", "name": "Melbourne, Australia", "region": "Oceania", "flag": "🇦🇺", "colour": "pink", "tags": ["🏥 Excellent healthcare", "🌿 Lots of parks", "🇬🇧 English"] },
-  { "id": "amsterdam", "name": "Amsterdam, Netherlands", "region": "Europe", "flag": "🇳🇱", "colour": "lavender", "tags": ["🚲 Flat & walkable", "🏥 Great healthcare", "🇬🇧 English widely spoken"] },
-  { "id": "bangkok", "name": "Bangkok, Thailand", "region": "Southeast Asia", "flag": "🇹🇭", "colour": "coral", "tags": ["🏥 Strong private hospitals", "💰 Very affordable", "🍜 Baby-friendly food"] }
-]

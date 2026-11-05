@@ -20,10 +20,10 @@ prototype is `My Drive/TinyTrip/tinytrip-v2.html`.
 
 ```text
 src/
-  data/        Content as JSON (ages, packing, countdown, ask, worries, guides, destinations, sleep, meltdown).
+  data/        Content as JSON (ages, packing, countdown, ask, worries, guides, sleep, meltdown).
                Stepping stone to Supabase — edit content here, not in the pages.
   layouts/     Base.astro: <head>, nav, footer with the "not medical advice" note
-  pages/       One file per route: / /ready /plan /pack /ask /travel-day /sleep /meltdown /destinations /guides /thanks
+  pages/       One file per route: / /ready /plan /pack /ask /travel-day /sleep /meltdown /guides (flying) /thanks
   lib/         trip.ts: saved trip (age, mode, length, date, time zones, bedtime), share links, packing-list rules
   styles/      global.css: colour tokens and shared components
 CONTENT_REVIEW.md  Health/safety claims still to verify before launch

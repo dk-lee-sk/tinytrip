@@ -1,6 +1,6 @@
 {
   "reassurance": {
-    "title": "💚 Before anything else: you're not failing.",
+    "title": "First: this isn't you failing.",
     "text": "Babies cry and toddlers tantrum. Every parent has been there, and most people are kinder than the stares suggest. You don't have to fix it fast."
   },
   "steps": [
@@ -30,15 +30,14 @@
     }
   ],
   "kit": {
-    "title": "🧳 Meltdown prevention kit (always in your bag)",
+    "title": "Keep these in your bag",
     "items": [
       "One familiar comfort toy",
       "A snack they love",
       "Noise-cancelling headphones (theirs)",
       "White noise app on your phone",
       "A downloaded show or music playlist",
-      "An extra dummy/soother",
-      "Your own slow breath"
+      "An extra dummy/soother"
     ]
   }
 }

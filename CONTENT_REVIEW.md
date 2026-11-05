@@ -80,8 +80,8 @@ site is written for UK parents; a "Not in the UK?" note is added where rules dif
   *Was "ask for hot water, most will help".*
 - [ ] **Flying, tip:** AAP says to "feel free to ignore the stares". *Removed: "most babies sleep more than usual
   due to engine noise" (no source).*
-- [ ] **Packing, buying abroad:** formula sold widely but brands differ, so bring your usual one. Source: CDC.
-  *Was "formula is available globally".*
+- Packing and hotel guides removed on 2026-11-05 (the "rule of three" had no source; the rest repeated the
+  packing list and the questions-to-ask page). The formula advice lives on in the packing list's formula item.
 
 ## Meltdown guide (`src/data/meltdown.json`)
 
@@ -116,6 +116,5 @@ site is written for UK parents; a "Not in the UK?" note is added where rules dif
 
 ## Not yet drafted
 
-- **Destinations (`src/data/destinations.json`):** tags like "World-class hospitals" or "Nursing rooms common" still
-  need either a source per destination or a decision on how to describe destinations credibly. Best done together
-  with the destination rating method (see the brief's open decisions).
+- **Destinations:** page removed on 2026-11-05. Bring it back only with a sourced way to describe places
+  (see the brief's open decisions).

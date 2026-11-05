@@ -26,7 +26,7 @@
     "id": "early",
     "label": "6 weeks – 3 months",
     "icon": "🌱",
-    "blurb": "A lovely window for a first trip.",
+    "blurb": "Often a good time for a first trip.",
     "title": "6 weeks – 3 months: A good time for a first trip.",
     "body": "Healthy babies can usually fly now. Born early or unwell? Check with your GP first.",
     "listHeading": "Try this",
@@ -98,14 +98,14 @@
     "id": "toddler",
     "label": "18 months – 2 years",
     "icon": "🎒",
-    "blurb": "Big feelings, big fun.",
-    "title": "18 months – 2 years: Big feelings, big fun.",
+    "blurb": "Strong opinions, short attention.",
+    "title": "18 months – 2 years: Small choices help.",
     "body": "Toddlers have strong opinions. Small choices go a long way.",
     "listHeading": "Try this",
     "points": [
       "Offer simple choices: “park or beach first?”",
       "Keep snacks within reach",
-      "Download a few shows, guilt-free"
+      "Download a few shows before you go"
     ],
     "needsReview": false
   },

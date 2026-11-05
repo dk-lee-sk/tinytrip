@@ -100,8 +100,8 @@
     "title": "Do a practice run",
     "note": "A day out with the full nappy bag, or a nap in the travel cot at home. You'll find out what you really use.",
     "link": {
-      "href": "/guides#packing",
-      "label": "How to pack: a first-timer's framework"
+      "href": "/pack",
+      "label": "Your packing list"
     }
   },
   {
@@ -169,7 +169,7 @@
   {
     "id": "go-day",
     "days": 0,
-    "title": "Travel day: you've got this",
+    "title": "Travel day",
     "note": "Something will go off-plan, and that's normal. Have a quick look at the meltdown guide so it's fresh in your mind.",
     "link": {
       "href": "/meltdown",

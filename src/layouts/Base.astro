@@ -18,17 +18,16 @@ const pageTitle = title ? `${title} · TinyTrip` : 'TinyTrip — Your First Trip
 
 // Main menu stays short; the rest sits under "More".
 const links = [
-  { href: '/ready', label: '🍼 Is baby ready?' },
-  { href: '/plan', label: '🗓️ My plan' },
-  { href: '/pack', label: '📋 Pack list' },
-  { href: '/travel-day', label: '✈️ Travel day' },
-  { href: '/meltdown', label: '😰 Meltdown help' },
+  { href: '/ready', label: 'Is baby ready?' },
+  { href: '/plan', label: 'My plan' },
+  { href: '/pack', label: 'Pack list' },
+  { href: '/travel-day', label: 'Travel day' },
+  { href: '/meltdown', label: 'Meltdown help' },
 ];
 const more = [
-  { href: '/ask', label: '❓ Questions to ask' },
-  { href: '/sleep', label: '😴 Sleep' },
-  { href: '/guides', label: '📖 Guides' },
-  { href: '/destinations', label: '🗺️ Destinations' },
+  { href: '/ask', label: 'Questions to ask' },
+  { href: '/sleep', label: 'Sleep' },
+  { href: '/guides', label: 'Flying with a baby' },
 ];
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -53,7 +52,7 @@ const ogImage = new URL('/og.png', Astro.site);
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="TinyTrip — Your first trip with baby. You've got this." />
+    <meta property="og:image:alt" content="TinyTrip: plan your first trip with a baby, one step at a time." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#E07A5F" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -68,7 +67,7 @@ const ogImage = new URL('/og.png', Astro.site);
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <nav class="site-nav" aria-label="Main">
-      <a class="logo" href="/"><span aria-hidden="true">🌍</span> TinyTrip</a>
+      <a class="logo" href="/">TinyTrip</a>
       <ul>
         {links.map((l) => (
           <li>
@@ -106,8 +105,8 @@ const ogImage = new URL('/og.png', Astro.site);
       <p class="fb-honeypot" hidden><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
       <fieldset class="fb-q">
         <legend>Was this page helpful?</legend>
-        <label class="fb-choice"><input type="radio" name="helpful" value="yes" required /> <span>👍 Yes</span></label>
-        <label class="fb-choice"><input type="radio" name="helpful" value="not really" /> <span>🤔 Not really</span></label>
+        <label class="fb-choice"><input type="radio" name="helpful" value="yes" required /> <span>Yes</span></label>
+        <label class="fb-choice"><input type="radio" name="helpful" value="not really" /> <span>Not really</span></label>
       </fieldset>
       <div class="fb-more" id="fb-more">
         <label for="fb-message">What's missing, confusing, or still worrying you? <span>(optional)</span></label>
@@ -122,13 +121,13 @@ const ogImage = new URL('/og.png', Astro.site);
     )}
 
     <footer class="site-footer">
-      <p class="footer-love">Made with care for new parents and their tiny travellers 💚</p>
       <p>
-        <strong>TinyTrip is a friendly guide, not a doctor.</strong>
-        Every baby is different, so check with your GP, health visitor or pharmacist about your own little one,
+        <strong>TinyTrip is a guide, not a doctor.</strong>
+        Every baby is different, so check with your GP, health visitor or pharmacist about your own baby,
         especially if they're very young or unwell. Health and travel rules link to the official page they come
         from, and anything marked “still being double-checked” is waiting for a final review.
       </p>
+      <p class="footer-made">TinyTrip is a small independent project, written with help from AI tools.</p>
     </footer>
     <script>
       // Send feedback without leaving the page. Without JS the form posts normally and lands on /thanks.
@@ -151,7 +150,7 @@ const ogImage = new URL('/og.png', Astro.site);
           });
           if (!res.ok) throw new Error(String(res.status));
           fb.classList.add('sent');
-          status.textContent = 'Thank you 💚 Every message helps make TinyTrip better for the next parent.';
+          status.textContent = 'Thanks, that’s sent. Every message gets read.';
         } catch {
           button.disabled = false;
           status.textContent = "Sorry, that didn't send. Please try again in a moment.";

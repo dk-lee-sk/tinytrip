@@ -104,7 +104,7 @@ a { color: inherit; }
   text-align: center;
 }
 .site-footer p { max-width: 720px; margin: 0 auto; }
-.site-footer .footer-love { font-family: 'Lora', serif; font-style: italic; font-size: 0.95rem; color: var(--coral-dk); margin-bottom: 8px; }
+.site-footer .footer-made { margin-top: 8px; }
 .site-footer strong { color: var(--deep); }
 
 /* ── FEEDBACK (every page, above the footer) ── */

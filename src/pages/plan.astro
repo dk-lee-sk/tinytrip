@@ -71,9 +71,9 @@ function before(days: number) {
     </section>
 
     <div class="plan-actions no-print">
-      <button type="button" class="btn-ghost" id="btn-ics">📅 Add to my calendar</button>
-      <button type="button" class="btn-ghost" id="btn-share">💌 Share with my partner</button>
-      <button type="button" class="btn-ghost" id="btn-print">🖨️ Print my plan</button>
+      <button type="button" class="btn-ghost" id="btn-ics">Add to my calendar</button>
+      <button type="button" class="btn-ghost" id="btn-share">Share my plan</button>
+      <button type="button" class="btn-ghost" id="btn-print">Print my plan</button>
       <p class="action-status" id="action-status" role="status"></p>
     </div>
 
@@ -87,7 +87,7 @@ function before(days: number) {
       <ol class="task-list" id="list-later"></ol>
     </section>
     <section aria-labelledby="done-heading" id="group-done">
-      <h2 class="group-title" id="done-heading">Done 💚</h2>
+      <h2 class="group-title" id="done-heading">Done</h2>
       <ol class="task-list" id="list-done"></ol>
     </section>
 
@@ -223,7 +223,7 @@ function before(days: number) {
         trip.mode && MODES[trip.mode], trip.length && LENGTHS[trip.length]].filter(Boolean);
       if (n > 1) big.textContent = `${n} days to go`;
       else if (n === 1) big.textContent = 'Tomorrow!';
-      else if (n === 0) big.textContent = "It's travel day 💚";
+      else if (n === 0) big.textContent = "It's travel day";
       else big.textContent = 'Hope the trip went well';
       sub.textContent = n < 0
         ? "We'd love to hear how it went. Use the feedback box at the bottom of this page."
@@ -312,7 +312,7 @@ function before(days: number) {
 
   $('btn-share').addEventListener('click', async () => {
     const result = await shareOrCopy(shareLink('/plan', trip), 'Our TinyTrip plan');
-    if (result === 'copied') say("Link copied. Send it to your partner: it opens this plan with everything you've ticked.");
+    if (result === 'copied') say("Link copied. Whoever opens it gets this plan, with everything you've ticked.");
     else if (result === 'failed') say("Couldn't share from this browser. Try copying the page address instead.");
     else say('');
   });

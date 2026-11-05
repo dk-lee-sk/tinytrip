@@ -6,7 +6,7 @@ import { LENGTHS, MODES, KIDS, resolveItem, type PackItem } from '../lib/trip';
 import Sources from '../components/Sources.astro';
 
 // Server render shows the full list (no trip known yet); the script below tailors it in the browser.
-const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important', nice: 'Nice to have', you: 'For you 💚' };
+const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important', nice: 'Nice to have', you: 'For you' };
 ---
 
 <Base title="Your packing list">
@@ -50,7 +50,7 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
     </form>
 
     <p class="multi-note" id="multi-note" hidden>
-      👫 Travelling with more than one? We've added a few extra things below.
+      Travelling with more than one? There are a few extra things below.
       <a href="/ready#multi">More tips</a>
     </p>
 
@@ -60,7 +60,6 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
           <div class="progress-pct" id="pct">0%</div>
           <div class="progress-desc" id="pct-desc">0 items packed</div>
         </div>
-        <div class="progress-cheer">You're doing great 💚</div>
       </div>
       <div class="prog-bar" role="progressbar" aria-labelledby="pct-desc" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="prog-bar">
         <div class="prog-fill" id="prog-fill"></div>
@@ -70,7 +69,6 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
     {packing.map((section) => (
       <section class="checklist-section" data-section={section.id} aria-labelledby={`sec-${section.id}`}>
         <div class="cs-header">
-          <span class="cs-icon" aria-hidden="true">{section.icon}</span>
           <h2 id={`sec-${section.id}`}>{section.title}</h2>
           <span class={`pill pill-${section.badge} cs-badge`}>{section.badgeLabel}</span>
         </div>
@@ -99,8 +97,8 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
     ))}
 
     <div class="next-step pack-actions no-print">
-      <button type="button" class="btn-ghost" id="share">💌 Share with my partner</button>
-      <button type="button" class="btn-ghost" id="print">🖨️ Print</button>
+      <button type="button" class="btn-ghost" id="share">Share this list</button>
+      <button type="button" class="btn-ghost" id="print">Print</button>
       <button type="button" class="btn-ghost" id="reset">Clear all ticks</button>
       <p class="trip-status" id="share-status" role="status"></p>
       <p><a class="btn-coral" href="/plan">Next: Your countdown →</a></p>
@@ -115,7 +113,7 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
     saveTrip, tripFromUrl, resolveItem, shareLink, shareOrCopy,
     PACK_KEY, LENGTHS, MODES, KIDS, type PackItem, type Trip,
   } from '../lib/trip';
-  const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important', nice: 'Nice to have', you: 'For you 💚' };
+  const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important', nice: 'Nice to have', you: 'For you' };
   const ageLabel = (id?: string) => ages.find((a) => a.id === id)?.label;
 
   const form = document.getElementById('trip-form') as HTMLFormElement;

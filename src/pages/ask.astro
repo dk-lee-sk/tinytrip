@@ -16,7 +16,6 @@ import Sources from '../components/Sources.astro';
       {groups.map((g) => (
         <details class="ask-group" id={g.id} data-modes={(g.modes ?? []).join(',')} open>
           <summary>
-            <span class="ag-icon" aria-hidden="true">{g.icon}</span>
             <span class="ag-title">{g.title}</span>
             <span class="ag-count" data-count={g.id}></span>
             <span class="guide-arrow" aria-hidden="true">›</span>
@@ -42,8 +41,8 @@ import Sources from '../components/Sources.astro';
               ))}
             </ul>
             <div class="ag-actions no-print">
-              <button type="button" class="btn-ghost" data-copy={g.id}>📋 Copy questions</button>
-              <a class="btn-ghost" data-mail={g.id} href="mailto:">✉️ Write an email</a>
+              <button type="button" class="btn-ghost" data-copy={g.id}>Copy questions</button>
+              <a class="btn-ghost" data-mail={g.id} href="mailto:">Write an email</a>
               <span class="ag-msg" role="status" data-msg={g.id}></span>
             </div>
           </div>
@@ -52,7 +51,7 @@ import Sources from '../components/Sources.astro';
     </div>
 
     <div class="calm-box">
-      <h2>💚 Feeling awkward about asking?</h2>
+      <h2>Feeling awkward about asking?</h2>
       <p>
         Don't be. Airlines, hotels and rental firms get these questions every day, and a good one will be glad you
         asked. If an answer is vague, that tells you something useful too.

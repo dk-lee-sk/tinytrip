@@ -16,7 +16,6 @@ import Sources from '../components/Sources.astro';
     <div class="age-grid" role="group" aria-label="Choose your child's age">
       {ages.map((a) => (
         <button type="button" class="age-card" data-age={a.id} aria-pressed="false" aria-controls={`result-${a.id}`}>
-          <span class="ac-icon" aria-hidden="true">{a.icon}</span>
           <span class="ac-title">{a.label}</span>
           <span class="ac-blurb">{a.blurb}</span>
         </button>
@@ -26,11 +25,11 @@ import Sources from '../components/Sources.astro';
     <div aria-live="polite">
       {ages.map((a) => (
         <section class="readiness-result" id={`result-${a.id}`} hidden>
-          <h2>✅ {a.title}</h2>
+          <h2>{a.title}</h2>
           <p>{a.body}</p>
           <p><strong>{a.listHeading}:</strong></p>
           <ul>{a.points.map((p) => <li>{p}</li>)}</ul>
-          {a.flightNote && <p class="flight-note" data-flight-note hidden>✈️ {a.flightNote}</p>}
+          {a.flightNote && <p class="flight-note" data-flight-note hidden>{a.flightNote}</p>}
           <Sources ids={a.sources} />
           {a.needsReview && <span class="review-flag">Still being double-checked</span>}
         </section>
@@ -38,7 +37,7 @@ import Sources from '../components/Sources.astro';
     </div>
 
     <section class="multi" id="multi" aria-labelledby="multi-heading">
-      <h2 id="multi-heading">👫 {multi.title}</h2>
+      <h2 id="multi-heading">{multi.title}</h2>
       <ul>
         {multi.points.map((p) => (
           <li>

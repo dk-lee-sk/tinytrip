@@ -9,7 +9,7 @@
       {
         "id": "car-seat",
         "name": "Car seat that fits baby's age and size",
-        "note": "Correctly installed every time. The #1 safety item for any car journey.",
+        "note": "Fitted properly, every journey, even short ones.",
         "priority": "must",
         "variants": [
           {
@@ -28,7 +28,7 @@
               ]
             },
             "priority": "key",
-            "note": "Only if you'll drive, rent a car or take taxis at your destination. Some rental firms and taxi services can provide one — book ahead."
+            "note": "Only if you'll drive, hire a car or take taxis when you get there. Some hire firms and taxi services can provide one if you book ahead."
           }
         ]
       },
@@ -106,7 +106,7 @@
       {
         "id": "nursing-cover",
         "name": "Nursing cover / portable privacy wrap",
-        "note": "Optional — but helpful in busy airports and restaurants.",
+        "note": "Optional. Some parents like one in busy airports and cafés; plenty don't bother.",
         "priority": "nice",
         "show": {
           "ages": [
@@ -165,8 +165,8 @@
       },
       {
         "id": "bibs",
-        "name": "Bibs × 6 minimum",
-        "note": "You will always need more bibs than you think.",
+        "name": "Plenty of bibs",
+        "note": "More than you'd get through in a day at home.",
         "priority": "key",
         "show": {
           "ages": [
@@ -181,7 +181,7 @@
       {
         "id": "snacks",
         "name": "Snacks they already know and like",
-        "note": "Pack more than seems reasonable. A hungry baby on the move is a meltdown waiting to happen.",
+        "note": "More than you'd need at home, in case of delays.",
         "priority": "key",
         "show": {
           "ages": [
@@ -218,7 +218,7 @@
       {
         "id": "nappies",
         "name": "Nappies and wipes for the journey + first day",
-        "note": "You can buy more at your destination — no need to fill a suitcase.",
+        "note": "You can buy more when you arrive, so there's no need to fill a suitcase.",
         "priority": "must",
         "variants": [
           {
@@ -237,14 +237,14 @@
               ]
             },
             "name": "Nappies and wipes for the whole trip",
-            "note": "For a short trip it's easiest to bring everything — plus a few spares for delays."
+            "note": "For a short trip it's simplest to bring everything, plus a few spares for delays."
           }
         ]
       },
       {
         "id": "changing-mat",
         "name": "Portable changing mat",
-        "note": "Some airports and restaurants lack changing facilities. Be prepared.",
+        "note": "Not every café, train or plane has a changing table.",
         "priority": "key",
         "variants": [
           {
@@ -267,7 +267,7 @@
       {
         "id": "spare-outfits",
         "name": "Spare outfits in your hand luggage",
-        "note": "At least two for baby — and a spare top for you. Blowouts love a long journey.",
+        "note": "At least two for baby, and a spare top for you.",
         "priority": "must"
       },
       {
@@ -306,25 +306,25 @@
       {
         "id": "travel-cot",
         "name": "Portable travel cot or book a hotel crib",
-        "note": "Confirm with hotel 48h in advance. Specify infant, not toddler crib.",
+        "note": "If you're using the hotel's cot, ask them to confirm it in writing before you arrive.",
         "priority": "must"
       },
       {
         "id": "white-noise",
         "name": "White noise app or portable speaker",
-        "note": "Recreates home sleep sounds — powerful for unsettled environments.",
+        "note": "If you use one at home, bring it. A familiar sound can make a new room feel less strange.",
         "priority": "key"
       },
       {
         "id": "blackout-blind",
         "name": "Portable blackout blind",
-        "note": "Clip-on, fits most windows. Game-changer for naps in bright rooms.",
+        "note": "Suction or clip-on blinds fit most windows. Useful for naps in a bright room.",
         "priority": "key"
       },
       {
         "id": "sleep-sack",
         "name": "Baby's familiar sleep bag",
-        "note": "Scent and feel of home. Huge comfort anchor for babies.",
+        "note": "Something that smells and feels like home.",
         "priority": "key",
         "needsReview": true,
         "variants": [
@@ -345,7 +345,7 @@
               ]
             },
             "name": "Baby's familiar sleep bag or swaddle",
-            "note": "Scent and feel of home. If you swaddle, the Lullaby Trust advises stopping once baby shows signs of rolling."
+            "note": "Something that smells and feels like home. If you swaddle, the Lullaby Trust advises stopping once baby shows signs of rolling."
           }
         ],
         "sources": [
@@ -355,7 +355,7 @@
       {
         "id": "comforter",
         "name": "Their favourite comfort toy (and a backup if you have one)",
-        "note": "Losing it on day one is a trip-defining event. Keep it on a clip or in a known pocket.",
+        "note": "Losing it is hard on everyone. Keep it on a clip or in one pocket you always check.",
         "priority": "key",
         "show": {
           "ages": [
@@ -430,13 +430,13 @@
       {
         "id": "nappy-cream",
         "name": "Nappy rash cream",
-        "note": "Travel can trigger flare-ups from heat and different water.",
+        "note": "Bring the one you already use.",
         "priority": "key"
       },
       {
         "id": "wipes",
-        "name": "Anti-bac wipes × 100+",
-        "note": "Used for surfaces, tray tables, changing mats. Stock up.",
+        "name": "Antibacterial wipes",
+        "note": "For tray tables, changing mats and sticky hands.",
         "priority": "key"
       },
       {
@@ -538,7 +538,7 @@
       {
         "id": "entertainment",
         "name": "A few small new toys or books",
-        "note": "Something new holds attention far longer than old favourites. Hand them out one at a time.",
+        "note": "New things tend to hold attention for longer. Hand them out one at a time.",
         "priority": "key",
         "show": {
           "ages": [
@@ -552,7 +552,7 @@
       {
         "id": "shows",
         "name": "Downloaded shows or music",
-        "note": "Downloaded, not streamed — signal disappears exactly when you need it. No guilt.",
+        "note": "Download them before you go. Signal drops on planes, trains and motorways.",
         "priority": "nice",
         "show": {
           "ages": [
@@ -605,7 +605,7 @@
       {
         "id": "sibling-job",
         "name": "A job for older siblings",
-        "note": "Snack keeper, ticket holder or music chooser. Helpers are happier travellers.",
+        "note": "Snack keeper, ticket holder or music chooser. It gives them something to do.",
         "priority": "nice",
         "show": {
           "kids": [
@@ -664,7 +664,7 @@
       {
         "id": "nappy-bag",
         "name": "Nappy bag with packing cubes",
-        "note": "Compartmentalise feed, change, sleep items. Saves you at 2am.",
+        "note": "Separate cubes for feeding, changing and sleep, so things are quick to find.",
         "priority": "nice",
         "variants": [
           {
@@ -690,8 +690,8 @@
       },
       {
         "id": "earphones",
-        "name": "Noise-cancelling earphones (yours!)",
-        "note": "You deserve this. Especially on the return flight.",
+        "name": "Earphones for you",
+        "note": "For when baby finally sleeps.",
         "priority": "you",
         "show": {
           "modes": [
