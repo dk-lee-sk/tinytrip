@@ -113,8 +113,11 @@ a { color: inherit; }
   background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
   padding: 20px 24px;
 }
-.fb-q { border: none; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-.fb-q legend { float: left; font-weight: 800; font-size: 0.95rem; margin-right: 8px; }
+.fb-title { font-size: 1.05rem; margin-bottom: 4px; }
+.fb-intro { font-size: 0.85rem; color: var(--muted); margin-bottom: 14px; }
+.fb-q { border: none; margin-bottom: 14px; }
+.fb-q legend { font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; }
+.fb-choices { display: flex; flex-wrap: wrap; gap: 8px; }
 .fb-choice { position: relative; }
 .fb-choice input { position: absolute; opacity: 0; inset: 0; }
 .fb-choice span {
@@ -123,9 +126,8 @@ a { color: inherit; }
 }
 .fb-choice input:checked + span { background: var(--blush); border-color: var(--coral); }
 .fb-choice input:focus-visible + span { outline: 3px solid var(--coral); outline-offset: 2px; }
-.fb-more { display: none; margin-top: 16px; }
-.feedback.open .fb-more { display: block; }
-.fb-more label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; }
+.fb-more { margin-top: 4px; }
+.fb-more label { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; }
 .fb-more label span { font-weight: 400; color: var(--muted); }
 .fb-more textarea, .fb-more input {
   width: 100%; padding: 10px 14px; margin-bottom: 12px;
@@ -139,7 +141,7 @@ a { color: inherit; }
 .fb-status { font-size: 0.88rem; font-weight: 700; color: var(--sage-dk); }
 .fb-status:empty { display: none; }
 .fb-status:not(:empty) { margin-top: 10px; }
-.feedback.sent .fb-q, .feedback.sent .fb-more { display: none; }
+.feedback.sent .fb-q, .feedback.sent .fb-more, .feedback.sent .fb-intro, .feedback.sent .fb-title { display: none; }
 .fb-honeypot[hidden] { display: none; }
 
 /* ── BUTTONS ── */

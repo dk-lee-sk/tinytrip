@@ -133,5 +133,55 @@
     "org": "NHS Wirral Community Health and Care",
     "title": "Your baby's sleep at 6–12 months",
     "url": "https://www.wchc.nhs.uk/wp-content/uploads/2019/12/SaferSleep_6-12months.pdf"
+  },
+  "nhs-ibuprofen-kids": {
+    "org": "NHS",
+    "title": "Ibuprofen for children",
+    "url": "https://www.nhs.uk/medicines/ibuprofen-for-children/"
+  },
+  "nhs-hyoscine": {
+    "org": "NHS",
+    "title": "Hyoscine hydrobromide (travel sickness)",
+    "url": "https://www.nhs.uk/medicines/hyoscine-hydrobromide/"
+  },
+  "nhs-motion": {
+    "org": "NHS",
+    "title": "Motion sickness",
+    "url": "https://www.nhs.uk/conditions/motion-sickness/"
+  },
+  "nhs-antihistamines": {
+    "org": "NHS",
+    "title": "Antihistamines",
+    "url": "https://www.nhs.uk/medicines/antihistamines/"
+  },
+  "nhs-cold": {
+    "org": "NHS",
+    "title": "Common cold",
+    "url": "https://www.nhs.uk/conditions/common-cold/"
+  },
+  "nhs-bf-meds": {
+    "org": "NHS",
+    "title": "Breastfeeding and medicines",
+    "url": "https://www.nhs.uk/baby/breastfeeding-and-bottle-feeding/breastfeeding-and-lifestyle/medicines/"
+  },
+  "nhs-chlorphenamine": {
+    "org": "NHS",
+    "title": "Who can take chlorphenamine",
+    "url": "https://www.nhs.uk/medicines/chlorphenamine-including-piriton/who-can-and-cannot-take-chlorphenamine/"
+  },
+  "nhs-cetirizine": {
+    "org": "NHS",
+    "title": "Who can take cetirizine",
+    "url": "https://www.nhs.uk/medicines/cetirizine/who-can-and-cannot-take-cetirizine/"
+  },
+  "govuk-hand-meds": {
+    "org": "GOV.UK",
+    "title": "Hand luggage: medicines",
+    "url": "https://www.gov.uk/hand-luggage-restrictions/essential-medicines-and-medical-equipment"
+  },
+  "govuk-medicine-abroad": {
+    "org": "GOV.UK",
+    "title": "Take medicine in or out of the UK",
+    "url": "https://www.gov.uk/take-medicine-in-or-out-uk"
   }
 }

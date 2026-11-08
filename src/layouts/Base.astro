@@ -4,7 +4,7 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
-  /** Show the "Was this page helpful?" box (default true) */
+  /** Show the feedback survey under the page (default true) */
   feedback?: boolean;
 }
 
@@ -103,18 +103,31 @@ const ogImage = new URL('/og.png', Astro.site);
       <input type="hidden" name="form-name" value="feedback" />
       <input type="hidden" name="page" value={path} />
       <p class="fb-honeypot" hidden><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+      <h2 class="fb-title">Three quick questions</h2>
+      <p class="fb-intro">They go straight to the person who makes TinyTrip, and help make it better for the next parent.</p>
       <fieldset class="fb-q">
-        <legend>Was this page helpful?</legend>
-        <label class="fb-choice"><input type="radio" name="helpful" value="yes" required /> <span>Yes</span></label>
-        <label class="fb-choice"><input type="radio" name="helpful" value="not really" /> <span>Not really</span></label>
+        <legend>1. Was this page helpful?</legend>
+        <div class="fb-choices">
+          <label class="fb-choice"><input type="radio" name="helpful" value="yes" required /> <span>Yes</span></label>
+          <label class="fb-choice"><input type="radio" name="helpful" value="somewhat" /> <span>Somewhat</span></label>
+          <label class="fb-choice"><input type="radio" name="helpful" value="not really" /> <span>Not really</span></label>
+        </div>
       </fieldset>
-      <div class="fb-more" id="fb-more">
-        <label for="fb-message">What's missing, confusing, or still worrying you? <span>(optional)</span></label>
+      <fieldset class="fb-q">
+        <legend>2. After reading it, how do you feel about the trip?</legend>
+        <div class="fb-choices">
+          <label class="fb-choice"><input type="radio" name="feeling" value="more ready" /> <span>More ready</span></label>
+          <label class="fb-choice"><input type="radio" name="feeling" value="about the same" /> <span>About the same</span></label>
+          <label class="fb-choice"><input type="radio" name="feeling" value="still worried" /> <span>Still worried</span></label>
+        </div>
+      </fieldset>
+      <div class="fb-more">
+        <label for="fb-message">3. How could we make it better? Anything missing or confusing? <span>(optional)</span></label>
         <textarea id="fb-message" name="message" rows="3" maxlength="2000"></textarea>
         <label for="fb-email">Your email, if you'd like a reply <span>(optional)</span></label>
         <input type="email" id="fb-email" name="email" autocomplete="email" />
-        <p class="fb-note">We read every message. Please don't include medical details. This isn't a way to get medical advice.</p>
-        <button type="submit" class="btn-coral">Send feedback</button>
+        <p class="fb-note">Please don't include medical details. This isn't a way to get medical advice.</p>
+        <button type="submit" class="btn-coral">Send</button>
       </div>
       <p class="fb-status" id="fb-status" role="status"></p>
     </form>
@@ -134,9 +147,6 @@ const ogImage = new URL('/og.png', Astro.site);
       const fb = document.getElementById('feedback') as HTMLFormElement | null;
       const status = document.getElementById('fb-status');
       if (fb && status) {
-      fb.addEventListener('change', (e) => {
-        if ((e.target as HTMLInputElement).name === 'helpful') fb.classList.add('open');
-      });
       fb.addEventListener('submit', async (e) => {
         e.preventDefault();
         const body = new URLSearchParams(new FormData(fb) as unknown as Record<string, string>);

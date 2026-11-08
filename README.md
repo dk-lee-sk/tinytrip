@@ -54,5 +54,9 @@ on the packing list.
   it), and an optional `show.modes` and `link`. The page can export the open tasks as a calendar file (.ics).
 - **Share links**: `shareLink()` in `trip.ts` puts the trip in the URL (`?age=&mode=&length=&date=&from=&to=&bed=`)
   plus ticked items (`packed=`, `done=`). Opening the link saves the trip and adds those ticks on the new device.
-- **Feedback box**: on every page (turn off with `<Base feedback={false}>`). It's a Netlify Form called
-  `feedback`. Submissions appear in the Netlify dashboard under Forms once form detection is enabled for the site.
+- **Feedback survey**: three short questions under every page (turn off with `<Base feedback={false}>`): was it
+  helpful, how do you feel about the trip now, and how could it be better, plus an optional email. It's a Netlify
+  Form called `feedback`, and each answer also records which page it came from. Submissions appear in the Netlify
+  dashboard under Forms once form detection is on. To get each one by email: Netlify → Project configuration →
+  Notifications → Emails and webhooks → Form submission notifications → Add notification → Email notification,
+  form `feedback`. The address lives in Netlify, not in the site's code, so it isn't public.

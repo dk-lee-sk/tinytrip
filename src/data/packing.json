@@ -376,6 +376,46 @@
     "badgeLabel": "Essential",
     "items": [
       {
+        "id": "nappy-cream",
+        "name": "Nappy rash cream",
+        "note": "Bring the one you already use.",
+        "priority": "key"
+      },
+      {
+        "id": "wipes",
+        "name": "Antibacterial wipes",
+        "note": "For tray tables, changing mats and sticky hands.",
+        "priority": "key"
+      },
+      {
+        "id": "sun",
+        "name": "Sunhat and stroller sunshade",
+        "note": "The NHS advises keeping babies under 6 months out of direct strong sunlight, so shade is your friend. Ask a pharmacist about sun cream for older babies.",
+        "priority": "key",
+        "needsReview": true,
+        "sources": [
+          "nhs-sun"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "medicines",
+    "title": "Medicines",
+    "badge": "must",
+    "badgeLabel": "For you and them",
+    "items": [
+      {
+        "id": "kid-prescriptions",
+        "name": "Your child's own medicines, if they take any",
+        "note": "Pack them in hand luggage with the pharmacy label on. At UK airports, liquid medicines over 100ml need a copy of the prescription or a letter from the doctor.",
+        "priority": "must",
+        "sources": [
+          "govuk-hand-meds"
+        ],
+        "needsReview": true
+      },
+      {
         "id": "paracetamol",
         "name": "Infant paracetamol (age-appropriate)",
         "note": "The NHS says most children over 2 months can have it. Check the dose for their age on the pack, and ask a pharmacist if you're not sure.",
@@ -388,7 +428,7 @@
                 "older"
               ]
             },
-            "name": "Children's paracetamol or ibuprofen",
+            "name": "Children's paracetamol",
             "note": "Check the dose for their age on the pack, and ask a pharmacist if you're not sure.",
             "priority": "key"
           },
@@ -405,6 +445,35 @@
         ],
         "sources": [
           "nhs-paracetamol"
+        ]
+      },
+      {
+        "id": "kid-ibuprofen",
+        "name": "Children's ibuprofen",
+        "note": "The NHS says most children over 3 months can have it. It may not suit children with asthma or an infection like chickenpox, so ask a pharmacist if you’re not sure.",
+        "priority": "key",
+        "show": {
+          "ages": [
+            "rolling",
+            "sitter",
+            "walker",
+            "toddler",
+            "older"
+          ]
+        },
+        "sources": [
+          "nhs-ibuprofen-kids"
+        ],
+        "needsReview": true,
+        "variants": [
+          {
+            "when": {
+              "ages": [
+                "rolling"
+              ]
+            },
+            "note": "The NHS says babies of 3 to 6 months can have it if they weigh over 5kg, and not for more than 24 hours without speaking to a doctor or pharmacist."
+          }
         ]
       },
       {
@@ -428,26 +497,111 @@
         ]
       },
       {
-        "id": "nappy-cream",
-        "name": "Nappy rash cream",
-        "note": "Bring the one you already use.",
-        "priority": "key"
-      },
-      {
-        "id": "wipes",
-        "name": "Antibacterial wipes",
-        "note": "For tray tables, changing mats and sticky hands.",
-        "priority": "key"
-      },
-      {
-        "id": "sun",
-        "name": "Sunhat and stroller sunshade",
-        "note": "The NHS advises keeping babies under 6 months out of direct strong sunlight, so shade is your friend. Ask a pharmacist about sun cream for older babies.",
+        "id": "kid-cold",
+        "name": "Ask a pharmacist what to bring for colds",
+        "note": "Many cough and cold medicines aren’t suitable for young children. The NHS says no decongestants under 6, no honey under 12 months and no aspirin under 16.",
         "priority": "key",
-        "needsReview": true,
         "sources": [
-          "nhs-sun"
+          "nhs-cold"
+        ],
+        "needsReview": true
+      },
+      {
+        "id": "kid-antihistamine",
+        "name": "Children's antihistamine, for allergies",
+        "note": "The NHS says chlorphenamine (Piriton) is suitable from age 1, and cetirizine liquid from pharmacies from age 2. Check the pack for their age.",
+        "priority": "nice",
+        "show": {
+          "ages": [
+            "walker",
+            "toddler",
+            "older"
+          ]
+        },
+        "sources": [
+          "nhs-chlorphenamine",
+          "nhs-cetirizine"
+        ],
+        "needsReview": true
+      },
+      {
+        "id": "kid-travel-sick",
+        "name": "Travel sickness tablets, if they’re 4 or older",
+        "note": "The NHS says hyoscine (for example Kwells Kids) is for children aged 4 and over. It can cause side effects like confusion in children, so follow the pack and ask a pharmacist.",
+        "priority": "key",
+        "show": {
+          "ages": [
+            "walker",
+            "toddler",
+            "older"
+          ]
+        },
+        "sources": [
+          "nhs-hyoscine",
+          "nhs-motion"
+        ],
+        "needsReview": true,
+        "variants": [
+          {
+            "when": {
+              "ages": [
+                "walker",
+                "toddler"
+              ]
+            },
+            "name": "Travel sickness: tips, not tablets, for under-4s",
+            "note": "The NHS says travel sickness tablets like hyoscine are for children aged 4 and over. For younger children: fresh air, regular breaks, and songs or music instead of screens. If it’s a real problem, ask a pharmacist or GP."
+          }
         ]
+      },
+      {
+        "id": "adult-prescriptions",
+        "name": "Your own regular medicines and medical kit",
+        "note": "Inhalers, adrenaline pens, contraception, anything you take daily, plus extra for delays. Keep them in hand luggage. Liquids over 100ml need a copy of the prescription or a doctor’s letter at UK airports; tablets don’t. Some medicines are controlled in other countries, so check with the embassy.",
+        "priority": "must",
+        "sources": [
+          "govuk-hand-meds",
+          "govuk-medicine-abroad"
+        ],
+        "needsReview": true
+      },
+      {
+        "id": "adult-pain",
+        "name": "Pain and fever relief for you",
+        "note": "Paracetamol or ibuprofen. Breastfeeding? The NHS says ibuprofen is thought to be the safest anti-inflammatory, and to check with a GP or midwife before taking paracetamol mixed with other medicines.",
+        "priority": "key",
+        "sources": [
+          "nhs-bf-meds"
+        ],
+        "needsReview": true
+      },
+      {
+        "id": "adult-cold",
+        "name": "Cold and allergy remedies for you",
+        "note": "Whatever you’d reach for at home. Breastfeeding? The NHS says decongestant tablets or drinks aren’t recommended, and to check with a pharmacist before using nasal sprays, antihistamines or combined cold remedies.",
+        "priority": "key",
+        "sources": [
+          "nhs-bf-meds"
+        ],
+        "needsReview": true
+      },
+      {
+        "id": "adult-travel-sick",
+        "name": "Travel sickness remedy for you, if you get it",
+        "note": "Some travel sickness medicines are drowsy antihistamines, so they’re not for whoever is driving or looking after the baby alone. Breastfeeding? Ask a pharmacist which suits you.",
+        "priority": "nice",
+        "sources": [
+          "nhs-motion",
+          "nhs-antihistamines",
+          "nhs-bf-meds"
+        ],
+        "needsReview": true
+      },
+      {
+        "id": "first-aid",
+        "name": "A small first-aid kit",
+        "note": "Plasters, antiseptic wipes and tweezers cover most small knocks and splinters.",
+        "priority": "key"
       }
     ]
   },
@@ -613,6 +767,136 @@
             "3"
           ]
         }
+      },
+      {
+        "id": "car-reach-bag",
+        "name": "A bag within reach, not in the boot",
+        "note": "Nappies, wipes, snacks, drinks and a spare outfit, so you don’t have to unpack the boot in a lay-by.",
+        "priority": "must",
+        "show": {
+          "modes": [
+            "road"
+          ]
+        }
+      },
+      {
+        "id": "car-sick-kit",
+        "name": "Sick bags, an old towel and wipes",
+        "note": "Car sickness can come on fast. The NHS suggests fresh air, looking ahead at the horizon and breaking up long journeys, and talking or singing rather than screens.",
+        "priority": "key",
+        "show": {
+          "modes": [
+            "road"
+          ]
+        },
+        "sources": [
+          "nhs-motion"
+        ],
+        "needsReview": true
+      },
+      {
+        "id": "car-water",
+        "name": "Water, snacks and a blanket for hold-ups",
+        "note": "Enough for everyone if you’re stuck in traffic for a while.",
+        "priority": "key",
+        "show": {
+          "modes": [
+            "road"
+          ]
+        }
+      },
+      {
+        "id": "car-charger",
+        "name": "Phone charger and holder",
+        "note": "For maps, white noise and calls, without anyone holding the phone.",
+        "priority": "nice",
+        "show": {
+          "modes": [
+            "road"
+          ]
+        }
+      },
+      {
+        "id": "train-seat-bag",
+        "name": "One small bag for your seat",
+        "note": "Big bags go in the rack. Keep feeds, nappies, snacks and a change of clothes with you.",
+        "priority": "must",
+        "show": {
+          "modes": [
+            "train"
+          ]
+        }
+      },
+      {
+        "id": "train-tickets",
+        "name": "Tickets and seat reservations on your phone, with a screenshot",
+        "note": "Signal can drop just when the ticket inspector arrives.",
+        "priority": "key",
+        "show": {
+          "modes": [
+            "train"
+          ]
+        }
+      },
+      {
+        "id": "flight-security-bag",
+        "name": "Baby milk, food and medicines in one easy-to-reach bag",
+        "note": "At UK airports you can take enough baby milk, food and sterilised water for the journey, even over 100ml. Breast milk is allowed in containers up to 2 litres; formula and baby food only if your baby is travelling. Staff may open containers to check them.",
+        "priority": "must",
+        "show": {
+          "modes": [
+            "flight"
+          ]
+        },
+        "sources": [
+          "govuk-baby-food",
+          "govuk-hand-meds"
+        ],
+        "needsReview": true,
+        "variants": [
+          {
+            "when": {
+              "ages": [
+                "older"
+              ]
+            },
+            "name": "Snacks, drinks and medicines in one easy-to-reach bag",
+            "note": "Keep them easy to reach at security. At UK airports, essential medicines over 100ml are allowed in hand luggage with a copy of the prescription or a doctor’s letter. Staff may open containers to check them."
+          }
+        ]
+      },
+      {
+        "id": "flight-docs-pocket",
+        "name": "Passports and boarding passes in one pocket",
+        "note": "Everyone’s, including the children’s. You’ll be asked for them at check-in, security and the gate, often with your hands full.",
+        "priority": "key",
+        "show": {
+          "modes": [
+            "flight"
+          ]
+        }
+      },
+      {
+        "id": "flight-layers",
+        "name": "Layers and a light blanket",
+        "note": "Easy to add or take off as the cabin warms up or cools down.",
+        "priority": "key",
+        "show": {
+          "modes": [
+            "flight"
+          ]
+        }
+      },
+      {
+        "id": "flight-gear-bags",
+        "name": "Bags or covers for the stroller and car seat",
+        "note": "Keeps the parts together and stops them getting grubby in the hold.",
+        "priority": "nice",
+        "show": {
+          "modes": [
+            "flight"
+          ]
+        }
       }
     ]
   },
@@ -658,6 +942,14 @@
             },
             "name": "A carrier or light stroller for tired legs",
             "priority": "nice"
+          },
+          {
+            "when": {
+              "modes": [
+                "train"
+              ]
+            },
+            "note": "Handy on stairs and busy platforms, so you’re not carrying a stroller and bags at the same time."
           }
         ]
       },

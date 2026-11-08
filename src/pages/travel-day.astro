@@ -13,11 +13,17 @@ import Sources from '../components/Sources.astro';
     <div class="td-layout">
       <form class="panel td-form" id="td-form">
         <h2>The journey</h2>
-        <div class="form-field">
-          <label for="td-mode">Travel type</label>
-          <select id="td-mode" name="mode">
-            {Object.entries(MODES).map(([v, l]) => <option value={v}>{l}</option>)}
-          </select>
+        <div class="form-2col">
+          <div class="form-field">
+            <label for="td-mode">Travel type</label>
+            <select id="td-mode" name="mode">
+              {Object.entries(MODES).map(([v, l]) => <option value={v}>{l}</option>)}
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="td-date">Travel date</label>
+            <input type="date" id="td-date" name="date" />
+          </div>
         </div>
         <div class="form-2col">
           <div class="form-field">
@@ -79,6 +85,19 @@ import Sources from '../components/Sources.astro';
         <p class="td-empty" id="td-empty">Fill in the journey on the left to see your day.</p>
         <Sources ids={['aap-flying', 'cdc-infants', 'nhs-sleep']} />
         <span class="review-flag">Still being double-checked</span>
+        <div class="td-cal no-print" id="td-cal">
+          <h3>Add it to your calendar</h3>
+          <div class="td-next">
+            <button type="button" class="btn-ghost" data-cal="google">Google Calendar</button>
+            <button type="button" class="btn-ghost" data-cal="outlook">Outlook</button>
+            <button type="button" class="btn-ghost" data-cal="ics">Apple and other calendars (.ics)</button>
+          </div>
+          <p class="hint">
+            Google and Outlook add the day as one event, with the timeline in the notes. The .ics file adds each step
+            on its own, and opens in Apple Calendar, Outlook and most other calendar apps.
+          </p>
+          <p class="td-cal-msg" id="td-cal-msg" role="status"></p>
+        </div>
         <div class="td-next no-print">
           <button type="button" class="btn-ghost" id="td-print">Print</button>
           <a class="btn-ghost" href="/pack">Check the journey bag →</a>
@@ -99,6 +118,7 @@ import Sources from '../components/Sources.astro';
 <script>
   import ages from '../data/ages.json';
   import { tripFromUrl, saveTrip } from '../lib/trip';
+  import { stamp, utcOffset, icsFile, downloadIcs, googleLink, outlookLink, type CalEvent } from '../lib/calendar';
 
   const KEY = 'tinytrip:travelday:v1';
   const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -115,6 +135,7 @@ import Sources from '../components/Sources.astro';
   } catch {}
   if (trip.mode) ($<HTMLSelectElement>('td-mode')).value = trip.mode;
   if (trip.bed) ($<HTMLInputElement>('td-bed')).value = trip.bed;
+  if (trip.date) ($<HTMLInputElement>('td-date')).value = trip.date;
 
   const LABELS = {
     flight: { start: 'Take-off', hours: 'Flight length (hours)' },
@@ -148,7 +169,8 @@ import Sources from '../components/Sources.astro';
     return [h && `${h}h`, m && `${m}m`].filter(Boolean).join(' ') || '0m';
   };
 
-  type Event = { at: number; title: string; text: string; kind: string };
+  // `until` is when it ends, for calendars (naps and the journey itself).
+  type Event = { at: number; until?: number; title: string; text: string; kind: string };
 
   function build() {
     const f = new FormData(form);
@@ -168,13 +190,13 @@ import Sources from '../components/Sources.astro';
 
     const events: Event[] = [];
     events.push({ at: wake, kind: 'home', title: 'Baby wakes', text: 'A normal morning as far as possible. Same feed, same nappy change, same cuddle.' });
-    events.push({ at: leave, kind: 'go', title: 'Leave home', text: mode === 'road' ? 'Nappy change just before you set off.' : 'Nappy change just before you go. Documents, nappy bag, snacks.' });
+    events.push({ at: leave, until: mode === 'road' ? end : undefined, kind: 'go', title: 'Leave home', text: mode === 'road' ? 'Nappy change just before you set off.' : 'Nappy change just before you go. Documents, nappy bag, snacks.' });
 
     if (mode === 'flight') {
-      events.push({ at: start, kind: 'go', title: 'Take-off', text: 'If you can, have a feed, bottle, dummy or drink ready for take-off. Sucking and swallowing can help little ears.' });
+      events.push({ at: start, until: end, kind: 'go', title: 'Take-off', text: 'If you can, have a feed, bottle, dummy or drink ready for take-off. Sucking and swallowing can help little ears.' });
       events.push({ at: end, kind: 'go', title: 'Landing', text: 'Same again for the descent, which starts a while before touchdown. Watch for the seatbelt sign.' });
     } else if (mode === 'train') {
-      events.push({ at: start, kind: 'go', title: 'Train leaves', text: 'Settle in, park the stroller, and find out where the changing toilet is.' });
+      events.push({ at: start, until: end, kind: 'go', title: 'Train leaves', text: 'Settle in, park the stroller, and find out where the changing toilet is.' });
       events.push({ at: end, kind: 'go', title: 'Arrive at the station', text: 'Get bags and baby off without rushing. Others can wait a moment.' });
     } else {
       events.push({ at: end, kind: 'go', title: 'Reach your destination', text: 'Driving time plus your stops. Allow extra time; arriving later is fine.' });
@@ -207,7 +229,7 @@ import Sources from '../components/Sources.astro';
       } else {
         text += t < leave ? 'At home, before you go.' : 'At your stay, in a dark room if you can.';
       }
-      events.push({ at: t, kind: 'nap', title: `Nap ${n}`, text });
+      events.push({ at: t, until: t + len, kind: 'nap', title: `Nap ${n}`, text });
     }
 
     // Feeds or snacks at the parent's own interval
@@ -240,7 +262,7 @@ import Sources from '../components/Sources.astro';
 
     // Journey shading: tag which events fall during the journey
     events.sort((a, b) => a.at - b.at);
-    return { events, start, end, arrive, mode, napsOnJourney, feedsOnJourney };
+    return { events, leave, start, end, arrive, mode, napsOnJourney, feedsOnJourney };
   }
 
   function render() {
@@ -270,14 +292,8 @@ import Sources from '../components/Sources.astro';
     const zone = $('td-zone');
     zone.hidden = true;
     if (trip.from && trip.to && trip.from !== trip.to) {
-      const off = (tz: string) => {
-        const name = new Intl.DateTimeFormat('en-GB', { timeZone: tz, timeZoneName: 'longOffset' })
-          .formatToParts(trip.date ? new Date(`${trip.date}T12:00:00Z`) : new Date())
-          .find((p) => p.type === 'timeZoneName')!.value;
-        const m = name.match(/GMT([+-])(\d{1,2}):?(\d{2})?/);
-        return m ? (m[1] === '-' ? -1 : 1) * (Number(m[2]) * 60 + Number(m[3] || 0)) : 0;
-      };
-      const diff = off(trip.to) - off(trip.from);
+      const day = trip.date || new Date().toISOString().slice(0, 10);
+      const diff = utcOffset(trip.to, day) - utcOffset(trip.from, day);
       if (diff) {
         zone.hidden = false;
         zone.textContent = `All times above are on home time. At your destination it'll be ${clock(arrive + diff)} when you arrive at your stay. See the sleep page for adjusting to the new time.`;
@@ -293,6 +309,7 @@ import Sources from '../components/Sources.astro';
     try { localStorage.setItem(KEY, JSON.stringify(data)); } catch {}
     // Keep the shared trip in step, so other pages agree.
     trip.mode = data.mode;
+    if (data.date) trip.date = data.date;
     if (data.bed) trip.bed = data.bed;
     saveTrip(trip);
   }
@@ -306,6 +323,57 @@ import Sources from '../components/Sources.astro';
     if (window.matchMedia('(max-width: 900px)').matches) $('td-title').scrollIntoView({ behavior: 'smooth' });
   });
   $('td-print').addEventListener('click', () => window.print());
+
+  // ── Calendar export ──
+  const MODE_NAME = { flight: 'Flight', train: 'Train', road: 'Drive' } as const;
+  const calMsg = $('td-cal-msg');
+
+  function calendarEvents() {
+    const date = $<HTMLInputElement>('td-date').value;
+    if (!date) return null;
+    const { events, leave, arrive, mode } = build();
+    // Times on the page are home time. If we know home's time zone, pin them to it.
+    const off = trip.from ? utcOffset(trip.from, date) : undefined;
+    const at = (mins: number) => stamp(date, mins, off);
+    const steps: CalEvent[] = events.map((e, i) => ({
+      uid: `${date}-${i}-${e.kind}`,
+      title: e.kind === 'go' && e.until ? `${e.title} (${MODE_NAME[mode]} ${dur(e.until - e.at)})` : e.title,
+      description: e.text,
+      start: at(e.at),
+      end: at(e.until ?? e.at + (e.title === 'Bedtime' ? 30 : 15)),
+    }));
+    const timeline = events.map((e) => `${clock(e.at)}  ${e.title}: ${e.text}`).join('\n');
+    const day: CalEvent = {
+      uid: `${date}-day`,
+      title: `Travel day: ${MODE_NAME[mode].toLowerCase()} with baby`,
+      description: `Times are home time.\n\n${timeline}\n\nMade with TinyTrip: ${location.origin}/travel-day`,
+      start: at(leave),
+      end: at(arrive),
+    };
+    return { date, steps, day };
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-cal]').forEach((btn) =>
+    btn.addEventListener('click', () => {
+      if (!form.reportValidity()) return;
+      const cal = calendarEvents();
+      if (!cal) {
+        calMsg.textContent = 'Add your travel date first, then try again.';
+        $('td-date').focus();
+        return;
+      }
+      save();
+      render();
+      const kind = btn.dataset.cal;
+      if (kind === 'ics') {
+        downloadIcs(icsFile(cal.steps), `tinytrip-travel-day-${cal.date}.ics`);
+        calMsg.textContent = 'Downloaded. Open the file to add each step to your calendar.';
+      } else {
+        window.open(kind === 'google' ? googleLink(cal.day) : outlookLink(cal.day), '_blank', 'noopener');
+        calMsg.textContent = `Opened ${kind === 'google' ? 'Google Calendar' : 'Outlook'} in a new tab. Check the details and save.`;
+      }
+    }),
+  );
 
   syncLabels();
   render();
@@ -346,6 +414,12 @@ import Sources from '../components/Sources.astro';
   .td-empty { font-size: 0.9rem; color: var(--muted); }
   .td-next { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
   .td-next .btn-ghost { padding: 9px 16px; font-size: 0.85rem; }
+  .td-cal { margin-top: 20px; padding-top: 16px; border-top: 1px solid #F0EBE5; }
+  .td-cal h3 { font-size: 1rem; }
+  .td-cal .td-next { margin-top: 10px; }
+  .td-cal .hint { margin-top: 10px; }
+  .td-cal-msg { font-size: 0.85rem; font-weight: 700; color: var(--deep); margin-top: 8px; }
+  .td-cal-msg:empty { display: none; }
 
   @media (max-width: 900px) {
     .td-layout { grid-template-columns: 1fr; }

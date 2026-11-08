@@ -71,6 +71,27 @@ site is written for UK parents; a "Not in the UK?" note is added where rules dif
   Source: [BA, Pushchairs](https://www.britishairways.com/content/information/family-travel/baggage).
   *Was "most airlines let you take it to the gate".*
 
+## Medicines and travel-type items (`src/data/packing.json`, added 2026-11-08)
+
+- [ ] **Children's ibuprofen:** most children over 3 months; 3–6 months only if over 5kg and not beyond 24 hours
+  without advice; may not suit asthma or chickenpox. Source: NHS (ibuprofen for children).
+- [ ] **Colds:** no decongestants under 6, no honey under 12 months, no aspirin under 16. Source: NHS (common cold).
+- [ ] **Children's antihistamine:** chlorphenamine from age 1; cetirizine liquid from pharmacies from age 2.
+  Sources: NHS (chlorphenamine, cetirizine).
+- [ ] **Travel sickness tablets:** hyoscine (e.g. Kwells Kids) from age 4; can cause confusion in children. Under-4s
+  get non-medicine tips instead. Sources: NHS (hyoscine, motion sickness).
+- [ ] **Breastfeeding parents:** ibuprofen thought safest NSAID; check before combined paracetamol products; swallowed
+  decongestants not recommended; check nasal sprays, antihistamines and cold remedies. Source: NHS (breastfeeding and
+  medicines).
+- [ ] **Drowsy travel sickness medicines** not for the driver or a lone carer. Sources: NHS (motion sickness,
+  antihistamines). *Our wording; the NHS pages describe them as sedating.*
+- [ ] **Medicines in hand luggage:** liquids over 100ml need a prescription copy or doctor's letter at UK airports;
+  tablets don't; controlled drugs must be carried and checked with the destination's embassy. Sources: GOV.UK.
+- [ ] **Car sickness kit:** fresh air, look at the horizon, break up journeys, talk or sing rather than screens.
+  Source: NHS (motion sickness).
+- [ ] **Flight security bag:** enough baby milk, food and sterilised water for the journey; breast milk up to 2 litres;
+  formula and baby food only with baby present; containers may be opened. Source: GOV.UK.
+
 ## Guides (`src/data/guides.json`)
 
 - [ ] **Flying, ears:** feed/bottle/dummy at take-off and landing; descent often trickier. Sources: AAP, CDC.
