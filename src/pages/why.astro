@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Why I made this" description="The first trip with our son, and why TinyTrip exists.">
+  <article class="inner narrow">
+    <p class="page-eyebrow">About</p>
+    <h1 class="page-title">Why I made this</h1>
+
+    <div class="why-body">
+      <p>
+        When our son was 4 months old, we took him on his first trip: a resort in Portugal.
+      </p>
+      <p>
+        Everything was provided. And I still had no idea how to plan for it, or whether it was going to be okay.
+      </p>
+      <p>
+        The trips after that got easier. But getting ready never stopped being mentally hard, because each trip
+        brought something I’d never faced before. What do we do if he gets sick the day we arrive? How do you deal
+        with a bag of dirty clothes in public, with nowhere to wash them?
+      </p>
+      <p>
+        TinyTrip is for new parents asking the question I did: <em>can we actually do this?</em> It’s a simple
+        place to work out whether your baby is ready, what to pack, how travel day might go, and what to do when
+        things don’t go to plan.
+      </p>
+
+      <h2>What it is, and what it isn’t</h2>
+      <p>
+        It gives advice. It isn’t a source of truth. Health and travel points link to the official pages they
+        come from, like the NHS and GOV.UK, and anything marked “still being double-checked” is waiting for a
+        final review. Your GP, health visitor or pharmacist knows your baby best.
+      </p>
+
+      <h2>How it’s made</h2>
+      <p>
+        It’s a small independent project. I built it with Claude Code, an AI coding tool, and wrote the advice
+        with its help, checking health and travel points against official sources. Nothing is sold here. Your trip
+        details are saved in your own browser, not on a server, unless you share a link or send feedback.
+      </p>
+
+      <h2>Help make it better</h2>
+      <p>
+        It’s still early, and it gets better with every parent who uses it. One parent’s feedback has already
+        reshaped the packing list: items that do several jobs, and what you can leave at home. If something is
+        missing, confusing or still worrying you, the three questions below come straight to me.
+      </p>
+      <p class="why-sign">DK</p>
+    </div>
+
+    <div class="next-step">
+      <a class="btn-coral" href="/ready">Start with: is baby ready? →</a>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .why-body {
+    background: var(--white); border-radius: 18px; box-shadow: var(--shadow);
+    padding: 28px 32px; font-size: 0.98rem; line-height: 1.8; margin-top: 8px;
+  }
+  .why-body p + p { margin-top: 14px; }
+  .why-body h2 { font-weight: 700; font-size: 1.05rem; margin: 26px 0 8px; color: var(--coral-dk); }
+  .why-sign { font-family: 'Lora', serif; font-weight: 700; font-size: 1.1rem; margin-top: 20px; }
+  .next-step { text-align: center; margin-top: 24px; }
+  @media (max-width: 520px) { .why-body { padding: 20px 18px; } }
+</style>

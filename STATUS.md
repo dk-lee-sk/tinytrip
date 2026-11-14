@@ -11,6 +11,7 @@ plans per account.
 Pre-launch. Static Astro site on Netlify; trip saved in the browser only (no accounts yet). 10 pages.
 
 ## Done recently
+- 2026-11-14: "Why I made this" page from DK's own story (first trip to Portugal at 4 months); LinkedIn post drafted
 - 2026-11-14: Destinations page brought back with sources: Copenhagen, Vienna, Amsterdam, Valencia, Berlin, with licensed photos (research in `DESTINATIONS_RESEARCH.md`)
 - 2026-11-14: Pack light mode, "does several jobs" items, "Forgot something?" card (from a parent's feedback); fixed a travel-day tip that suggested covering the stroller with a muslin
 - 2026-11-08: Netlify form detection on; survey answers emailed to DK (tested end to end)
@@ -24,12 +25,10 @@ Pre-launch. Static Astro site on Netlify; trip saved in the browser only (no acc
 ## Next (not yet confirmed by DK)
 1. Approve the health and travel claims in `CONTENT_REVIEW.md` (55 items open, 0 approved), including the new Destinations claims
 2. Ask the parent who sent the pack-light feedback if she can be quoted, and for more "used to bring, now don't" items
-3. "Why I made this" page: needs DK's own story and name
-4. Decide the accounts and saved-plans approach (the README names Supabase as the next step)
+3. Decide the accounts and saved-plans approach (the README names Supabase as the next step)
 
 ## Blockers and decisions waiting on DK
 - Content approval: ideally a health visitor or paediatric nurse reads the health items before launch
-- DK's story for the "Why I made this" page
 
 ## Metrics
 - Feedback: 1 parent's feedback received directly (2026-11-14). Survey form: no real submissions yet (1 test on 2026-11-08).

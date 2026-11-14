@@ -29,6 +29,7 @@ const more = [
   { href: '/ask', label: 'Questions to ask' },
   { href: '/sleep', label: 'Sleep' },
   { href: '/guides', label: 'Flying with a baby' },
+  { href: '/why', label: 'Why I made this' },
 ];
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -141,7 +142,7 @@ const ogImage = new URL('/og.png', Astro.site);
         especially if they're very young or unwell. Health and travel rules link to the official page they come
         from, and anything marked “still being double-checked” is waiting for a final review.
       </p>
-      <p class="footer-made">TinyTrip is a small independent project, written with help from AI tools.</p>
+      <p class="footer-made">TinyTrip is a small independent project, written with help from AI tools. <a href="/why">Why I made this</a></p>
     </footer>
     <script>
       // Send feedback without leaving the page. Without JS the form posts normally and lands on /thanks.
