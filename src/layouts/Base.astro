@@ -37,6 +37,11 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 // Link previews (WhatsApp, iMessage, social) need absolute URLs.
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og.png', Astro.site);
+
+// Cloudflare Web Analytics: counts visits without cookies or personal data.
+// The token is public (it ships in every page). Only loads on the built site, not in dev.
+const CF_ANALYTICS_TOKEN = '2f145cd1dc354dfca8d4791e42ba890d';
+const analytics = import.meta.env.PROD && CF_ANALYTICS_TOKEN;
 ---
 
 <!doctype html>
@@ -65,6 +70,14 @@ const ogImage = new URL('/og.png', Astro.site);
       rel="stylesheet"
     />
     <title>{pageTitle}</title>
+    {analytics && (
+      <script
+        is:inline
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: CF_ANALYTICS_TOKEN })}
+      ></script>
+    )}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

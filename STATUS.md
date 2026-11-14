@@ -8,9 +8,10 @@ product; the aim for now is helping parents, not revenue. Planned retention feat
 plans per account.
 
 ## Stage
-Pre-launch. Static Astro site on Netlify; trip saved in the browser only (no accounts yet). 10 pages.
+Soft launch (shared on LinkedIn 2026-11-14). Static Astro site on Netlify; trip saved in the browser only (no accounts yet). 10 pages.
 
 ## Done recently
+- 2026-11-14: Cloudflare Web Analytics added (no cookies); Why page says visits are counted. LinkedIn post published with a 15-second screen-recording video
 - 2026-11-14: "Why I made this" page from DK's own story (first trip to Portugal at 4 months); LinkedIn post drafted
 - 2026-11-14: Destinations page brought back with sources: Copenhagen, Vienna, Amsterdam, Valencia, Berlin, with licensed photos (research in `DESTINATIONS_RESEARCH.md`)
 - 2026-11-14: Pack light mode, "does several jobs" items, "Forgot something?" card (from a parent's feedback); fixed a travel-day tip that suggested covering the stroller with a muslin
@@ -32,4 +33,4 @@ Pre-launch. Static Astro site on Netlify; trip saved in the browser only (no acc
 
 ## Metrics
 - Feedback: 1 parent's feedback received directly (2026-11-14). Survey form: no real submissions yet (1 test on 2026-11-08).
-- No usage analytics set up.
+- Visits: Cloudflare Web Analytics live from 2026-11-14 (dashboard: Cloudflare > Analytics > Web analytics). No numbers yet.
