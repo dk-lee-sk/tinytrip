@@ -1,0 +1,254 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Base from '../layouts/Base.astro';
+import Sources from '../components/Sources.astro';
+import cities from '../data/destinations.json';
+import credits from '../data/photo-credits.json';
+
+const photos = import.meta.glob<{ default: ImageMetadata }>('../assets/destinations/*.jpg', { eager: true });
+const photo = (file: string) => photos[`../assets/destinations/${file}.jpg`].default;
+const credit = (file: string) => (credits as Record<string, { author: string; license: string; page: string }>)[file];
+
+const FACTS = [
+  ['flight', 'Flight from the UK'],
+  ['transfer', 'Airport to centre'],
+  ['stepFree', 'Getting around with a pram'],
+  ['kidsFare', 'Children’s fares'],
+] as const;
+---
+
+<Base
+  title="Five easy first trips with a baby"
+  description="Copenhagen, Vienna, Amsterdam, Valencia and Berlin: short flights, step-free transport and lots for little ones, with sources."
+>
+  <div class="inner">
+    <p class="page-eyebrow">Destinations</p>
+    <h1 class="page-title">Five easy first trips with a baby</h1>
+    <p class="page-sub">
+      Short-haul cities where a pram, a nap and a playground are never far apart. Every fact links to where it came
+      from, so you can check it for yourself.
+    </p>
+
+    <section class="panel how" aria-labelledby="how-heading">
+      <h2 id="how-heading">How we chose</h2>
+      <p>For a first trip with a baby under 2, the city matters less than how easy the day is. We looked for:</p>
+      <ul>
+        <li><strong>A short flight and a quick airport transfer</strong>, so travel day is half a day, not a whole one.</li>
+        <li><strong>Step-free public transport</strong>, so you’re not carrying a pram up stairs.</li>
+        <li><strong>Flat streets and big parks</strong>, for pram naps on the move and space for new walkers.</li>
+        <li><strong>Things made for under-5s</strong>: playgrounds, zoos, aquariums and baby-friendly museums.</li>
+        <li><strong>Simple rules for UK families</strong>: all five are in the EU, one hour ahead of UK time.</li>
+      </ul>
+      <p class="how-evidence">
+        We started from the 2026 LateRooms Family Breaks Index of European cities, then checked each city against its
+        transport operator, GOV.UK, TravelHealthPro, tourist boards, and what parents say in blogs and forums.
+      </p>
+      <Sources ids={['laterooms-index', 'euronews-index']} />
+    </section>
+
+    <nav class="city-jump" aria-label="Jump to a city">
+      {cities.map((c) => <a href={`#${c.id}`}>{c.name}</a>)}
+    </nav>
+
+    <div class="table-wrap">
+      <table class="compare">
+        <caption>At a glance</caption>
+        <thead>
+          <tr><th scope="col">City</th><th scope="col">Flight</th><th scope="col">To the centre</th><th scope="col">With a pram</th><th scope="col">Good for</th></tr>
+        </thead>
+        <tbody>
+          {cities.map((c) => (
+            <tr>
+              <th scope="row"><a href={`#${c.id}`}>{c.name}</a></th>
+              <td>{c.facts.flight.text}</td>
+              <td>{c.facts.transfer.text}</td>
+              <td>{c.facts.stepFree.text}</td>
+              <td>{c.tagline}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    {cities.map((c, i) => (
+      <section class="city" id={c.id} aria-labelledby={`${c.id}-name`}>
+        <div class="city-photos">
+          {c.photos.map((p, n) => (
+            <figure class={n === 0 ? 'ph-main' : 'ph-side'}>
+              <Image
+                src={photo(p.file)}
+                alt={p.alt}
+                width={n === 0 ? 1200 : 600}
+                widths={n === 0 ? [480, 800, 1200] : [400, 600]}
+                quality={70}
+                sizes={n === 0 ? '(max-width: 760px) 100vw, 520px' : '(max-width: 760px) 100vw, 260px'}
+                loading={i === 0 ? 'eager' : 'lazy'}
+              />
+              <figcaption>
+                Photo: <a href={credit(p.file).page} target="_blank" rel="noopener">{credit(p.file).author}</a>{`, ${credit(p.file).license}`}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <div class="city-head">
+          <p class="city-country">{c.country}</p>
+          <h2 id={`${c.id}-name`}>{c.name}</h2>
+          <p class="city-tagline">{c.tagline}</p>
+          <span class="pill pill-key">LateRooms index: {c.laterooms}</span>
+        </div>
+
+        <dl class="facts">
+          {FACTS.map(([key, label]) => (
+            <div>
+              <dt>{label}</dt>
+              <dd>{c.facts[key].text}<Sources ids={c.facts[key].sources} /></dd>
+            </div>
+          ))}
+        </dl>
+
+        <div class="city-cols">
+          <div>
+            <h3>Why it works with a baby</h3>
+            <ul class="claims">
+              {c.why.map((w) => <li>{w.text} <Sources ids={w.sources} /></li>)}
+            </ul>
+            <h3>Watch out for</h3>
+            <ul class="claims watch">
+              {c.watch.map((w) => <li>{w.text} <Sources ids={w.sources} /></li>)}
+            </ul>
+          </div>
+          <div>
+            <h3>For little ones</h3>
+            <ul class="places">
+              {c.places.map((p) => (
+                <li>
+                  {p.url ? <a href={p.url} target="_blank" rel="noopener"><strong>{p.name}</strong></a> : <strong>{p.name}</strong>}
+                  <span>{p.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <section class="panel all-five" aria-labelledby="all-heading">
+      <h2 id="all-heading">True for all five</h2>
+      <ul class="claims">
+        <li>
+          <strong>One hour ahead of the UK.</strong> Short trips can stay on home time, so naps and bedtime barely move.
+          <a href="/sleep">Sleep and time zones</a>
+        </li>
+        <li>
+          <strong>Take a GHIC as well as travel insurance.</strong> A Global Health Insurance Card covers state
+          healthcare in the EU, but it isn’t a replacement for insurance that names your baby.
+          <Sources ids={['govuk-ghic', 'govuk-insurance']} />
+        </li>
+        <li>
+          <strong>New EU border checks.</strong> You may need to give fingerprints and a photo at the border the first
+          time. Children aged 11 or younger don’t have their fingerprints scanned, but may have a photo taken. Expect
+          longer queues.
+          <Sources ids={['fcdo-spain-entry']} />
+        </li>
+        <li>
+          <strong>Check every passport, including baby’s.</strong> For the EU, a UK passport must be less than 10
+          years old on the day you arrive and valid for at least 3 months after the day you leave.
+          <Sources ids={['fcdo-spain-entry']} />
+        </li>
+      </ul>
+    </section>
+
+    <section class="also" aria-labelledby="also-heading">
+      <h2 id="also-heading">Also considered</h2>
+      <p>
+        <strong>Barcelona</strong> ranked third in the LateRooms index and is a great beach-and-city trip; we picked
+        Valencia for its long, flat Turia park. <strong>Florence and Lisbon</strong> are lovely, but parents warn of
+        cobbles and hills with a pram. <strong>Tokyo</strong> often tops kid-friendly city rankings, but the long
+        flight and big time difference make it a bigger first trip.
+      </p>
+      <Sources ids={['laterooms-index', 'peanut-pram', 'radical-index']} />
+    </section>
+
+    <p class="checked">
+      Last checked November 2026. Fares, lifts and opening times change, so check the linked pages before you book.
+      <span class="review-flag">Still being double-checked</span>
+    </p>
+
+    <div class="next-step">
+      <a class="btn-ghost" href="/ready">Is baby ready to travel? →</a>
+      <a class="btn-coral" href="/pack">Start your packing list →</a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .how ul { margin: 10px 0 12px 18px; font-size: 0.92rem; line-height: 1.6; }
+  .how li { margin-bottom: 4px; }
+  .how p { font-size: 0.92rem; line-height: 1.6; }
+  .how-evidence { color: var(--muted); }
+  .city-jump { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 16px; }
+  .city-jump a {
+    text-decoration: none; font-weight: 700; font-size: 0.85rem; color: var(--coral-dk);
+    border: 2px solid var(--peach); border-radius: 100px; padding: 6px 14px; background: var(--white);
+  }
+  .city-jump a:hover { border-color: var(--coral); }
+
+  .table-wrap { overflow-x: auto; margin-bottom: 36px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow); }
+  .compare { width: 100%; border-collapse: collapse; font-size: 0.82rem; min-width: 640px; }
+  .compare caption { text-align: left; font-weight: 700; font-size: 1rem; padding: 16px 18px 6px; }
+  .compare th, .compare td { text-align: left; padding: 10px 14px; border-bottom: 1px solid #F0EBE5; vertical-align: top; }
+  .compare thead th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }
+  .compare tbody tr:last-child > * { border-bottom: none; }
+  .compare th a { color: var(--deep); }
+
+  .city {
+    background: var(--white); border-radius: 20px; box-shadow: var(--shadow);
+    padding: 20px; margin-bottom: 32px; scroll-margin-top: 80px;
+  }
+  .city-photos { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-bottom: 18px; }
+  .city-photos figure { margin: 0; display: flex; flex-direction: column; }
+  .city-photos img { width: 100%; height: 280px; object-fit: cover; border-radius: 14px; display: block; }
+  .city-photos figcaption { font-size: 0.68rem; color: var(--muted); margin-top: 4px; }
+  .city-photos figcaption a { color: inherit; }
+
+  .city-head { margin-bottom: 14px; }
+  .city-country { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); }
+  .city-head h2 { font-family: 'Lora', serif; font-size: 1.7rem; line-height: 1.2; }
+  .city-tagline { font-size: 1rem; color: var(--coral-dk); font-weight: 700; margin: 2px 0 8px; }
+
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 18px; }
+  .facts div { background: var(--warm); border-radius: 12px; padding: 10px 12px; }
+  .facts dt { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 4px; }
+  .facts dd { font-size: 0.85rem; font-weight: 700; line-height: 1.4; }
+  .facts dd :global(.sources) { display: block; margin-top: 4px; font-weight: 400; }
+
+  .city-cols { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; }
+  .city h3 { font-size: 0.95rem; margin: 6px 0 8px; color: var(--deep); }
+  .claims { list-style: none; margin-bottom: 14px; }
+  .claims li { font-size: 0.87rem; line-height: 1.6; padding: 6px 0 6px 16px; position: relative; }
+  .claims li::before { content: ''; position: absolute; left: 0; top: 14px; width: 6px; height: 6px; border-radius: 50%; background: var(--sage); }
+  .claims.watch li::before { background: var(--gold); }
+  .places { list-style: none; }
+  .places li { padding: 8px 0; border-bottom: 1px solid #F0EBE5; font-size: 0.85rem; line-height: 1.5; }
+  .places li:last-child { border-bottom: none; }
+  .places strong { display: block; font-size: 0.9rem; }
+  .places a { color: var(--coral-dk); }
+  .places span { color: var(--muted); }
+
+  .all-five { margin-bottom: 24px; }
+  .all-five h2, .also h2 { font-size: 1.1rem; margin-bottom: 8px; }
+  .also { margin-bottom: 20px; font-size: 0.9rem; line-height: 1.65; }
+  .checked { font-size: 0.8rem; color: var(--muted); margin-bottom: 20px; }
+  .next-step { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+
+  @media (max-width: 760px) {
+    .city { padding: 14px; }
+    .city-photos { grid-template-columns: 1fr; }
+    .city-photos img { height: 220px; }
+    .city-photos .ph-side { display: none; }
+    .facts { grid-template-columns: 1fr 1fr; }
+    .city-cols { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>

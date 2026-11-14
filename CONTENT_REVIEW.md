@@ -151,7 +151,22 @@ Prompted by feedback from a parent of three. Most of this is practical, not rule
 - [ ] Take-off/landing feed tip and bedtime routine. Sources: AAP, CDC, NHS (sleep).
 - Feed times come from the parent's own interval; the page doesn't recommend one.
 
-## Not yet drafted
+## Destinations (`src/data/destinations.json`, `src/pages/destinations.astro`, added 2026-11-14)
 
-- **Destinations:** page removed on 2026-11-05. Bring it back only with a sourced way to describe places
-  (see the brief's open decisions).
+Research notes and the comparison table are in `DESTINATIONS_RESEARCH.md`. Every claim on the page carries its own
+source link; tourist-board and parent-blog points are labelled as such.
+
+- [ ] **Flight and airport transfer times** for all five, from the LateRooms Family Breaks Index (2026).
+- [ ] **Transport:** Copenhagen metro lifts at every station and two under-12s free per adult (Visit Copenhagen);
+  prams free (Copenhagen Metro). Vienna U-Bahn all step-free, under-6s free to end of that school year (Wiener
+  Linien). Amsterdam pushchairs free, up to and including 3 free (GVB). Berlin 86% step-free, under-6s free (BVG).
+- [ ] **Eurostar:** under-4s free on a lap, one per adult.
+- [ ] **Valencia Fallas:** 1–19 March, mascletà at 2pm daily (Visit Valencia, 2026 calendar). 120 dB "health hazard
+  for babies" is The Local's report, not a primary measurement.
+- [ ] **Sun and heat:** reuses NHS sun and Lullaby Trust hot-weather claims already on the packing list.
+- [ ] **Austria ticks:** TravelHealthPro advises tick-bite avoidance for everyone.
+- [ ] **EU border checks and passports:** children 11 or younger not fingerprinted; passport issued less than 10
+  years before arrival and valid 3 months after leaving (GOV.UK Spain entry requirements; same Schengen rules apply
+  to the other four).
+- Seasonal tips (Copenhagen winter, Berlin summer and winter) are general, not sourced claims.
+

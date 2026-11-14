@@ -198,5 +198,150 @@
     "org": "GOV.UK",
     "title": "Emergency travel document",
     "url": "https://www.gov.uk/emergency-travel-document"
+  },
+  "laterooms-index": {
+    "org": "LateRooms",
+    "title": "The Family Breaks Index",
+    "url": "https://www.laterooms.com/blog/easiest-european-city-breaks-with-young-kids/"
+  },
+  "euronews-index": {
+    "org": "Euronews",
+    "title": "Europe's easiest city breaks for families",
+    "url": "https://www.euronews.com/2026/03/16/travelling-with-young-kids-these-are-europes-easiest-city-breaks-for-families"
+  },
+  "peanut-pram": {
+    "org": "Peanut (parents)",
+    "title": "Pram friendly city break",
+    "url": "https://www.peanut-app.io/posts/3z32d-a87/pram-friendly-city-break"
+  },
+  "fcdo-spain-entry": {
+    "org": "GOV.UK",
+    "title": "Spain entry requirements",
+    "url": "https://www.gov.uk/foreign-travel-advice/spain/entry-requirements"
+  },
+  "govuk-ghic": {
+    "org": "GOV.UK",
+    "title": "Global Health Insurance Card",
+    "url": "https://www.gov.uk/global-health-insurance-card"
+  },
+  "thp-austria": {
+    "org": "TravelHealthPro",
+    "title": "Austria",
+    "url": "https://travelhealthpro.org.uk/countries/austria"
+  },
+  "cph-kids": {
+    "org": "Visit Copenhagen",
+    "title": "Copenhagen with kids",
+    "url": "https://www.visitcopenhagen.com/copenhagen/activities/copenhagen-with-kids"
+  },
+  "cph-playgrounds": {
+    "org": "Visit Copenhagen",
+    "title": "Playgrounds",
+    "url": "https://www.visitcopenhagen.com/copenhagen/things-to-do/outdoor/playgrounds"
+  },
+  "cph-access": {
+    "org": "Visit Copenhagen",
+    "title": "Accessible transportation",
+    "url": "https://www.visitcopenhagen.com/copenhagen/planning/accessible-transportation"
+  },
+  "cph-metro-prams": {
+    "org": "Copenhagen Metro",
+    "title": "Bikes, scooters and prams",
+    "url": "https://m.dk/en/travel-with-the-metro/contact-and-customer-service/bikes-scooters-and-prams/"
+  },
+  "cph-metro-status": {
+    "org": "Copenhagen Metro",
+    "title": "Status and lift information",
+    "url": "https://m.dk/en/operation-and-service/status-and-planned-changes/"
+  },
+  "cph-blog": {
+    "org": "Born i Byen (local parents)",
+    "title": "Insider tips for Copenhagen with kids",
+    "url": "https://bornibyen.dk/articles/12-insider-tips-for-visiting-copenhagen-with-kids"
+  },
+  "wl-lifts": {
+    "org": "Wiener Linien",
+    "title": "Lifts and escalators",
+    "url": "https://www.wienerlinien.at/web/wl-en/infrastructure-modernisation/lifts-escalators"
+  },
+  "wl-free": {
+    "org": "Wiener Linien",
+    "title": "Discounts and free travel",
+    "url": "https://www.wienerlinien.at/web/wl-en/discounts-and-free-travel"
+  },
+  "zoom-ocean": {
+    "org": "ZOOM Kindermuseum",
+    "title": "ZOOM Ocean",
+    "url": "https://kindermuseum.at/en/zoom_programmes/zoom_ocean"
+  },
+  "vienna-blog": {
+    "org": "Vienna Unwrapped (local blog)",
+    "title": "Vienna with a toddler",
+    "url": "https://vienna-unwrapped.com/vienna-with-toddler/"
+  },
+  "gvb-rules": {
+    "org": "GVB",
+    "title": "Travel rules",
+    "url": "https://reisproducten.gvb.nl/en/travel-information/travelrules-and-conditions"
+  },
+  "gvb-metro": {
+    "org": "GVB",
+    "title": "Metro station rules",
+    "url": "https://en.gvb.nl/klantenservice/reisregels/reisregels-metrostations"
+  },
+  "eurostar-kids": {
+    "org": "Eurostar",
+    "title": "Travelling with children",
+    "url": "https://www.eurostar.com/uk-en/travel-info/travel-planning/travel-with-children"
+  },
+  "frommers-ams": {
+    "org": "Frommer's",
+    "title": "Amsterdam for kids",
+    "url": "https://www.frommers.com/destinations/amsterdam/things-to-do/especially-for-kids/"
+  },
+  "ams-blog": {
+    "org": "Have Baby Will Travel (parent blog)",
+    "title": "Amsterdam with babies and toddlers",
+    "url": "https://havebabywilltravel.com/visiting-amsterdam-with-babies-and-toddlers/"
+  },
+  "vlc-kids": {
+    "org": "Visit Valencia",
+    "title": "Valencia with kids",
+    "url": "https://www.visitvalencia.com/en/what-to-do-valencia/valencia-for-children"
+  },
+  "vlc-gulliver": {
+    "org": "Visit Valencia",
+    "title": "Gulliver Park",
+    "url": "https://visitvalencia.com/en/what-to-do-valencia/nature-in-valencia/parks-and-gardens-valencia/gulliver-park"
+  },
+  "vlc-fallas": {
+    "org": "Visit Valencia",
+    "title": "Fallas fireworks calendar",
+    "url": "https://www.visitvalencia.com/en/events-valencia/pyrotechnical-calendar-2026-fallas-mascletas-and-fireworks"
+  },
+  "thelocal-noise": {
+    "org": "The Local Spain",
+    "title": "Valencia wages war on noise",
+    "url": "https://www.thelocal.es/20230220/no-loud-music-at-the-beach-or-shouting-spains-valencia-wages-war-on-noise"
+  },
+  "bvg-access": {
+    "org": "BVG",
+    "title": "Barrier-free travel",
+    "url": "https://www.bvg.de/en/service-and-support/barrier-free-travel"
+  },
+  "bvg-faq": {
+    "org": "BVG",
+    "title": "FAQ for tourists",
+    "url": "https://www.bvg.de/en/tourists/faq-tourists"
+  },
+  "berlin-blog": {
+    "org": "Learning Escapes (parent blog)",
+    "title": "Berlin with kids",
+    "url": "https://www.learningescapes.net/berlin-with-kids-tips/"
+  },
+  "radical-index": {
+    "org": "Radical Storage",
+    "title": "Kid-friendly cities index",
+    "url": "https://radicalstorage.com/travel/kid-friendly-cities/"
   }
 }

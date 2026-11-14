@@ -8,9 +8,10 @@ product; the aim for now is helping parents, not revenue. Planned retention feat
 plans per account.
 
 ## Stage
-Pre-launch. Static Astro site on Netlify; trip saved in the browser only (no accounts yet). 9 pages.
+Pre-launch. Static Astro site on Netlify; trip saved in the browser only (no accounts yet). 10 pages.
 
 ## Done recently
+- 2026-11-14: Destinations page brought back with sources: Copenhagen, Vienna, Amsterdam, Valencia, Berlin, with licensed photos (research in `DESTINATIONS_RESEARCH.md`)
 - 2026-11-14: Pack light mode, "does several jobs" items, "Forgot something?" card (from a parent's feedback); fixed a travel-day tip that suggested covering the stroller with a muslin
 - 2026-11-08: Netlify form detection on; survey answers emailed to DK (tested end to end)
 - 2026-11-08: Medicines and travel-type packing items, calendar export (Google, Outlook, .ics), three-question feedback survey
@@ -21,7 +22,7 @@ Pre-launch. Static Astro site on Netlify; trip saved in the browser only (no acc
 - 2026-10-31: Link-preview card; packing list personalised by age, travel type and trip length; Astro scaffold
 
 ## Next (not yet confirmed by DK)
-1. Approve the health and travel claims in `CONTENT_REVIEW.md` (48 items open, 0 approved; 41 data entries still `needsReview`)
+1. Approve the health and travel claims in `CONTENT_REVIEW.md` (55 items open, 0 approved), including the new Destinations claims
 2. Ask the parent who sent the pack-light feedback if she can be quoted, and for more "used to bring, now don't" items
 3. "Why I made this" page: needs DK's own story and name
 4. Decide the accounts and saved-plans approach (the README names Supabase as the next step)

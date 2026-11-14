@@ -1,0 +1,507 @@
+[
+  {
+    "id": "copenhagen",
+    "name": "Copenhagen",
+    "country": "Denmark",
+    "tagline": "The easiest all-rounder",
+    "photos": [
+      {
+        "file": "copenhagen-1",
+        "alt": "Colourful houses and boats along the Nyhavn canal in Copenhagen"
+      },
+      {
+        "file": "copenhagen-2",
+        "alt": "Wide lawns and trees in Kongens Have, the King’s Garden, in central Copenhagen"
+      }
+    ],
+    "facts": {
+      "flight": {
+        "text": "Just under 2 hours from UK airports, on average",
+        "sources": [
+          "laterooms-index"
+        ]
+      },
+      "transfer": {
+        "text": "Metro to the centre in around 15 minutes",
+        "sources": [
+          "laterooms-index"
+        ]
+      },
+      "stepFree": {
+        "text": "Every metro station has a lift",
+        "sources": [
+          "cph-access"
+        ]
+      },
+      "kidsFare": {
+        "text": "Up to two children under 12 free with each adult ticket",
+        "sources": [
+          "cph-kids"
+        ]
+      }
+    },
+    "why": [
+      {
+        "text": "Ranked the easiest family city break in Europe in the 2026 LateRooms Family Breaks Index, which looked at flight times, airport transfers, walkability and family places to stay.",
+        "sources": [
+          "laterooms-index",
+          "euronews-index"
+        ]
+      },
+      {
+        "text": "Prams go free on the metro, buses and trains when there’s space, and buses and trains have marked places for them.",
+        "sources": [
+          "cph-metro-prams",
+          "cph-kids"
+        ]
+      },
+      {
+        "text": "Playgrounds all over the city, and Visit Copenhagen says many are small adventure hubs rather than the usual swings and slide.",
+        "sources": [
+          "cph-playgrounds"
+        ]
+      },
+      {
+        "text": "Cafés and restaurants commonly have high chairs.",
+        "sources": [
+          "cph-kids"
+        ]
+      }
+    ],
+    "places": [
+      {
+        "name": "The King’s Garden playground",
+        "text": "A friendly dragon to ride and a fairy-tale world of wooden figures, in a central park.",
+        "url": "https://www.visitcopenhagen.com/copenhagen/planning/the-kings-garden-playground-gdk566087"
+      },
+      {
+        "name": "Tower playground, Fælledparken",
+        "text": "Climbing frames shaped like five of the city’s famous towers.",
+        "url": "https://www.visitcopenhagen.com/copenhagen/planning/playground-with-towers-in-faelledparken-gdk570166"
+      },
+      {
+        "name": "Experimentarium: Miniverset",
+        "text": "A science play area made for children aged 1 to 5 and their grown-ups.",
+        "url": "https://www.experimentarium.dk/en/"
+      },
+      {
+        "name": "Den Blå Planet",
+        "text": "The national aquarium. Fish tanks are hypnotic at any age.",
+        "url": "https://denblaaplanet.dk/en/"
+      },
+      {
+        "name": "Copenhagen Zoo",
+        "text": "Big animals and plenty of space to push a buggy.",
+        "url": "https://www.zoo.dk/en"
+      }
+    ],
+    "watch": [
+      {
+        "text": "Lifts sometimes close for repairs. The metro’s status page lists any that are out of service, so check it on the day.",
+        "sources": [
+          "cph-metro-status"
+        ]
+      },
+      {
+        "text": "Winter days are short and dark. Late spring to early autumn is the easy season for parks and playgrounds.",
+        "sources": []
+      }
+    ],
+    "laterooms": "Best overall family city break"
+  },
+  {
+    "id": "vienna",
+    "name": "Vienna",
+    "country": "Austria",
+    "tagline": "Flat, green and step-free",
+    "photos": [
+      {
+        "file": "vienna-1",
+        "alt": "Formal gardens with a fountain at Schönbrunn Palace, Vienna"
+      },
+      {
+        "file": "vienna-2",
+        "alt": "A Humboldt penguin at Tiergarten Schönbrunn, Vienna’s zoo"
+      }
+    ],
+    "facts": {
+      "flight": {
+        "text": "Around 2½ hours from UK airports",
+        "sources": [
+          "laterooms-index"
+        ]
+      },
+      "transfer": {
+        "text": "City Airport Train in roughly 16 minutes",
+        "sources": [
+          "laterooms-index"
+        ]
+      },
+      "stepFree": {
+        "text": "All U-Bahn stations are step-free",
+        "sources": [
+          "wl-lifts"
+        ]
+      },
+      "kidsFare": {
+        "text": "Under-6s ride free on U-Bahn, trams and buses",
+        "sources": [
+          "wl-free"
+        ]
+      }
+    },
+    "why": [
+      {
+        "text": "Wiener Linien says every underground station can be reached without steps, using ramps, lifts and raised platforms.",
+        "sources": [
+          "wl-lifts"
+        ]
+      },
+      {
+        "text": "Children travel free on Wiener Linien until the end of the school year in which they turn 6.",
+        "sources": [
+          "wl-free"
+        ]
+      },
+      {
+        "text": "A local blog points to central playgrounds at Rathauspark and Karlsplatz, and cafés that are relaxed about toddlers.",
+        "sources": [
+          "vienna-blog"
+        ]
+      },
+      {
+        "text": "Parents who have been describe it as very flat and easy to walk around, with wide pavements.",
+        "sources": [
+          "peanut-pram"
+        ]
+      }
+    ],
+    "places": [
+      {
+        "name": "ZOOM Ocean",
+        "text": "An under-the-sea play area at the children’s museum, for ages 0 to 6. Book ahead.",
+        "url": "https://kindermuseum.at/en/zoom_programmes/zoom_ocean"
+      },
+      {
+        "name": "Tiergarten Schönbrunn",
+        "text": "The zoo in the palace grounds, with penguins, pandas and plenty of paths.",
+        "url": "https://www.zoovienna.at/en/"
+      },
+      {
+        "name": "Schönbrunn Palace gardens",
+        "text": "Wide, flat paths for a pram nap after the zoo.",
+        "url": "https://www.schoenbrunn.at/en/"
+      },
+      {
+        "name": "Prater",
+        "text": "A huge park with the famous big wheel and lots of green space.",
+        "url": "https://www.prater.at/en/"
+      }
+    ],
+    "watch": [
+      {
+        "text": "Lifts are renovated a few at a time, so one may be closed. Wiener Linien suggests changing at a nearby station with a central platform instead.",
+        "sources": [
+          "wl-lifts"
+        ]
+      },
+      {
+        "text": "Heading into the woods outside the city? TravelHealthPro advises everyone to avoid tick bites in Austria.",
+        "sources": [
+          "thp-austria"
+        ]
+      }
+    ],
+    "laterooms": "Best for kid-friendly museums"
+  },
+  {
+    "id": "amsterdam",
+    "name": "Amsterdam",
+    "country": "Netherlands",
+    "tagline": "The quickest hop, and you can go by train",
+    "photos": [
+      {
+        "file": "amsterdam-1",
+        "alt": "Canal-side houses and a brick bridge where the Prinsengracht and Reguliersgracht canals meet, Amsterdam"
+      },
+      {
+        "file": "amsterdam-2",
+        "alt": "The gate of the Vondelpark in Amsterdam, framed by green leaves"
+      }
+    ],
+    "facts": {
+      "flight": {
+        "text": "Just over 1 hour 20 minutes from UK airports",
+        "sources": [
+          "laterooms-index"
+        ]
+      },
+      "transfer": {
+        "text": "Train from Schiphol in around 17 minutes",
+        "sources": [
+          "laterooms-index"
+        ]
+      },
+      "stepFree": {
+        "text": "Pushchairs ride free, with marked spaces on trams and buses",
+        "sources": [
+          "gvb-rules"
+        ]
+      },
+      "kidsFare": {
+        "text": "Children up to and including 3 travel free",
+        "sources": [
+          "gvb-metro"
+        ]
+      }
+    },
+    "why": [
+      {
+        "text": "The shortest flight of the five. Or skip the airport: Eurostar runs direct trains from London, and under-4s travel free on your lap (one per adult).",
+        "sources": [
+          "laterooms-index",
+          "eurostar-kids"
+        ]
+      },
+      {
+        "text": "A parent blog describes it as a relatively flat city where a stroller works fine.",
+        "sources": [
+          "ams-blog"
+        ]
+      },
+      {
+        "text": "GVB lets you bring a pushchair on board for free; use the marked area and put the brake on.",
+        "sources": [
+          "gvb-rules"
+        ]
+      }
+    ],
+    "places": [
+      {
+        "name": "Vondelpark",
+        "text": "The big central park, with playgrounds and a paddling pool in summer.",
+        "url": "https://www.iamsterdam.com/en/explore/neighbourhoods/oud-zuid/vondelpark"
+      },
+      {
+        "name": "ARTIS zoo",
+        "text": "A city-centre zoo with an aquarium, easy to reach by tram.",
+        "url": "https://www.artis.nl/en"
+      },
+      {
+        "name": "A canal boat",
+        "text": "Lots of babies love the motion. Ask whether the boat has room for a folded buggy."
+      }
+    ],
+    "watch": [
+      {
+        "text": "Cobbles in older streets: Frommer’s says pushing a stroller across them “isn’t much fun”. Stick to main routes, or bring a carrier.",
+        "sources": [
+          "frommers-ams"
+        ]
+      },
+      {
+        "text": "Bikes everywhere. Keep the pram off the red cycle lanes, and look both ways twice.",
+        "sources": []
+      },
+      {
+        "text": "Canal houses often have very steep stairs. Ask about a lift or ground floor before you book.",
+        "sources": []
+      }
+    ],
+    "laterooms": "Best for short family trips"
+  },
+  {
+    "id": "valencia",
+    "name": "Valencia",
+    "country": "Spain",
+    "tagline": "Sun, sea and a giant playground",
+    "photos": [
+      {
+        "file": "valencia-1",
+        "alt": "Palm-lined paths and lawns in the Turia Garden, Valencia"
+      },
+      {
+        "file": "valencia-2",
+        "alt": "The giant Gulliver figure with slides, seen from a bridge in Valencia’s Turia Garden"
+      }
+    ],
+    "facts": {
+      "flight": {
+        "text": "Around 2 hours 35 minutes from UK airports",
+        "sources": [
+          "laterooms-index"
+        ]
+      },
+      "transfer": {
+        "text": "Metro to the centre in roughly 20 minutes",
+        "sources": [
+          "laterooms-index"
+        ]
+      },
+      "stepFree": {
+        "text": "Flat centre, with a 9 km park running through it",
+        "sources": [
+          "vlc-kids"
+        ]
+      },
+      "kidsFare": {
+        "text": "Check current child fares with Metrovalencia",
+        "sources": []
+      }
+    },
+    "why": [
+      {
+        "text": "The Turia Garden runs for about 9 km along the old riverbed, with playgrounds, cafés and flat paths: an easy pram walk right through the city.",
+        "sources": [
+          "vlc-kids"
+        ]
+      },
+      {
+        "text": "Gulliver Park is a 70-metre figure of Gulliver that children climb and slide down. Little ones can watch from the edges.",
+        "sources": [
+          "vlc-gulliver"
+        ]
+      },
+      {
+        "text": "Beach and city in one trip, with milder winters than the other four.",
+        "sources": []
+      }
+    ],
+    "places": [
+      {
+        "name": "Gulliver Park",
+        "text": "Free giant playground in the Turia Garden. Go late afternoon, when it’s cooler.",
+        "url": "https://visitvalencia.com/en/what-to-do-valencia/nature-in-valencia/parks-and-gardens-valencia/gulliver-park"
+      },
+      {
+        "name": "Bioparc",
+        "text": "Animals in recreated African habitats, at the western end of the Turia Garden.",
+        "url": "https://www.bioparcvalencia.es/en/"
+      },
+      {
+        "name": "Oceanogràfic",
+        "text": "A big aquarium in the City of Arts and Sciences.",
+        "url": "https://www.oceanografic.org/en/"
+      },
+      {
+        "name": "The beach",
+        "text": "Malvarrosa and its neighbours are a short tram or bus ride from the centre."
+      }
+    ],
+    "watch": [
+      {
+        "text": "Las Fallas, 1–19 March: a firecracker show (the mascletà) goes off at 2pm every day in the main square, with more fireworks at night. The Local reports it can reach 120 decibels, which the city sees as a health hazard for babies. Avoid these dates, or stay well away and bring ear defenders.",
+        "sources": [
+          "vlc-fallas",
+          "thelocal-noise"
+        ]
+      },
+      {
+        "text": "July and August are hot. The NHS advises keeping babies under 6 months out of direct strong sunlight, and the Lullaby Trust says use a clip-on sunshade, not a cover over the pram.",
+        "sources": [
+          "nhs-sun",
+          "lullaby-hot"
+        ]
+      }
+    ],
+    "laterooms": "Best for family activities"
+  },
+  {
+    "id": "berlin",
+    "name": "Berlin",
+    "country": "Germany",
+    "tagline": "Big city, bigger parks",
+    "photos": [
+      {
+        "file": "berlin-1",
+        "alt": "People relaxing on the lawns of the Tiergarten park in Berlin on a sunny day"
+      },
+      {
+        "file": "berlin-2",
+        "alt": "Panorama of Tempelhofer Feld, the former airport in Berlin that is now a huge open park"
+      }
+    ],
+    "facts": {
+      "flight": {
+        "text": "Just over 2 hours from UK airports",
+        "sources": [
+          "laterooms-index"
+        ]
+      },
+      "transfer": {
+        "text": "Train from the airport in around 30 minutes",
+        "sources": [
+          "laterooms-index"
+        ]
+      },
+      "stepFree": {
+        "text": "86% of U-Bahn stations are step-free",
+        "sources": [
+          "bvg-access"
+        ]
+      },
+      "kidsFare": {
+        "text": "Under-6s travel free on BVG",
+        "sources": [
+          "bvg-faq"
+        ]
+      }
+    },
+    "why": [
+      {
+        "text": "Ranked second in the LateRooms Family Breaks Index, which counted more than 200 family-friendly attractions.",
+        "sources": [
+          "laterooms-index"
+        ]
+      },
+      {
+        "text": "Under-6s ride free on buses, trams, the U-Bahn and S-Bahn.",
+        "sources": [
+          "bvg-faq"
+        ]
+      },
+      {
+        "text": "A parent blog recommends Prenzlauer Berg for cafés with play corners, so you can have a coffee while they play.",
+        "sources": [
+          "berlin-blog"
+        ]
+      }
+    ],
+    "places": [
+      {
+        "name": "Tiergarten",
+        "text": "The huge, flat central park. Good for a pram nap on the move.",
+        "url": "https://www.visitberlin.de/en/tiergarten"
+      },
+      {
+        "name": "Tempelhofer Feld",
+        "text": "A former airport turned park. Endless flat space for new walkers."
+      },
+      {
+        "name": "Zoo Berlin",
+        "text": "One of the city’s big days out, right by the Tiergarten.",
+        "url": "https://www.zoo-berlin.de/en"
+      },
+      {
+        "name": "Labyrinth Kindermuseum",
+        "text": "A hands-on children’s museum; one blog notes a corner for toddlers.",
+        "url": "https://www.labyrinth-kindermuseum.de/en"
+      }
+    ],
+    "watch": [
+      {
+        "text": "About 1 in 7 U-Bahn stations still has no step-free route, and lifts can be out of order. BVG’s app and journey planner can find step-free routes.",
+        "sources": [
+          "bvg-access"
+        ]
+      },
+      {
+        "text": "Summers can be hot and winters cold. Spring and early autumn are the comfortable times.",
+        "sources": [
+          "berlin-blog"
+        ]
+      }
+    ],
+    "laterooms": "Best for family attractions"
+  }
+]
