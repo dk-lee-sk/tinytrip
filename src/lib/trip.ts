@@ -169,6 +169,10 @@ export type PackItem = {
   /** ids from src/data/sources.json */
   sources?: string[];
   show?: Condition;
+  /** Things this one item can do, for "does double duty" tags */
+  jobs?: string[];
+  /** With "Pack light" on: a shorter version, or skip (moves it to "Could leave at home", note says why) */
+  light?: { skip?: boolean; name?: string; note: string };
   variants?: ({ when: Condition } & Partial<Pick<PackItem, 'name' | 'note' | 'priority' | 'needsReview'>>)[];
 };
 

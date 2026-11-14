@@ -92,6 +92,22 @@ site is written for UK parents; a "Not in the UK?" note is added where rules dif
 - [ ] **Flight security bag:** enough baby milk, food and sterilised water for the journey; breast milk up to 2 litres;
   formula and baby food only with baby present; containers may be opened. Source: GOV.UK.
 
+## Pack light, double-duty items and "Forgot something?" (`src/data/packing.json`, `src/data/forgot.json`, added 2026-11-14)
+
+Prompted by feedback from a parent of three. Most of this is practical, not rule-based; the safety points are below.
+
+- [ ] **Don't cover the pram or buggy** with a muslin or blanket; covers can make babies overheat; use a clip-on sunshade.
+  Source: [Lullaby Trust, Hot weather](https://www.lullabytrust.org.uk/baby-safety/travel-and-weather/hot-weather/).
+  Appears on the new muslins item, the sun item, and the travel-day train nap tip (which used to suggest a muslin
+  over the stroller).
+- [ ] **No cot where you stay:** links to the Lullaby Trust's safer sleep away from home advice. Source:
+  [Lullaby Trust](https://www.lullabytrust.org.uk/baby-safety/travel-and-weather/safer-sleep-away-from-home-in-emergency-situations/).
+- [ ] **Lost passport abroad:** British nationals may be able to get an emergency travel document (conditions apply).
+  Source: [GOV.UK](https://www.gov.uk/emergency-travel-document).
+- [ ] **Blackout tip (pack light):** a dark towel over the curtain rail, "well away from the cot". Our wording; worth a
+  health visitor's eye.
+- Formula brands differing abroad repeats the existing formula item.
+
 ## Guides (`src/data/guides.json`)
 
 - [ ] **Flying, ears:** feed/bottle/dummy at take-off and landing; descent often trickier. Sources: AAP, CDC.

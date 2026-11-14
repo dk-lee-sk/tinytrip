@@ -115,6 +115,10 @@
             "rolling",
             "sitter"
           ]
+        },
+        "light": {
+          "skip": true,
+          "note": "A big muslin or a light scarf does the same job."
         }
       },
       {
@@ -176,7 +180,29 @@
             "sitter",
             "walker"
           ]
+        },
+        "light": {
+          "name": "Two or three bibs",
+          "note": "A muslin covers the rest. Rinse them in the evening and they’re usually dry by morning."
         }
+      },
+      {
+        "id": "muslins",
+        "name": "Two big muslins",
+        "note": "Probably the hardest-working thing in the bag. One job they shouldn’t do: cover the pram or buggy. The Lullaby Trust says covers can make babies overheat, so use a clip-on sunshade instead.",
+        "priority": "key",
+        "jobs": [
+          "Nursing cover",
+          "Bib and burp cloth",
+          "Towel",
+          "Mopping up sick",
+          "Changing mat in a pinch",
+          "Emergency outfit"
+        ],
+        "sources": [
+          "lullaby-hot"
+        ],
+        "needsReview": true
       },
       {
         "id": "snacks",
@@ -256,7 +282,11 @@
             "name": "Portable changing mat (if they still use nappies)",
             "priority": "nice"
           }
-        ]
+        ],
+        "light": {
+          "skip": true,
+          "note": "A muslin or small towel can do this job in a pinch."
+        }
       },
       {
         "id": "nappy-bags",
@@ -265,10 +295,27 @@
         "priority": "key"
       },
       {
+        "id": "zip-bags",
+        "name": "A few zip-lock bags",
+        "note": "They weigh nothing and keep the mess away from everything else.",
+        "priority": "key",
+        "jobs": [
+          "Wet or dirty clothes",
+          "Sick bag",
+          "Snacks",
+          "Leaky bottles and creams",
+          "Keeping documents dry"
+        ]
+      },
+      {
         "id": "spare-outfits",
         "name": "Spare outfits in your hand luggage",
         "note": "At least two for baby, and a spare top for you.",
-        "priority": "must"
+        "priority": "must",
+        "light": {
+          "name": "One spare outfit each in your hand luggage",
+          "note": "Plus a spare top for you. If you run out, a big muslin makes a decent toga until you can change."
+        }
       },
       {
         "id": "potty",
@@ -313,13 +360,21 @@
         "id": "white-noise",
         "name": "White noise app or portable speaker",
         "note": "If you use one at home, bring it. A familiar sound can make a new room feel less strange.",
-        "priority": "key"
+        "priority": "key",
+        "light": {
+          "name": "White noise app on your phone",
+          "note": "No need for a separate speaker if your phone can do it."
+        }
       },
       {
         "id": "blackout-blind",
         "name": "Portable blackout blind",
         "note": "Suction or clip-on blinds fit most windows. Useful for naps in a bright room.",
-        "priority": "key"
+        "priority": "key",
+        "light": {
+          "skip": true,
+          "note": "A dark towel pinned over the curtain rail, well away from the cot, can darken a room for naps."
+        }
       },
       {
         "id": "sleep-sack",
@@ -385,16 +440,21 @@
         "id": "wipes",
         "name": "Antibacterial wipes",
         "note": "For tray tables, changing mats and sticky hands.",
-        "priority": "key"
+        "priority": "key",
+        "light": {
+          "skip": true,
+          "note": "Baby wipes can do tray tables and sticky hands too."
+        }
       },
       {
         "id": "sun",
         "name": "Sunhat and stroller sunshade",
-        "note": "The NHS advises keeping babies under 6 months out of direct strong sunlight, so shade is your friend. Ask a pharmacist about sun cream for older babies.",
+        "note": "The NHS advises keeping babies under 6 months out of direct strong sunlight, so shade is your friend. Ask a pharmacist about sun cream for older babies. Use a clip-on sunshade rather than a muslin or blanket over the pram: the Lullaby Trust says covers can make babies overheat.",
         "priority": "key",
         "needsReview": true,
         "sources": [
-          "nhs-sun"
+          "nhs-sun",
+          "lullaby-hot"
         ]
       }
     ]
@@ -676,6 +736,10 @@
           "modes": [
             "road"
           ]
+        },
+        "light": {
+          "skip": true,
+          "note": "Useful if one adult is driving alone with baby. Otherwise easy to leave out."
         }
       },
       {
@@ -701,6 +765,10 @@
             "toddler",
             "older"
           ]
+        },
+        "light": {
+          "name": "Two or three small new toys or books",
+          "note": "New things hold attention for longer, so a few go a long way. Hand them out one at a time."
         }
       },
       {
@@ -896,6 +964,10 @@
           "modes": [
             "flight"
           ]
+        },
+        "light": {
+          "skip": true,
+          "note": "Nice for keeping things clean, but your gear will be fine without."
         }
       }
     ]
@@ -951,6 +1023,11 @@
             },
             "note": "Handy on stairs and busy platforms, so you’re not carrying a stroller and bags at the same time."
           }
+        ],
+        "jobs": [
+          "Carrying them",
+          "A nap spot on the go",
+          "Hands free for bags and tickets"
         ]
       },
       {
@@ -967,7 +1044,11 @@
             },
             "name": "Day bag with snacks, wipes and a spare outfit"
           }
-        ]
+        ],
+        "light": {
+          "skip": true,
+          "note": "Any backpack you already have will do."
+        }
       },
       {
         "id": "laundry",
@@ -978,6 +1059,10 @@
           "lengths": [
             "week"
           ]
+        },
+        "light": {
+          "name": "Plan to do a wash",
+          "note": "Packing for half the trip and washing once is lighter than packing for every day."
         }
       },
       {

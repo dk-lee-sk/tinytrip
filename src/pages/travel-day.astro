@@ -83,7 +83,7 @@ import Sources from '../components/Sources.astro';
         <ol class="timeline" id="td-timeline"></ol>
         <p class="td-zone" id="td-zone" hidden></p>
         <p class="td-empty" id="td-empty">Fill in the journey on the left to see your day.</p>
-        <Sources ids={['aap-flying', 'cdc-infants', 'nhs-sleep']} />
+        <Sources ids={['aap-flying', 'cdc-infants', 'nhs-sleep', 'lullaby-hot']} />
         <span class="review-flag">Still being double-checked</span>
         <div class="td-cal no-print" id="td-cal">
           <h3>Add it to your calendar</h3>
@@ -222,7 +222,7 @@ import Sources from '../components/Sources.astro';
       if (w === 'journey') {
         napsOnJourney++;
         text += mode === 'flight' ? 'On the plane: try the carrier, your lap or the bassinet, with white noise if it helps.'
-          : mode === 'train' ? 'On the train: carrier, stroller or a cosy lap. A muslin over the stroller blocks out the bustle.'
+          : mode === 'train' ? 'On the train: carrier, stroller or a cosy lap. A quiet corner and their usual sleep cues help. Don’t cover the stroller with a muslin or blanket, as it can get too hot underneath.'
           : 'In the car seat: often a good stretch to keep driving. Stop when baby wakes.';
       } else if (w === 'transit') {
         text += 'On the move: the stroller or carrier is your friend. A shorter nap is fine today.';

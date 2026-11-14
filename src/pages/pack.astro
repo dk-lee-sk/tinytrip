@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import packing from '../data/packing.json';
+import forgot from '../data/forgot.json';
 import ages from '../data/ages.json';
 import { LENGTHS, MODES, KIDS, resolveItem, type PackItem } from '../lib/trip';
 import Sources from '../components/Sources.astro';
@@ -47,7 +48,16 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
         </div>
       </div>
       <p class="trip-status" id="trip-status" aria-live="polite">Showing the full list. Pick your trip details to tailor it.</p>
+      <label class="light-toggle">
+        <input type="checkbox" id="pack-light" />
+        <span><strong>Pack light</strong> Show a shorter list, and what you could leave at home.</span>
+      </label>
     </form>
+
+    <p class="light-note" id="light-note" hidden>
+      Pack light is on. Items marked “does several jobs” cover for others, and the things you could leave at home are
+      listed at the bottom.
+    </p>
 
     <p class="multi-note" id="multi-note" hidden>
       Travelling with more than one? There are a few extra things below.
@@ -81,11 +91,13 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
                 <label class="ci-main">
                   <input type="checkbox" data-item={item.id} />
                   <strong class="ci-name">{item.name}</strong>
+                  {item.jobs && <span class="ci-jobs">Does {item.jobs.length} jobs</span>}
                 </label>
                 <span class={`pill pill-${item.priority} ci-pill`}>{pillLabel[item.priority]}</span>
                 <details class="ci-more">
                   <summary>More info</summary>
                   <span class="ci-note">{item.note}</span>
+                  {item.jobs && <span class="ci-jobs-list">Jobs it can do: {item.jobs.join(', ')}.</span>}
                   <Sources ids={item.sources} />
                   <span class="review-flag" hidden={!item.needsReview}>Still being double-checked</span>
                 </details>
@@ -95,6 +107,25 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
         </div>
       </section>
     ))}
+
+    <section class="leave-home" id="leave-home" aria-labelledby="leave-heading" hidden>
+      <h2 id="leave-heading">Could leave at home</h2>
+      <p class="leave-intro">Useful, but other things in your bag can do the job.</p>
+      <ul id="leave-list"></ul>
+    </section>
+
+    <section class="forgot" aria-labelledby="forgot-heading">
+      <h2 id="forgot-heading">Forgot something?</h2>
+      <p class="forgot-intro">It happens to everyone. Most things can be bought, borrowed or improvised when you get there.</p>
+      <dl>
+        {forgot.map((f) => (
+          <div class="forgot-item">
+            <dt>{f.title}</dt>
+            <dd>{f.text}{f.sources && <Sources ids={f.sources} />}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
 
     <div class="next-step pack-actions no-print">
       <button type="button" class="btn-ghost" id="share">Share this list</button>
@@ -123,6 +154,9 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
     mode: document.getElementById('trip-mode') as HTMLSelectElement,
     length: document.getElementById('trip-length') as HTMLSelectElement,
   };
+  const LIGHT_KEY = 'tinytrip:packlight:v1';
+  const lightBox = document.getElementById('pack-light') as HTMLInputElement;
+  try { lightBox.checked = localStorage.getItem(LIGHT_KEY) === '1'; } catch {}
   const boxes = Array.from(document.querySelectorAll<HTMLInputElement>('.ci input[type="checkbox"]'));
 
   function loadTicks(): Set<string> {
@@ -148,11 +182,21 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
   }
 
   function applyTrip(trip: Trip) {
+    const light = lightBox.checked;
+    const leave: { name: string; note: string }[] = [];
     for (const section of packing) {
       let visible = 0;
       for (const raw of section.items as PackItem[]) {
         const row = document.querySelector<HTMLElement>(`[data-row="${raw.id}"]`)!;
-        const item = resolveItem(raw, trip);
+        let item = resolveItem(raw, trip);
+        if (item && light && item.light) {
+          if (item.light.skip) {
+            leave.push({ name: item.name, note: item.light.note });
+            item = null;
+          } else {
+            item = { ...item, name: item.light.name ?? item.name, note: item.light.note };
+          }
+        }
         row.hidden = !item;
         if (!item) continue;
         visible++;
@@ -167,6 +211,15 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
     }
     document.getElementById('trip-status')!.textContent = describe(trip);
     document.getElementById('multi-note')!.hidden = !trip.kids || trip.kids === '1';
+    document.getElementById('light-note')!.hidden = !light;
+    document.getElementById('leave-home')!.hidden = !light || leave.length === 0;
+    document.getElementById('leave-list')!.replaceChildren(
+      ...leave.map((l) => {
+        const li = document.createElement('li');
+        li.append(Object.assign(document.createElement('strong'), { textContent: l.name }), ` ${l.note}`);
+        return li;
+      }),
+    );
     renderProgress();
   }
 
@@ -188,7 +241,12 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
   fields.mode.value = trip.mode ?? '';
   fields.length.value = trip.length ?? '';
 
-  form.addEventListener('change', () => {
+  form.addEventListener('change', (e) => {
+    if (e.target === lightBox) {
+      try { localStorage.setItem(LIGHT_KEY, lightBox.checked ? '1' : '0'); } catch {}
+      applyTrip(trip);
+      return;
+    }
     const next: Trip = {
       kids: fields.kids.value || undefined,
       age: fields.age.value || undefined,
@@ -271,6 +329,35 @@ const pillLabel: Record<string, string> = { must: 'Essential', key: 'Important',
     .ci-more summary { display: none; }
     .progress-cheer { display: none; }
   }
+  .ci-jobs {
+    font-size: 0.7rem; font-weight: 700; color: #2F5C80; background: var(--sky-lt);
+    padding: 2px 9px; border-radius: 100px; white-space: nowrap;
+  }
+  .ci-jobs-list { display: block; margin-top: 4px; font-size: 0.8rem; line-height: 1.5; }
+  .light-toggle {
+    display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; padding-top: 14px;
+    border-top: 1px solid #F0EBE5; font-size: 0.88rem; cursor: pointer;
+  }
+  .light-toggle input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--coral-dk); flex-shrink: 0; }
+  .light-toggle strong { margin-right: 4px; }
+  .light-note {
+    background: var(--sage-lt, #EEF5EE); border-radius: 14px; padding: 10px 16px;
+    font-size: 0.85rem; margin: -8px 0 24px;
+  }
+  .light-note[hidden], .leave-home[hidden] { display: none; }
+  .leave-home, .forgot {
+    background: var(--white); border-radius: 16px; box-shadow: var(--shadow);
+    padding: 20px 24px; margin-bottom: 24px;
+  }
+  .leave-home h2, .forgot h2 { font-size: 1rem; margin-bottom: 4px; }
+  .leave-intro, .forgot-intro { font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; }
+  .leave-home ul { list-style: none; }
+  .leave-home :global(li) { font-size: 0.85rem; line-height: 1.5; padding: 8px 0; border-bottom: 1px solid #F0EBE5; }
+  .leave-home :global(li:last-child) { border-bottom: none; }
+  .forgot-item { padding: 10px 0; border-bottom: 1px solid #F0EBE5; }
+  .forgot-item:last-child { border-bottom: none; }
+  .forgot dt { font-weight: 700; font-size: 0.9rem; }
+  .forgot dd { font-size: 0.85rem; line-height: 1.55; color: var(--muted); margin-top: 2px; }
   .ci.checked .ci-name { text-decoration: line-through; opacity: 0.45; }
   .ci.checked .ci-note { opacity: 0.4; }
 
